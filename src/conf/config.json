@@ -1,0 +1,6 @@
+{
+	"host":"http://www.acfun.tv",
+	"getVideoUrl":"http://www.acfun.tv/video/getVideo.aspx",
+	"staticUrl":"http://static.comment.acfun.mm111.net/V2",
+	"websocketUri":"ws://danmaku.acfun.tv:443"
+}

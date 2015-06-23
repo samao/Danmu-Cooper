@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 乐视tv播放器处理配置信息 -->
+<node>
+	<address>http://yuntv.letv.com/bcloud.swf</address>
+</node>

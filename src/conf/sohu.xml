@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 搜狐播放器处理配置信息 -->
+<node>
+	<address>http://tv.sohu.com/upload/swf/20150618/Main.swf</address>
+	<core>
+		<!-- SDK检测 -->
+		<check exist="tvSohuMpb"></check>
+		<check exist="tvSohuMpb.core"></check>
+		<check exist="tvSohuMpb.core.fileTotTime"></check>
+		
+		<!-- 事件处理 -->
+		<dispatch target="tvSohuMpb.core">
+		
+			<!-- 播放事件 type为事件类型 value为执行的coop函数 -->
+			<event type="onPlay">onPlay</event>
+			<event type="onStop">onStop</event>
+			<event type="onPause">onPause</event>
+			
+			<!-- from 如果是event数据 -->
+			<event type="play_progress" from="obj.nowTime">onTime</event>
+			
+			<!-- from 如果是全局数据,重加载文件中查找数据 -->
+			<!-- <event type="play_progress" from="::obj.nowTime">onTime</event> -->
+		</dispatch>
+	</core>
+</node>
