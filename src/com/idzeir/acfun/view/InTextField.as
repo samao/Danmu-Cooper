@@ -29,10 +29,11 @@ package com.idzeir.acfun.view
 			this.wordWrap = false;
 			
 			this.background = true;
-			this.backgroundColor = 0x343434;
-			this.defaultTextFormat = new TextFormat(FontUtil.fontName,12,0xffffff,true);
+			this.backgroundColor = 0xFFFFFF;
+			this.defaultTextFormat = new TextFormat(FontUtil.fontName,12,0x000000,true);
+			this.defaultTextFormat.leftMargin = 10;
 			this.border = true;
-			this.borderColor = 0xffffff;
+			this.borderColor = 0x33333;
 			this.maxChars = 60;
 		}
 	}

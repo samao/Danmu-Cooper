@@ -15,9 +15,12 @@ package com.idzeir.acfun.view
 	
 	import flash.ui.Keyboard;
 	
+	/**
+	 * 弹幕工具栏
+	 */	
 	public class InputTools extends HBox
 	{
-
+		/** 输入文本框 */		
 		private var _inputTxt:InTextField;
 		
 		public function InputTools()
@@ -34,15 +37,27 @@ package com.idzeir.acfun.view
 			_inputTxt = new InTextField();
 			_inputTxt.width = 500;
 			addChild(_inputTxt);
-			addChild(new LabelButton("<font color='#ffffff' size='14'>发送</font>",function():void{
+			
+			var send:LabelButton = new LabelButton("发送",function():void
+			{
 				Log.debug("发送");
-			}));
-			addChild(new LabelButton("<font color='#ffffff' size='14'>设置</font>",function():void{
+			});
+			send.style = new LabelButtonStyle(0xFFFFFF,0x666666,null,null,0xFF0000);
+			addChild(send);
+			
+			var option:LabelButton = new LabelButton("设置",function():void
+			{
 				Log.debug("设置");
-			}));
-			addChild(new LabelButton("<font color='#ffffff' size='14'>关闭弹幕</font>",function():void{
+			});
+			option.style = send.style;
+			addChild(option);
+			
+			var close:LabelButton = new LabelButton("关闭弹幕",function():void
+			{
 				Log.debug("关闭弹幕");
-			}));
+			});
+			close.style = send.style;
+			addChild(close);
 			
 			$.k.listener(flash.ui.Keyboard.ENTER,function():void
 			{
@@ -50,6 +65,9 @@ package com.idzeir.acfun.view
 			});
 		}
 		
+		/**
+		 * 发送弹幕
+		 */		
 		private function send():void
 		{
 			$.e.dispatchEvent(new GlobalEvent(EventType.SEND,_inputTxt.text));
