@@ -32,5 +32,13 @@ package com.idzeir.acfun.events
 		 * info为弹幕信息 
 		 */		
 		public static const RECIVE:String = "recive";
+		/**
+		 * 打开关闭设置面板
+		 */		
+		public static const SWITCH_OPTION:String = "switchOption";
+		/**
+		 * 打开弹幕显示
+		 */		
+		public static const SWITCH_BULLET:String = "switchBullet";
 	}
 }

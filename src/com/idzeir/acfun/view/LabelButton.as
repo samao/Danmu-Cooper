@@ -25,7 +25,7 @@ package com.idzeir.acfun.view
 		private const UP:String = "up";
 		private const OVER:String = "over";
 		private const DOWN:String = "down";
-		private const MARGIN:int = 2;
+		private const MARGIN:int = 1;
 		
 		private var _label:TextField;
 		
@@ -33,6 +33,8 @@ package com.idzeir.acfun.view
 		private var _status:String = UP;
 		
 		private var _bglayer:Shape;
+		
+		private var _tf:TextFormat;
 		
 		public function LabelButton(label:String,click:Function = null)
 		{
@@ -44,9 +46,9 @@ package com.idzeir.acfun.view
 			
 			_label.autoSize = "left";
 			_label.selectable = false;
-			_label.htmlText = label;
-			_label.defaultTextFormat = new TextFormat(FontUtil.fontName,12,null,true);
+			_tf = new TextFormat(FontUtil.fontName,12,null,true);
 			
+			this.label =  label;
 			_label.x = _label.y = MARGIN;
 			this.addChild(_label);
 			
@@ -62,7 +64,7 @@ package com.idzeir.acfun.view
 			{
 				if(!_style)return;
 				textColor = _style.overTextColor;
-				_label.backgroundColor = _style.overBackgroundColor;
+				backgroundColor = _style.overBackgroundColor;
 				
 			});
 			this.addEventListener(MouseEvent.ROLL_OUT,function():void
@@ -78,6 +80,14 @@ package com.idzeir.acfun.view
 				}
 			});
 			status = UP;
+		}
+		
+		/**
+		 * 设置是否启用背景（默认启用）
+		 */		
+		public function set background(bool:Boolean):void
+		{
+			_bglayer.visible = false;
 		}
 		
 		/**
@@ -104,7 +114,14 @@ package com.idzeir.acfun.view
 		 */		
 		public function set label(value:String):void
 		{
+			_label.defaultTextFormat = _tf;
 			_label.htmlText = value;
+			status = _status;
+		}
+		
+		public function get label():String
+		{
+			return _label.text;
 		}
 		
 		/**

@@ -19,6 +19,7 @@ package
 	import com.idzeir.acfun.coop.Logic;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
+	import com.idzeir.acfun.manage.Animation;
 	import com.idzeir.acfun.manage.BulletFactory;
 	import com.idzeir.acfun.manage.BulletVoMgr;
 	import com.idzeir.acfun.manage.Keys;
@@ -165,16 +166,21 @@ package
 			var errorTxt:ErrorText = new ErrorText();
 			this.addChild(errorTxt);
 			
-			setupInput();
+			initTools();
 		}
 		
-		private function setupInput():void
+		private function initTools():void
 		{
 			_tools = new InputTools();
 			_tools.x = 220;
 			_tools.y = stage.stageHeight - _tools.height - 5;
 			_tools.visible = false;
 			this.addChild(_tools);
+			
+			var loader:Loader = new Loader();
+			loader.load(new URLRequest("DanmuOption.swf"));
+			loader.x = loader.y = 10;
+			this.addChild(loader);
 		}
 		
 		private function loadCommentPlugin():void
@@ -331,6 +337,7 @@ package
 			$.e = new EventDispatcher();
 			$.u = BulletFactory.getInstance();
 			$.k = Keys.getInstance();
+			$.a = Animation.getInstance();
 			
 			$.f.update(stage.loaderInfo.parameters);
 			$.k.stage = stage;

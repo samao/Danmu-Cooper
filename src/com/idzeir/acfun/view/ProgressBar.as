@@ -34,6 +34,7 @@ package com.idzeir.acfun.view
 			$.e.addEventListener(EventType.PROGRESS,function(e:GlobalEvent):void
 			{
 				_info ||= new TextField();
+				_info.mouseEnabled = false;
 				_info.autoSize = "left";
 				_info.defaultTextFormat = tf;
 				_info.htmlText = e.info;

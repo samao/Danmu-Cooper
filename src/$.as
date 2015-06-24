@@ -11,6 +11,7 @@ package
 {
 	import com.idzeir.acfun.business.IQm;
 	import com.idzeir.acfun.coop.ILogic;
+	import com.idzeir.acfun.manage.IAnimation;
 	import com.idzeir.acfun.manage.IBulletFactory;
 	import com.idzeir.acfun.manage.IBulletVoMgr;
 	import com.idzeir.acfun.manage.IKeys;
@@ -66,5 +67,9 @@ package
 		 * 键盘按键管理 
 		 */		
 		public static var k:IKeys;
+		/**
+		 * 动画管理 
+		 */		
+		public static var a:IAnimation;
 	}
 }

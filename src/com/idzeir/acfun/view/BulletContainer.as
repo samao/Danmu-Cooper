@@ -9,6 +9,7 @@
 
 package com.idzeir.acfun.view
 {
+	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
@@ -142,6 +143,11 @@ package com.idzeir.acfun.view
 			this.addChild(_topBox);
 			this.addChild(_bottomBox);
 			//this.addChild(new BulletProfile());
+			
+			$.e.addEventListener(EventType.SWITCH_BULLET,function():void
+			{
+				visible = !visible;
+			});
 		}
 		
 		protected function update():void

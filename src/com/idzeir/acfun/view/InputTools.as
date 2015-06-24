@@ -47,14 +47,17 @@ package com.idzeir.acfun.view
 			
 			var option:LabelButton = new LabelButton("设置",function():void
 			{
-				Log.debug("设置");
+				//Log.debug("设置");
+				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_OPTION));
 			});
 			option.style = send.style;
 			addChild(option);
 			
 			var close:LabelButton = new LabelButton("关闭弹幕",function():void
 			{
-				Log.debug("关闭弹幕");
+				//Log.debug("关闭弹幕");
+				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
+				close.label = close.label == "关闭弹幕"?"打开弹幕":"关闭弹幕";
 			});
 			close.style = send.style;
 			addChild(close);
