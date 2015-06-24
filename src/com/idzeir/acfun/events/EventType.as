@@ -27,5 +27,10 @@ package com.idzeir.acfun.events
 		 * info为弹幕信息 
 		 */		
 		public static const SEND:String = "send";
+		/**
+		 * 接收实时弹幕
+		 * info为弹幕信息 
+		 */		
+		public static const RECIVE:String = "recive";
 	}
 }

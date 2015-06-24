@@ -69,6 +69,7 @@ package com.idzeir.acfun.business.init
 		
 		private function handleMessage(value:Object):void
 		{
+			//服务器和用户交互状态反馈
 			switch(value["status"])
 			{
 				case RespondType.SERVER_AUTHED:
@@ -77,6 +78,26 @@ package com.idzeir.acfun.business.init
 					break;
 				default:
 					break;
+			}
+			
+			try{
+				//收到服务器交互指令
+				switch(value["action"])
+				{
+					case RespondAction.POST:
+						//接收到弹幕，包括自己的弹幕
+						$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
+						break;
+					case RespondAction.VOW:
+						//服务器公告信息
+						$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
+						break;
+					default:
+						Log.debug("收到服务器action消息");
+						break;
+				}
+			}catch(e:Error){
+				Log.error("接收websocket消息处理出错：",e.message,e.getStackTrace());
 			}
 		}
 		
@@ -96,6 +117,14 @@ package com.idzeir.acfun.business.init
 			_websocket.sendUTF(JSON.stringify({action : "auth",command:JSON.stringify(handshakeData)}));
 		}
 	}
+}
+
+class RespondAction
+{
+	/** 弹幕接收 */	
+	public static const POST:String = "post";
+	/** 系统消息接收 */	
+	public static const VOW:String = "vow";
 }
 
 class RespondType

@@ -270,6 +270,7 @@ package
 			this.removeChild(_proBar);
 			_apiBox.visible = true;
 			_tools.visible = true;
+			
 			if($.f.autoplay)
 			{
 				this._bullets.start();
