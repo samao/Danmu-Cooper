@@ -9,8 +9,11 @@
 
 package com.idzeir.acfun.view
 {
+	import com.idzeir.acfun.events.EventType;
+	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.utils.FontUtil;
 	
+	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFieldType;
 	import flash.text.TextFormat;
@@ -35,6 +38,13 @@ package com.idzeir.acfun.view
 			this.border = true;
 			this.borderColor = 0x33333;
 			this.maxChars = 60;
+			
+			this.filters = [new DropShadowFilter(1,45,0,1,1,1),new DropShadowFilter(1,225,0,1,1,1)];
+			
+			$.e.addEventListener(EventType.COLOR_CHANGE,function(e:GlobalEvent):void
+			{
+				textColor = e.info;
+			});
 		}
 	}
 }

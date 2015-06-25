@@ -60,7 +60,7 @@ package com.idzeir.acfun.manage
 			if(_map.hasOwnProperty(e.keyCode))
 			{
 				var call:Function = _map[e.keyCode];
-				call.apply();
+				call.apply(null,[e]);
 			}
 		}
 	}

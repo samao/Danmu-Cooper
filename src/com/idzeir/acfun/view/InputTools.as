@@ -13,6 +13,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.utils.Log;
 	
+	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
 	
 	/**
@@ -38,19 +39,19 @@ package com.idzeir.acfun.view
 			_inputTxt.width = 500;
 			addChild(_inputTxt);
 			
-			var send:LabelButton = new LabelButton("发送",function():void
+			var sendBut:LabelButton = new LabelButton("发送",function():void
 			{
-				Log.debug("发送");
+				send();
 			});
-			send.style = new LabelButtonStyle(0xFFFFFF,0x666666,null,null,0xFF0000);
-			addChild(send);
+			sendBut.style = new LabelButtonStyle(0xFFFFFF,0x666666,null,null,0xFF0000);
+			addChild(sendBut);
 			
 			var option:LabelButton = new LabelButton("设置",function():void
 			{
 				//Log.debug("设置");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_OPTION));
 			});
-			option.style = send.style;
+			option.style = sendBut.style;
 			addChild(option);
 			
 			var close:LabelButton = new LabelButton("关闭弹幕",function():void
@@ -59,12 +60,20 @@ package com.idzeir.acfun.view
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
 				close.label = close.label == "关闭弹幕"?"打开弹幕":"关闭弹幕";
 			});
-			close.style = send.style;
+			close.style = sendBut.style;
 			addChild(close);
 			
+			$.k.listener(Keyboard.SPACE,function(e:KeyboardEvent):void
+			{
+				if(stage.focus == _inputTxt)
+				{
+					e.stopImmediatePropagation();
+					e.stopPropagation();
+				}
+			});
 			$.k.listener(flash.ui.Keyboard.ENTER,function():void
 			{
-				Log.debug("回车发送");
+				send();
 			});
 		}
 		
@@ -74,6 +83,7 @@ package com.idzeir.acfun.view
 		private function send():void
 		{
 			$.e.dispatchEvent(new GlobalEvent(EventType.SEND,_inputTxt.text));
+			Log.debug("发送弹幕：",_inputTxt.text);
 			_inputTxt.text = "";
 		}
 	}

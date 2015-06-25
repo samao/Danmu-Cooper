@@ -40,5 +40,10 @@ package com.idzeir.acfun.events
 		 * 打开弹幕显示
 		 */		
 		public static const SWITCH_BULLET:String = "switchBullet";
+		/**
+		 * 配置面板修改颜色
+		 * info为颜色数值
+		 */		
+		public static const COLOR_CHANGE:String = "colorChange";
 	}
 }
