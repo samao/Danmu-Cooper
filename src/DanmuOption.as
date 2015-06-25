@@ -42,6 +42,12 @@ package
 
 		private var _colorSelect:Shape;
 		
+		private var _styleGroup:RadioGroup;
+
+		private var _sizeGroup:RadioGroup;
+
+		private var _selectColor:uint;
+		
 		public function DanmuOption()
 		{
 			super();
@@ -58,14 +64,16 @@ package
 			var _box:VBox = new VBox();
 			_box.gap = 8;
 			
-			var sizeGroup:RadioGroup = new RadioGroup();
+			_sizeGroup = new RadioGroup();
 			var bigRadio:Radio = new Radio();
 			bigRadio.label = "大";
 			var midRadio:Radio = new Radio();
 			midRadio.label = "中";
 			var smallRadio:Radio = new Radio();
 			smallRadio.label = "小";
-			sizeGroup.group = [smallRadio,midRadio,bigRadio];
+			_sizeGroup.group = [smallRadio,midRadio,bigRadio];
+			_sizeGroup.index = 1;
+			
 			var size:TextField = new TextField();
 			size.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			size.autoSize = "left";
@@ -74,26 +82,28 @@ package
 			var sizeBox:HBox = new HBox();
 			sizeBox.algin = HBox.MIDDLE;
 			sizeBox.addChild(size);
-			sizeBox.addChild(sizeGroup);
+			sizeBox.addChild(_sizeGroup);
 			_box.addChild(sizeBox);
 			
-			var styleGroup:RadioGroup = new RadioGroup();
+			_styleGroup = new RadioGroup();
 			var topRadio:Radio = new Radio();
 			topRadio.label = "顶部";
 			var moveRadio:Radio = new Radio();
 			moveRadio.label = "滚动";
 			var bottomRadio:Radio = new Radio();
 			bottomRadio.label = "底部";
-			styleGroup.group = [topRadio,moveRadio,bottomRadio];
+			_styleGroup.group = [topRadio,moveRadio,bottomRadio];
+			_styleGroup.index = 1;
+			
 			var style:TextField = new TextField();
 			style.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			style.autoSize = "left";
 			style.textColor = 0xFFFFFF;
-			style.text = "弹幕样式：";
+			style.text = "弹幕模式：";
 			var styleBox:HBox = new HBox();
 			styleBox.algin = HBox.MIDDLE;
 			styleBox.addChild(style);
-			styleBox.addChild(styleGroup);
+			styleBox.addChild(_styleGroup);
 			_box.addChild(styleBox);
 			
 			var color:TextField = new TextField();
@@ -142,6 +152,9 @@ package
 			
 			this.x = -this.width - 50;
 			this.y = stage.stageHeight - this.height - 80;
+			
+			_styleGroup.addEventListener(Event.CHANGE,onOptionChange);
+			_sizeGroup.addEventListener(Event.CHANGE,onOptionChange);
 			$.e.addEventListener(EventType.SWITCH_OPTION,onSwitch);
 		}
 		
@@ -165,7 +178,7 @@ package
 					rect.y = j*HEIGHT+1;
 					var OFFX:uint = uint(i/6)*0x330000+uint(i%6)*0x003300;
 					var OFFY:uint = uint(j/6)*0x003300+uint(j%6)*0x000033;
-					var color:uint = OFFX|OFFY|(j>5?0xFF990000:0xFF000000);//算法进位有问题
+					var color:uint = OFFX|OFFY|(j>5?0xFF990000:0xFF000000);
 					bmd.fillRect(rect,color);
 				}
 			}
@@ -201,12 +214,18 @@ package
 			return colorPicker;
 		}
 		
+		private function onOptionChange(e:Event = null):void
+		{
+			$.e.dispatchEvent(new GlobalEvent(EventType.OPTION_CHANGE,{size:_sizeGroup.index,style:_styleGroup.index,color:_selectColor}));
+		}
+		
 		public function set selectColor(value:uint):void
 		{
+			_selectColor = value;
 			var ct:ColorTransform = new ColorTransform();
 			ct.color = value;
 			_colorSelect.transform.colorTransform = ct;
-			$.e.dispatchEvent(new GlobalEvent(EventType.COLOR_CHANGE,value));
+			onOptionChange();
 		}
 		
 		private function close():void

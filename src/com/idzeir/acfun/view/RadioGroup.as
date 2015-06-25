@@ -12,6 +12,7 @@ package com.idzeir.acfun.view
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
+	[Event(name="change", type="flash.events.Event")]
 	/**
 	 * 单选radio组
 	 */	
@@ -72,6 +73,17 @@ package com.idzeir.acfun.view
 				}
 			}
 			return -1;
+		}
+		
+		/**
+		 * 指定当前选中radio
+		 */		
+		public function set index(value:int):void
+		{
+			for(var i:uint = 0; i<_map.length;++i)
+			{
+				_map[i].selected = (i == value);
+			}
 		}
 	}
 }

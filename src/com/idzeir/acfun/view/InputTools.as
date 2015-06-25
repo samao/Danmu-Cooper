@@ -11,6 +11,7 @@ package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
+	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
 	
 	import flash.events.KeyboardEvent;
@@ -23,6 +24,14 @@ package com.idzeir.acfun.view
 	{
 		/** 输入文本框 */		
 		private var _inputTxt:InTextField;
+		
+		private var _sizes:Array = [16,20,25];
+		private var _styles:Array = [BulletType.FADE_OUT_TOP,BulletType.RIGHT_TO_LEFT,BulletType.FADE_OUT_BOTTOM];
+		
+		/**
+		 * 当前使用发送样式 
+		 */		
+		private var _style:Object = {size:1,style:1,color:0x000000};
 		
 		public function InputTools()
 		{
@@ -75,6 +84,13 @@ package com.idzeir.acfun.view
 			{
 				send();
 			});
+			
+			$.e.addEventListener(EventType.OPTION_CHANGE,function(e:GlobalEvent):void
+			{
+				_style.color = _inputTxt.textColor = e.info.color;
+				_style.size = e.info.size;
+				_style.style = e.info.style;
+			});
 		}
 		
 		/**
@@ -83,7 +99,7 @@ package com.idzeir.acfun.view
 		private function send():void
 		{
 			$.e.dispatchEvent(new GlobalEvent(EventType.SEND,_inputTxt.text));
-			Log.debug("发送弹幕：",_inputTxt.text);
+			Log.debug("发送弹幕：",_inputTxt.text,"弹幕样式："+_styles[_style.style]+"弹幕大小："+_sizes[_style.size],"弹幕颜色：0x"+_style.color.toString(16));
 			_inputTxt.text = "";
 		}
 	}

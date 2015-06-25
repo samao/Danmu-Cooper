@@ -44,6 +44,6 @@ package com.idzeir.acfun.events
 		 * 配置面板修改颜色
 		 * info为颜色数值
 		 */		
-		public static const COLOR_CHANGE:String = "colorChange";
+		public static const OPTION_CHANGE:String = "optionChange";
 	}
 }
