@@ -13,10 +13,14 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
+	import com.idzeir.acfun.utils.FontUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
 	
+	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
 	
 	/**
@@ -34,6 +38,8 @@ package com.idzeir.acfun.view
 		 * 当前使用发送样式 
 		 */		
 		private var _style:Object = {size:1,style:1,color:0x000000};
+
+		private var _tipsTxt:TextField;
 		
 		public function InputTools()
 		{
@@ -92,6 +98,39 @@ package com.idzeir.acfun.view
 				_style.color = _inputTxt.textColor = e.info.color;
 				_style.size = e.info.size;
 				_style.style = e.info.style;
+			});
+			
+			_tipsTxt = new TextField();
+			_tipsTxt.autoSize = "left";
+			_tipsTxt.textColor = 0x999999;
+			_tipsTxt.mouseEnabled = false;
+			_tipsTxt.defaultTextFormat = new TextFormat(FontUtil.fontName);
+			_tipsTxt.htmlText = "使用回车可以快速发送内容";
+			_tipsTxt.x = this._gap + 3;
+			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
+			this.addRawChild(_tipsTxt);
+			
+			addTextListener();
+		}
+		
+		/**
+		 * 添加输入文本监听事件
+		 */		
+		private function addTextListener():void
+		{
+			
+			_inputTxt.addEventListener(FocusEvent.FOCUS_IN,function():void
+			{
+				_tipsTxt.visible = false;
+			});
+			_inputTxt.addEventListener(FocusEvent.FOCUS_OUT,function():void
+			{
+				if(_inputTxt.text.length == 0)
+				{
+					_tipsTxt.visible = true;
+				}else{
+					_tipsTxt.visible = false;
+				}
 			});
 		}
 		
