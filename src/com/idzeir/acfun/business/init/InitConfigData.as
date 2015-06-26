@@ -13,8 +13,11 @@ package com.idzeir.acfun.business.init
 	import com.idzeir.acfun.business.IQm;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
+	import com.idzeir.acfun.manage.LanguagePack;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.RequestUtil;
+	
+	import flash.system.Capabilities;
 	
 	public class InitConfigData extends BaseInit
 	{
@@ -40,12 +43,40 @@ package com.idzeir.acfun.business.init
 				}
 				Log.debug(JSON.stringify(o));
 				$.c.update(o);
-				complete();
+				loadLanguagePack();
 			},function(value:Object):void
 			{
 				Log.error("加载配置失败：",JSON.stringify(value));
 				dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":"加载配置失败："+CONFIG_URL}));
 			});
+		}
+		
+		/**
+		 * 加载语言包
+		 */		
+		private function loadLanguagePack():void
+		{
+			Log.info("加载语言包：",Capabilities.language);
+			switch(Capabilities.language)
+			{
+				case "en":
+				case "zh-TW":
+				case "zh-CN":
+				default:
+					//加载中文简体
+					const LA_URL:String = "conf/zh-CN.xml";
+					RequestUtil.load(LA_URL,null,function(value:String):void
+					{
+						Log.debug("语言包加载成功：",XML(value).toXMLString());
+						$.o = LanguagePack.getInstance(XML(value));
+						complete();
+					},function(value:Object):void
+					{
+						Log.error("加载语言包失败：",JSON.stringify(value));
+						dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":"加载配置失败："+LA_URL}));
+					});
+					break;
+			}
 		}
 	}
 }

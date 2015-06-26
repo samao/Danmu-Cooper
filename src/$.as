@@ -15,6 +15,7 @@ package
 	import com.idzeir.acfun.manage.IBulletFactory;
 	import com.idzeir.acfun.manage.IBulletVoMgr;
 	import com.idzeir.acfun.manage.IKeys;
+	import com.idzeir.acfun.manage.ILanguagePack;
 	import com.idzeir.acfun.timer.ITicker;
 	import com.idzeir.acfun.vo.IConfigVo;
 	import com.idzeir.acfun.vo.IFlashVarsVo;
@@ -76,5 +77,9 @@ package
 		 * 用户个人信息 
 		 */		
 		public static var m:IUser;
+		/**
+		 * 语言包信息
+		 */		
+		public static var o:ILanguagePack;
 	}
 }

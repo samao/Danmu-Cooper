@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 语言包 -->
+<node>
+	<l key="comment_send_but">发送</l>
+	<l key="comment_option_but">设置</l>
+	<l key="comment_open_but">打开弹幕</l>
+	<l key="comment_close_but">关闭弹幕</l>
+	<l key="send_text_tips">使用回车可以快速发送内容</l>
+	<l key="setting_size_label">字体大小：</l>
+	<l key="setting_size_big">大</l>
+	<l key="setting_size_normal">中</l>
+	<l key="setting_size_small">小</l>
+	<l key="setting_style_label">弹幕模式：</l>
+	<l key="setting_style_top">顶部</l>
+	<l key="setting_style_move">滚动</l>
+	<l key="setting_style_bottom">底部</l>
+	<l key="setting_color_label">弹幕颜色：</l>
+</node>

@@ -56,14 +56,14 @@ package com.idzeir.acfun.view
 			_inputTxt.width = 500;
 			addChild(_inputTxt);
 			
-			var sendBut:LabelButton = new LabelButton("发送",function():void
+			var sendBut:LabelButton = new LabelButton($.o.get("comment_send_but"),function():void
 			{
 				send();
 			});
 			sendBut.style = new LabelButtonStyle(0xFFFFFF,0x666666,null,null,0xFF0000);
 			addChild(sendBut);
 			
-			var option:LabelButton = new LabelButton("设置",function():void
+			var option:LabelButton = new LabelButton($.o.get("comment_option_but"),function():void
 			{
 				//Log.debug("设置");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_OPTION));
@@ -71,11 +71,11 @@ package com.idzeir.acfun.view
 			option.style = sendBut.style;
 			addChild(option);
 			
-			var close:LabelButton = new LabelButton("关闭弹幕",function():void
+			var close:LabelButton = new LabelButton($.o.get("comment_close_but"),function():void
 			{
 				//Log.debug("关闭弹幕");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
-				close.label = close.label == "关闭弹幕"?"打开弹幕":"关闭弹幕";
+				close.label = close.label == $.o.get("comment_close_but")?$.o.get("comment_open_but"):$.o.get("comment_close_but");
 			});
 			close.style = sendBut.style;
 			addChild(close);
@@ -105,7 +105,7 @@ package com.idzeir.acfun.view
 			_tipsTxt.textColor = 0x999999;
 			_tipsTxt.mouseEnabled = false;
 			_tipsTxt.defaultTextFormat = new TextFormat(FontUtil.fontName);
-			_tipsTxt.htmlText = "使用回车可以快速发送内容";
+			_tipsTxt.htmlText = $.o.get("send_text_tips");
 			_tipsTxt.x = this._gap + 3;
 			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
 			this.addRawChild(_tipsTxt);

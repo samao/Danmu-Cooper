@@ -66,11 +66,11 @@ package
 			
 			_sizeGroup = new RadioGroup();
 			var bigRadio:Radio = new Radio();
-			bigRadio.label = "大";
+			bigRadio.label = $.o.get("setting_size_big");
 			var midRadio:Radio = new Radio();
-			midRadio.label = "中";
+			midRadio.label = $.o.get("setting_size_normal");
 			var smallRadio:Radio = new Radio();
-			smallRadio.label = "小";
+			smallRadio.label = $.o.get("setting_size_small");
 			_sizeGroup.group = [smallRadio,midRadio,bigRadio];
 			_sizeGroup.index = 1;
 			
@@ -78,7 +78,7 @@ package
 			size.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			size.autoSize = "left";
 			size.textColor = 0xFFFFFF;
-			size.text = "字体大小：";
+			size.text = $.o.get("setting_size_label");
 			var sizeBox:HBox = new HBox();
 			sizeBox.algin = HBox.MIDDLE;
 			sizeBox.addChild(size);
@@ -87,11 +87,11 @@ package
 			
 			_styleGroup = new RadioGroup();
 			var topRadio:Radio = new Radio();
-			topRadio.label = "顶部";
+			topRadio.label = $.o.get("setting_style_top");
 			var moveRadio:Radio = new Radio();
-			moveRadio.label = "滚动";
+			moveRadio.label = $.o.get("setting_style_move");
 			var bottomRadio:Radio = new Radio();
-			bottomRadio.label = "底部";
+			bottomRadio.label = $.o.get("setting_style_bottom");
 			_styleGroup.group = [topRadio,moveRadio,bottomRadio];
 			_styleGroup.index = 1;
 			
@@ -99,7 +99,7 @@ package
 			style.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			style.autoSize = "left";
 			style.textColor = 0xFFFFFF;
-			style.text = "弹幕模式：";
+			style.text = $.o.get("setting_style_label");
 			var styleBox:HBox = new HBox();
 			styleBox.algin = HBox.MIDDLE;
 			styleBox.addChild(style);
@@ -110,7 +110,7 @@ package
 			color.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			color.autoSize = "left";
 			color.textColor = 0xFFFFFF;
-			color.text = "弹幕颜色：";
+			color.text = $.o.get("setting_color_label");
 			
 			const BORDER:int = 1;
 			const SIZE:int = 15;

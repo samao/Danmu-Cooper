@@ -101,9 +101,15 @@ package
 			
 			initVo();
 			
-			initBusiness();
-			
-			initLayer();
+			//先加载语言包和配置然后才开始初始化界面
+			$.q.push(new InitConfigData());
+			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
+			{
+				$.q.removeEventListener(QmEvent.COMPLETE_QM,arguments.callee);
+				initLayer();
+				initBusiness();
+			});
+			$.q.excute();
 			
 			MenuUtil.hidenContextMenus(this,menuItem);
 			
@@ -122,7 +128,7 @@ package
 		private function initBusiness():void
 		{
 			Log.info("初始化业务");
-			$.q.push(new InitConfigData());
+			//$.q.push(new InitConfigData());
 			$.q.push(new InitVideoData());
 			
 			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
