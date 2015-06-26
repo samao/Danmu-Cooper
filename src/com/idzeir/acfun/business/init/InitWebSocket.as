@@ -74,7 +74,7 @@ package com.idzeir.acfun.business.init
 			{
 				case RespondType.SERVER_AUTHED:
 					Log.info("服务器验证成功");
-					
+					$.m.id = JSON.parse(value.msg)["uid"];
 					$.e.addEventListener(EventType.SEND,function(e:GlobalEvent):void
 					{
 						_websocket.sendUTF(JSON.stringify(e.info));

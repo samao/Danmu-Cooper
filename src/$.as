@@ -18,6 +18,7 @@ package
 	import com.idzeir.acfun.timer.ITicker;
 	import com.idzeir.acfun.vo.IConfigVo;
 	import com.idzeir.acfun.vo.IFlashVarsVo;
+	import com.idzeir.acfun.vo.IUser;
 	import com.idzeir.acfun.vo.IVideoInfoVo;
 	
 	import flash.events.IEventDispatcher;
@@ -71,5 +72,9 @@ package
 		 * 动画管理 
 		 */		
 		public static var a:IAnimation;
+		/**
+		 * 用户个人信息 
+		 */		
+		public static var m:IUser;
 	}
 }

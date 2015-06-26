@@ -35,6 +35,7 @@ package
 	import com.idzeir.acfun.vo.ConfigVo;
 	import com.idzeir.acfun.vo.FlashVarsVo;
 	import com.idzeir.acfun.vo.LogicEventVo;
+	import com.idzeir.acfun.vo.User;
 	import com.idzeir.acfun.vo.VideoInfoVo;
 	
 	import flash.display.InteractiveObject;
@@ -338,6 +339,7 @@ package
 			$.u = BulletFactory.getInstance();
 			$.k = Keys.getInstance();
 			$.a = Animation.getInstance();
+			$.m = User.getInstance();
 			
 			$.f.update(stage.loaderInfo.parameters);
 			$.k.stage = stage;

@@ -166,6 +166,7 @@ package com.idzeir.acfun.view
 				bullet.message = e.info.message;
 				bullet.stime = Number(e.info.stime);
 				bullet.size = Number(e.info.size);
+				bullet.user = e.info.user;
 				
 				var node:Node = new Node(bullet);
 				$.b.add(node);

@@ -37,7 +37,7 @@ package com.idzeir.acfun.view
 			this.tf.color = 0xffffff;
 			this.defaultTextFormat = tf;
 			
-			this.filters = [new DropShadowFilter(1,-135,0,1,1,1),new DropShadowFilter(1,45,0,1,1,1)];
+			this.filters = [/*new DropShadowFilter(1,-135,0,1,1,1),*/new DropShadowFilter(1,45,0,1,1,1)];
 			
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
 		}
@@ -71,6 +71,10 @@ package com.idzeir.acfun.view
 			
 			this.defaultTextFormat = this.tf;
 			this.text = value.message;
+			
+			this.border = value.user == $.m.id;
+			this.borderColor = 0xFFFFFF;
+			
 			//重置位置
 			x = y = 0;
 			return this

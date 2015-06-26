@@ -20,9 +20,6 @@ package com.idzeir.acfun.vo
 		private var _color:int;
 		private var _mode:String;
 		private var _size:int;
-		/**
-		 * 发送用户 
-		 */		
 		private var _user:String;
 		/**
 		 * 
@@ -56,6 +53,22 @@ package com.idzeir.acfun.vo
 			}
 		}
 		
+		/**
+		 * 发送用户 
+		 */
+		public function get user():String
+		{
+			return _user;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set user(value:String):void
+		{
+			_user = value;
+		}
+
 		/**
 		 * 弹幕模式 
 		 */

@@ -104,7 +104,7 @@ package com.idzeir.acfun.view
 			c.mode = _styles[_style.style];
 			c.color = _style.color;
 			c.size = _sizes[_style.size];
-			c.user = "erhuo";
+			c.user = $.m.id;
 			c.message = _inputTxt.text;
 			c.time = new Date().time;
 			//比当前时间少1s防止重复显示

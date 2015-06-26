@@ -40,11 +40,12 @@ package com.idzeir.acfun.view
 			{
 				for each(var i:Radio in _map)
 				{
-					if(i!=tarRadio)
-					{
-						i.selected = false;
-					}
+					i.selected = i==tarRadio;
 				}
+				//阻止radio点击事件
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+				this.dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
 		
