@@ -34,25 +34,26 @@ package com.idzeir.acfun.vo
 		private var _type:String;
 		private var _score:String;
 		
-		public function BulletVo(value:*,type:uint)
+		public function BulletVo(value:* = null,type:uint = 1)
 		{
-			//{"c":"885.686,16777215,1,25,2b7k2073538161,1414066687,147f785d-21f7-43f8-ace9-79a7c95dfb78","score":"147f785d-21f7-43f8-ace9-79a7c95dfb78","m":"好基友"}
-			//Log.debug("弹幕数据：",JSON.stringify(value));
-			try{
-				var cArr:Array = value["c"].split(",");
-				_stime = parseFloat(cArr[0]);
-				_color = int(cArr[1]);
-				_mode = cArr[2];
-				_size = int(cArr[3]);
-				_user = cArr[4];
-				_time = int(cArr[5])*1000;
-				_commentId = cArr[6];
-			}catch(e:Error){
-				Log.warn("弹幕数据不全:type=",type,"数据:value=",JSON.stringify(value));
+			if(value)
+			{
+				try{
+					var cArr:Array = value["c"].split(",");
+					_stime = parseFloat(cArr[0]);
+					_color = int(cArr[1]);
+					_mode = cArr[2];
+					_size = int(cArr[3]);
+					_user = cArr[4];
+					_time = int(cArr[5])*1000;
+					_commentId = cArr[6];
+				}catch(e:Error){
+					Log.warn("弹幕数据不全:type=",type,"数据:value=",JSON.stringify(value));
+				}
+				_message = value["m"];
+				_score = value["score"];
+				_type = type.toString();
 			}
-			_message = value["m"];
-			_score = value["score"];
-			_type = type.toString();
 		}
 		
 		/**

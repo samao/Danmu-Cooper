@@ -13,6 +13,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
+	import com.idzeir.acfun.utils.NodeUtil;
 	
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
@@ -98,7 +99,21 @@ package com.idzeir.acfun.view
 		 */		
 		private function send():void
 		{
-			$.e.dispatchEvent(new GlobalEvent(EventType.SEND,_inputTxt.text));
+			var d:Object = {};
+			var c:Object = {};
+			c.mode = _styles[_style.style];
+			c.color = _style.color;
+			c.size = _sizes[_style.size];
+			c.user = "erhuo";
+			c.message = _inputTxt.text;
+			c.time = new Date().time;
+			//比当前时间少1s防止重复显示
+			c.stime = NodeUtil.get($.b.timeNode).stime - 1;
+			
+			d.action = "post";
+			d.command = JSON.stringify(c);
+			
+			$.e.dispatchEvent(new GlobalEvent(EventType.SEND,d));
 			Log.debug("发送弹幕：",_inputTxt.text,"弹幕样式："+_styles[_style.style]+"弹幕大小："+_sizes[_style.size],"弹幕颜色：0x"+_style.color.toString(16));
 			_inputTxt.text = "";
 		}

@@ -10,9 +10,11 @@
 package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.events.EventType;
+	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
+	import com.idzeir.acfun.vo.BulletVo;
 	import com.idzeir.acfun.vo.Node;
 	
 	import flash.display.Sprite;
@@ -148,6 +150,23 @@ package com.idzeir.acfun.view
 			{
 				visible = !visible;
 			});
+			
+			$.e.addEventListener(EventType.RECIVE,function(e:GlobalEvent):void
+			{
+				Log.debug("收到websocket数据:",JSON.stringify(e.info))
+				
+				var bullet:BulletVo = new BulletVo();
+				bullet.color = int(e.info.color);
+				bullet.commentId = e.info.commentid;
+				bullet.mode = e.info.mode;
+				bullet.message = e.info.message;
+				bullet.stime = Number(e.info.stime);
+				bullet.size = Number(e.info.size);
+				
+				var node:Node = new Node(bullet);
+				$.b.add(node);
+				addBullet(node);
+			});
 		}
 		
 		protected function update():void
@@ -205,7 +224,7 @@ package com.idzeir.acfun.view
 		 */		
 		private function addMoveBullet(value:Node,index:int = 0):void
 		{
-			//Log.debug("移动弹幕",NodeUtil.get(value).message);
+			Log.debug("移动弹幕",NodeUtil.get(value).message);
 			//偏移量
 			const OFFX:int = 5;
 			for each(var i:LineBox in _useMap)
