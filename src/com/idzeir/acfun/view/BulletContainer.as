@@ -48,6 +48,10 @@ package com.idzeir.acfun.view
 		
 		private var _useMap:Vector.<LineBox> = new Vector.<LineBox>();
 		private var _isRunning:Boolean = false;
+		/**
+		 * 弹幕太多无法显示暂时缓存数据 
+		 */		
+		private var _overMap:Vector.<Node> = new Vector.<Node>();
 		
 		/**
 		 * 两次更新时间介个此时间之内都会不会seek跳过，直接显示 
@@ -224,7 +228,7 @@ package com.idzeir.acfun.view
 		 */		
 		private function addMoveBullet(value:Node,index:int = 0):void
 		{
-			Log.debug("移动弹幕",NodeUtil.get(value).message);
+			//Log.debug("移动弹幕",NodeUtil.get(value).message);
 			//偏移量
 			const OFFX:int = 5;
 			for each(var i:LineBox in _useMap)
@@ -237,7 +241,30 @@ package com.idzeir.acfun.view
 					return;
 				}
 			}
-			Log.warn("弹幕太多无法显示",NodeUtil.get(value).message);
+			
+			Log.warn("弹幕太多无法显示,等待空间",NodeUtil.get(value).message);
+			addToOverMap(value);
+		}
+		
+		/**
+		 * 没有空间显示，加入等待队列
+		 */		
+		private function addToOverMap(value:Node):void
+		{
+			_overMap.push(value);
+			checkOverMap();
+		}
+		
+		/**
+		 * 迭代延时循环添加弹幕
+		 */		
+		private function checkOverMap():void
+		{
+			if(_overMap.length > 0)
+			{
+				addBullet(_overMap.shift());
+				$.t.call(1,checkOverMap,1,true);
+			}
 		}
 	}
 }
