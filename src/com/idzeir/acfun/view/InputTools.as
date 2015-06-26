@@ -9,6 +9,7 @@
 
 package com.idzeir.acfun.view
 {
+	import com.adobe.utils.StringUtil;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
@@ -99,6 +100,8 @@ package com.idzeir.acfun.view
 		 */		
 		private function send():void
 		{
+			if(StringUtil.remove(_inputTxt.text," ").length == 0) return;
+			
 			var d:Object = {};
 			var c:Object = {};
 			c.mode = _styles[_style.style];
