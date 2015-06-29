@@ -66,11 +66,11 @@ package com.idzeir.acfun.module
 			
 			_sizeGroup = new RadioGroup();
 			var bigRadio:Radio = new Radio();
-			bigRadio.label = $.o.get("setting_size_big");
+			bigRadio.label = $.l.get("setting_size_big");
 			var midRadio:Radio = new Radio();
-			midRadio.label = $.o.get("setting_size_normal");
+			midRadio.label = $.l.get("setting_size_normal");
 			var smallRadio:Radio = new Radio();
-			smallRadio.label = $.o.get("setting_size_small");
+			smallRadio.label = $.l.get("setting_size_small");
 			_sizeGroup.group = [smallRadio,midRadio,bigRadio];
 			_sizeGroup.index = 1;
 			
@@ -78,7 +78,7 @@ package com.idzeir.acfun.module
 			size.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			size.autoSize = "left";
 			size.textColor = 0xFFFFFF;
-			size.text = $.o.get("setting_size_label");
+			size.text = $.l.get("setting_size_label");
 			var sizeBox:HBox = new HBox();
 			sizeBox.algin = HBox.MIDDLE;
 			sizeBox.addChild(size);
@@ -87,11 +87,11 @@ package com.idzeir.acfun.module
 			
 			_styleGroup = new RadioGroup();
 			var topRadio:Radio = new Radio();
-			topRadio.label = $.o.get("setting_style_top");
+			topRadio.label = $.l.get("setting_style_top");
 			var moveRadio:Radio = new Radio();
-			moveRadio.label = $.o.get("setting_style_move");
+			moveRadio.label = $.l.get("setting_style_move");
 			var bottomRadio:Radio = new Radio();
-			bottomRadio.label = $.o.get("setting_style_bottom");
+			bottomRadio.label = $.l.get("setting_style_bottom");
 			_styleGroup.group = [topRadio,moveRadio,bottomRadio];
 			_styleGroup.index = 1;
 			
@@ -99,7 +99,7 @@ package com.idzeir.acfun.module
 			style.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			style.autoSize = "left";
 			style.textColor = 0xFFFFFF;
-			style.text = $.o.get("setting_style_label");
+			style.text = $.l.get("setting_style_label");
 			var styleBox:HBox = new HBox();
 			styleBox.algin = HBox.MIDDLE;
 			styleBox.addChild(style);
@@ -110,7 +110,7 @@ package com.idzeir.acfun.module
 			color.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			color.autoSize = "left";
 			color.textColor = 0xFFFFFF;
-			color.text = $.o.get("setting_color_label");
+			color.text = $.l.get("setting_color_label");
 			
 			const BORDER:int = 1;
 			const SIZE:int = 15;

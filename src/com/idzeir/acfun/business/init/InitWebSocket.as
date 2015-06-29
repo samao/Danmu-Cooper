@@ -74,7 +74,7 @@ package com.idzeir.acfun.business.init
 			{
 				case RespondType.SERVER_AUTHED:
 					Log.info("服务器验证成功");
-					$.m.id = JSON.parse(value.msg)["uid"];
+					$.u.id = JSON.parse(value.msg)["uid"];
 					$.e.addEventListener(EventType.SEND,function(e:GlobalEvent):void
 					{
 						_websocket.sendUTF(JSON.stringify(e.info));
@@ -115,8 +115,8 @@ package com.idzeir.acfun.business.init
 			handshakeData['vid'] = $.f.vid;
 			handshakeData['vlength'] = $.v.videoLength;
 			handshakeData['time'] = new Date().time;
-			handshakeData['uid'] = 1368971//JavascriptAPI.getCookie("auth_key");
-			handshakeData['uid_ck'] = 1469459601//JavascriptAPI.getCookie("auth_key_ac_sha1");
+			handshakeData['uid'] = $.fc.get("auth_key");//1368971//JavascriptAPI.getCookie("auth_key");
+			handshakeData['uid_ck'] = $.fc.get("auth_key_ac_sha1")//1469459601//JavascriptAPI.getCookie("auth_key_ac_sha1");
 			//if (isNaN(Number(handshakeData['uid'])) || handshakeData['uid']==null) delete handshakeData['uid'];
 			//if (isNaN(Number(handshakeData['uid_ck'])) || handshakeData['uid_ck']==null) delete handshakeData['uid_ck'];			
 			Log.debug("发送认证信息",JSON.stringify(handshakeData));

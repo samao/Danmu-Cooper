@@ -178,7 +178,7 @@ package com.idzeir.acfun.view
 		{
 			if(!_isRunning)return;
 			
-			for each(var i:IBullet in $.u.useMap)
+			for each(var i:IBullet in $.ui.useMap)
 			{
 				i.update();
 			}
@@ -210,7 +210,7 @@ package com.idzeir.acfun.view
 		{
 			//Log.debug("固定底部弹幕",NodeUtil.get(value).message);
 			const BUTTOM_BAR_H:int = 50;
-			_bottomBox.addChild($.u.create(BulletType.FADE_OUT_BOTTOM).bullet(NodeUtil.get(value),new Point()).warp);
+			_bottomBox.addChild($.ui.create(BulletType.FADE_OUT_BOTTOM).bullet(NodeUtil.get(value),new Point()).warp);
 			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
 			_bottomBox.y = stage.stageHeight - _bottomBox.height - BUTTOM_BAR_H;
 		}
@@ -218,7 +218,7 @@ package com.idzeir.acfun.view
 		private function addTopBullet(value:Node):void
 		{
 			//Log.debug("固定顶部弹幕",NodeUtil.get(value).message);
-			_topBox.addChildAt($.u.create(BulletType.FADE_OUT_TOP).bullet(NodeUtil.get(value),new Point()).warp,0);
+			_topBox.addChildAt($.ui.create(BulletType.FADE_OUT_TOP).bullet(NodeUtil.get(value),new Point()).warp,0);
 			_topBox.x = stage.stageWidth - _topBox.width>>1;
 		}
 			
@@ -238,7 +238,7 @@ package com.idzeir.acfun.view
 				
 				if((rect.right + HGAP)<=stage.stageWidth)
 				{
-					i.addChild($.u.create(BulletType.RIGHT_TO_LEFT).bullet(NodeUtil.get(value),new Point(stage.stageWidth+index*OFFX,VGAP)).warp);
+					i.addChild($.ui.create(BulletType.RIGHT_TO_LEFT).bullet(NodeUtil.get(value),new Point(stage.stageWidth+index*OFFX,VGAP)).warp);
 					return;
 				}
 			}

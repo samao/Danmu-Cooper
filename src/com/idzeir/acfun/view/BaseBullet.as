@@ -45,13 +45,13 @@ package com.idzeir.acfun.view
 		protected function onAdded(event:Event):void
 		{
 			this.addEventListener(Event.REMOVED_FROM_STAGE,onRemoved);
-			$.u.useMap.push(this);
+			$.ui.useMap.push(this);
 		}
 		
 		protected function onRemoved(event:Event):void
 		{
 			this.removeEventListener(Event.REMOVED_FROM_STAGE,onRemoved);
-			$.u.recyle(this);
+			$.ui.recyle(this);
 		}
 		
 		public function update(time:int=0):void
@@ -72,7 +72,7 @@ package com.idzeir.acfun.view
 			this.defaultTextFormat = this.tf;
 			this.text = value.message;
 			
-			this.border = value.user == $.m.id;
+			this.border = value.user == $.u.id;
 			this.borderColor = 0xFFFFFF;
 			
 			//重置位置

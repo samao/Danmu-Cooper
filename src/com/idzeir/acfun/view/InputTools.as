@@ -56,14 +56,14 @@ package com.idzeir.acfun.view
 			_inputTxt.width = 500;
 			addChild(_inputTxt);
 			
-			var sendBut:LabelButton = new LabelButton($.o.get("comment_send_but"),function():void
+			var sendBut:LabelButton = new LabelButton($.l.get("comment_send_but"),function():void
 			{
 				send();
 			});
 			sendBut.style = new LabelButtonStyle(0xFFFFFF,0x666666,null,null,0xFF0000);
 			addChild(sendBut);
 			
-			var option:LabelButton = new LabelButton($.o.get("comment_option_but"),function():void
+			var option:LabelButton = new LabelButton($.l.get("comment_option_but"),function():void
 			{
 				//Log.debug("设置");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_OPTION));
@@ -71,11 +71,11 @@ package com.idzeir.acfun.view
 			option.style = sendBut.style;
 			addChild(option);
 			
-			var close:LabelButton = new LabelButton($.o.get("comment_close_but"),function():void
+			var close:LabelButton = new LabelButton($.l.get("comment_close_but"),function():void
 			{
 				//Log.debug("关闭弹幕");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
-				close.label = close.label == $.o.get("comment_close_but")?$.o.get("comment_open_but"):$.o.get("comment_close_but");
+				close.label = close.label == $.l.get("comment_close_but")?$.l.get("comment_open_but"):$.l.get("comment_close_but");
 			});
 			close.style = sendBut.style;
 			addChild(close);
@@ -105,7 +105,7 @@ package com.idzeir.acfun.view
 			_tipsTxt.textColor = 0x999999;
 			_tipsTxt.mouseEnabled = false;
 			_tipsTxt.defaultTextFormat = new TextFormat(FontUtil.fontName);
-			_tipsTxt.htmlText = $.o.get("send_text_tips");
+			_tipsTxt.htmlText = $.l.get("send_text_tips");
 			_tipsTxt.x = this._gap + 3;
 			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
 			this.addRawChild(_tipsTxt);
@@ -146,7 +146,7 @@ package com.idzeir.acfun.view
 			c.mode = _styles[_style.style];
 			c.color = _style.color;
 			c.size = _sizes[_style.size];
-			c.user = $.m.id;
+			c.user = $.u.id;
 			c.message = _inputTxt.text;
 			c.time = new Date().time;
 			//比当前时间少1s防止重复显示

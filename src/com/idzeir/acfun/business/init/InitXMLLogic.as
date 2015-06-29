@@ -33,7 +33,7 @@ package com.idzeir.acfun.business.init
 			RequestUtil.load(URL,null,function(value:String):void
 			{
 				Log.debug(XML(value).toXMLString());
-				$.l.update(XML(value));
+				$.g.update(XML(value));
 				complete();
 			},function(value:Object):void
 			{

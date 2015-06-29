@@ -68,7 +68,7 @@ package com.idzeir.acfun.business.init
 					RequestUtil.load(LA_URL,null,function(value:String):void
 					{
 						Log.debug("语言包加载成功：",XML(value).toXMLString());
-						$.o = LanguagePack.getInstance(XML(value));
+						$.l = LanguagePack.getInstance(XML(value));
 						complete();
 					},function(value:Object):void
 					{

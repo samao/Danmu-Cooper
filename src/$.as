@@ -14,6 +14,7 @@ package
 	import com.idzeir.acfun.manage.IAnimation;
 	import com.idzeir.acfun.manage.IBulletFactory;
 	import com.idzeir.acfun.manage.IBulletVoMgr;
+	import com.idzeir.acfun.manage.ICookie;
 	import com.idzeir.acfun.manage.IKeys;
 	import com.idzeir.acfun.manage.ILanguagePack;
 	import com.idzeir.acfun.timer.ITicker;
@@ -48,7 +49,7 @@ package
 		/**
 		 * 第三方逻辑 
 		 */		
-		public static var l:ILogic;
+		public static var g:ILogic;
 		/**
 		 * 弹幕数据中心
 		 */		
@@ -64,7 +65,7 @@ package
 		/**
 		 * 弹幕显示ui对象工厂 
 		 */		
-		public static var u:IBulletFactory;
+		public static var ui:IBulletFactory;
 		/**
 		 * 键盘按键管理 
 		 */		
@@ -76,10 +77,21 @@ package
 		/**
 		 * 用户个人信息 
 		 */		
-		public static var m:IUser;
+		public static var u:IUser;
 		/**
 		 * 语言包信息
 		 */		
-		public static var o:ILanguagePack;
+		public static var l:ILanguagePack;
+		/**
+		 * flash cookie 
+		 */		
+		public static var fc:ICookie;
+		/**
+		 * 检查是否支持flash cookie同步
+		 */		
+		public static function supportCookie():Boolean
+		{
+			return fc!=null;
+		}
 	}
 }

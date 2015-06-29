@@ -20,7 +20,6 @@ package com.idzeir.acfun.view
 	 */	
 	public class BaseStage extends Sprite
 	{
-		
 		public function BaseStage()
 		{
 			Security.allowDomain("*");

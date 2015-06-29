@@ -13,6 +13,7 @@ package
 	import com.idzeir.acfun.business.QmEvent;
 	import com.idzeir.acfun.business.init.InitBulletData;
 	import com.idzeir.acfun.business.init.InitConfigData;
+	import com.idzeir.acfun.business.init.InitCookieData;
 	import com.idzeir.acfun.business.init.InitVideoData;
 	import com.idzeir.acfun.business.init.InitWebSocket;
 	import com.idzeir.acfun.business.init.InitXMLLogic;
@@ -22,6 +23,8 @@ package
 	import com.idzeir.acfun.manage.Animation;
 	import com.idzeir.acfun.manage.BulletFactory;
 	import com.idzeir.acfun.manage.BulletVoMgr;
+	import com.idzeir.acfun.manage.Cookie;
+	import com.idzeir.acfun.manage.ICookie;
 	import com.idzeir.acfun.manage.Keys;
 	import com.idzeir.acfun.timer.Ticker;
 	import com.idzeir.acfun.utils.FindUtil;
@@ -133,6 +136,7 @@ package
 			
 			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			$.q.push(new InitBulletData());//可能抛出BREAK_QM
+			$.q.push(new InitCookieData());
 			$.q.push(new InitWebSocket());//可能抛出BREAK_QM
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
@@ -208,7 +212,7 @@ package
 		
 		private function loadCoopPlayer():void
 		{
-			Log.info("加载第三方播放器",$.l.playerURL);
+			Log.info("加载第三方播放器",$.g.playerURL);
 			$.e.dispatchEvent(new GlobalEvent(EventType.PROGRESS,"加载第三方播放器"));
 			var loader:Loader = new Loader();
 			var okHandler:Function = function(e:Event):void
@@ -220,7 +224,7 @@ package
 			};
 			var failHandler:Function = function(e:Event):void
 			{
-				Log.error("第三方播放器加载失败",$.l.playerURL);
+				Log.error("第三方播放器加载失败",$.g.playerURL);
 				clearHandler();
 			};
 			var clearHandler:Function = function():void
@@ -237,7 +241,7 @@ package
 			{
 				ldr["allowCodeImport"] = true;
 			}
-			loader.load(new URLRequest($.l.playerURL),ldr);
+			loader.load(new URLRequest($.g.playerURL),ldr);
 			
 			_apiBox.addChild(loader);
 			_apiBox.visible = false;
@@ -248,12 +252,12 @@ package
 			//1.检查播放器状态
 			var id:int = setInterval(function():void
 			{
-				if(FindUtil.get(_coopSDK,$.l.checks[0]) != null)
+				if(FindUtil.get(_coopSDK,$.g.checks[0]) != null)
 				{
-					$.l.checks.splice(0,1);
+					$.g.checks.splice(0,1);
 				}
 				
-				if($.l.checks.length == 0)
+				if($.g.checks.length == 0)
 				{
 					clearInterval(id);
 					//2.执行逻辑
@@ -264,10 +268,10 @@ package
 		
 		private function addXMLEvent():void
 		{
-			var target:IEventDispatcher = FindUtil.get(_coopSDK,$.l.eventTarget) as IEventDispatcher;
+			var target:IEventDispatcher = FindUtil.get(_coopSDK,$.g.eventTarget) as IEventDispatcher;
 			if(target)
 			{
-				for each(var i:LogicEventVo in $.l.logicEvents)
+				for each(var i:LogicEventVo in $.g.logicEvents)
 				{
 					var handler:Function = this[i.handler];
 					
@@ -338,14 +342,14 @@ package
 			$.c = ConfigVo.getInstance();
 			$.f = FlashVarsVo.getInstance();
 			$.v = VideoInfoVo.getInstance();
-			$.l = Logic.getInstance();
+			$.g = Logic.getInstance();
 			$.b = BulletVoMgr.getInstance();
 			$.t = Ticker.getInstance();
 			$.e = new EventDispatcher();
-			$.u = BulletFactory.getInstance();
+			$.ui = BulletFactory.getInstance();
 			$.k = Keys.getInstance();
 			$.a = Animation.getInstance();
-			$.m = User.getInstance();
+			$.u = User.getInstance();
 			
 			$.f.update(stage.loaderInfo.parameters);
 			$.k.stage = stage;
