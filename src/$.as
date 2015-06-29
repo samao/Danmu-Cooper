@@ -89,7 +89,7 @@ package
 		/**
 		 * 检查是否支持flash cookie同步
 		 */		
-		public static function supportCookie():Boolean
+		public static function get supportCookie():Boolean
 		{
 			return fc!=null;
 		}

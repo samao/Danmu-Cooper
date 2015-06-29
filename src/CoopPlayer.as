@@ -134,10 +134,10 @@ package
 			//$.q.push(new InitConfigData());
 			$.q.push(new InitVideoData());
 			
-			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			$.q.push(new InitBulletData());//可能抛出BREAK_QM
 			$.q.push(new InitCookieData());
 			$.q.push(new InitWebSocket());//可能抛出BREAK_QM
+			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
 			{
