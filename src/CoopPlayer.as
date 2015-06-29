@@ -84,6 +84,10 @@ package
 		 * 弹幕工具栏
 		 */		
 		private var _tools:InputTools;
+		/**
+		 * 弹幕配置面板 
+		 */		
+		private var _optionLoader:Loader;
 		
 		public function CoopPlayer()
 		{
@@ -106,6 +110,9 @@ package
 			
 			//先加载语言包和配置然后才开始初始化界面
 			$.q.push(new InitConfigData());
+			$.q.push(new InitVideoData());
+			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
+			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
 			{
 				$.q.removeEventListener(QmEvent.COMPLETE_QM,arguments.callee);
@@ -116,28 +123,26 @@ package
 			
 			MenuUtil.hidenContextMenus(this,menuItem);
 			
-			if(!(stage.hasEventListener(Event.RESIZE)))
+			stage.addEventListener(Event.RESIZE,function():void
 			{
-				stage.addEventListener(Event.RESIZE,function():void
-				{
-					//resize
-					_tools.visible = stage.displayState != StageDisplayState.FULL_SCREEN
-					_tools.x = 220;
-					_tools.y = stage.stageHeight - _tools.height - 5;
-				});
-			}
+				//resize
+				_tools.visible = stage.displayState != StageDisplayState.FULL_SCREEN
+				_tools.x = Number($.g.xml..input.@left[0]);
+				_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
+			});
 		}
 		
 		private function initBusiness():void
 		{
 			Log.info("初始化业务");
 			//$.q.push(new InitConfigData());
-			$.q.push(new InitVideoData());
+			//$.q.push(new InitVideoData());
+			//$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			
 			$.q.push(new InitBulletData());//可能抛出BREAK_QM
 			$.q.push(new InitCookieData());
 			$.q.push(new InitWebSocket());//可能抛出BREAK_QM
-			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
+			
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
 			{
@@ -183,15 +188,14 @@ package
 		private function initTools():void
 		{
 			_tools = new InputTools();
-			_tools.x = 220;
-			_tools.y = stage.stageHeight - _tools.height - 5;
+			_tools.x = Number($.g.xml..input.@left[0]);
+			_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
 			_tools.visible = false;
 			this.addChild(_tools);
 			
-			var loader:Loader = new Loader();
-			loader.load(new URLRequest("DanmuOption.swf"));
-			loader.x = loader.y = 10;
-			this.addChild(loader);
+			_optionLoader = new Loader();
+			_optionLoader.load(new URLRequest("DanmuOption.swf"));
+			this.addChild(_optionLoader);
 		}
 		
 		private function loadCommentPlugin():void

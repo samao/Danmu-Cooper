@@ -151,11 +151,16 @@ package com.idzeir.acfun.module
 			this.addChild(_box);
 			
 			this.x = -this.width - 50;
-			this.y = stage.stageHeight - this.height - 80;
+			this.y = stage.stageHeight - this.height - Number($.g.xml..option.@bottom[0]);
 			
 			_styleGroup.addEventListener(Event.CHANGE,onOptionChange);
 			_sizeGroup.addEventListener(Event.CHANGE,onOptionChange);
 			$.e.addEventListener(EventType.SWITCH_OPTION,onSwitch);
+			
+			stage.addEventListener(Event.RESIZE,function():void
+			{
+				y = stage.stageHeight - height - Number($.g.xml..option.@bottom[0]);
+			});
 		}
 		
 		private function createColorPicker():Sprite
@@ -238,7 +243,7 @@ package com.idzeir.acfun.module
 		{
 			if(!_open)
 			{
-				$.a.fromTo(this,.5,{x:-this.width - 50},{x:10});
+				$.a.fromTo(this,.5,{x:-this.width - 50},{x:Number($.g.xml..option.@left)});
 			}else{
 				$.a.to(this,.5,{x:-this.width - 50});
 			}

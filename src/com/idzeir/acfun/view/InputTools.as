@@ -14,6 +14,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.FontUtil;
+	import com.idzeir.acfun.utils.GlayUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
 	
@@ -111,6 +112,12 @@ package com.idzeir.acfun.view
 			this.addRawChild(_tipsTxt);
 			
 			addTextListener();
+			
+			if($.g.xml..input.@used == "0")
+			{
+				sendBut.mouseEnabled = _inputTxt.mouseEnabled = false;
+				_tipsTxt.htmlText = $.l.get("used_input_tips");
+			}
 		}
 		
 		/**

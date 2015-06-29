@@ -33,6 +33,10 @@ package com.idzeir.acfun.coop
 		 */		
 		function get checks():Vector.<String>;
 		/**
+		 * 业务xml全部内容
+		 */		
+		function get xml():XML;
+		/**
 		 * 更新业务xml
 		 */		
 		function update(xml:XML):void;

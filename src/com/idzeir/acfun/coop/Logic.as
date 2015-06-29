@@ -85,5 +85,10 @@ package com.idzeir.acfun.coop
 			
 			_eventTarget = _xml.core.dispatch.@target;
 		}
+		
+		public function get xml():XML
+		{
+			return _xml;
+		}
 	}
 }

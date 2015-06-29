@@ -22,5 +22,14 @@
 			<!-- from 如果是全局数据,重加载文件中查找数据 -->
 			<!-- <event type="play_progress" from="::obj.nowTime">onTime</event> -->
 		</dispatch>
+		
+		<!-- 弹幕配置部分 -->
+		<comment>
+			<!-- 弹幕设置面板 -->
+			<option left="10" bottom="80"/>
+			<!-- 输入框 -->
+			<input used="1" left="200" bottom="5"/>
+		</comment>
+		
 	</core>
 </node>
