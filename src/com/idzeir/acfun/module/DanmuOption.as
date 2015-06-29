@@ -7,7 +7,7 @@
  * ===================================
  */
 
-package
+package com.idzeir.acfun.module
 {
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;

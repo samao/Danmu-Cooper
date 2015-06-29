@@ -25,6 +25,7 @@ package com.idzeir.acfun.utils
 		 */		
 		public static function get(value:Object,key:String):*
 		{
+			if(key == "") return value;
 			var keys:Array = key.split(".");
 			var o:Object = value;
 			while(keys.length>0)

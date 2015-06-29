@@ -208,7 +208,7 @@ package com.idzeir.acfun.view
 		
 		private function addBottomBullet(value:Node):void
 		{
-			Log.debug("固定底部弹幕",NodeUtil.get(value).message);
+			//Log.debug("固定底部弹幕",NodeUtil.get(value).message);
 			const BUTTOM_BAR_H:int = 50;
 			_bottomBox.addChild($.u.create(BulletType.FADE_OUT_BOTTOM).bullet(NodeUtil.get(value),new Point()).warp);
 			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
@@ -217,7 +217,7 @@ package com.idzeir.acfun.view
 		
 		private function addTopBullet(value:Node):void
 		{
-			Log.debug("固定顶部弹幕",NodeUtil.get(value).message);
+			//Log.debug("固定顶部弹幕",NodeUtil.get(value).message);
 			_topBox.addChildAt($.u.create(BulletType.FADE_OUT_TOP).bullet(NodeUtil.get(value),new Point()).warp,0);
 			_topBox.x = stage.stageWidth - _topBox.width>>1;
 		}
