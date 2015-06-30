@@ -23,8 +23,6 @@ package
 	import com.idzeir.acfun.manage.Animation;
 	import com.idzeir.acfun.manage.BulletFactory;
 	import com.idzeir.acfun.manage.BulletVoMgr;
-	import com.idzeir.acfun.manage.Cookie;
-	import com.idzeir.acfun.manage.ICookie;
 	import com.idzeir.acfun.manage.Keys;
 	import com.idzeir.acfun.timer.Ticker;
 	import com.idzeir.acfun.utils.FindUtil;
@@ -112,8 +110,6 @@ package
 			//先加载语言包和配置然后才开始初始化界面
 			$.q.push(new InitCookieData());
 			$.q.push(new InitConfigData());
-			$.q.push(new InitVideoData());
-			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
 			{
@@ -128,27 +124,28 @@ package
 			stage.addEventListener(Event.RESIZE,function():void
 			{
 				//resize
-				_tools.visible = stage.displayState != StageDisplayState.FULL_SCREEN
-				_tools.x = Number($.g.xml..input.@left[0]);
-				_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
+				if(_tools)
+				{
+					_tools.visible = stage.displayState != StageDisplayState.FULL_SCREEN
+					_tools.x = Number($.g.xml..input.@left[0]);
+					_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
+				}
 			});
 		}
 		
 		private function initBusiness():void
 		{
 			Log.info("初始化弹幕业务数据");
-			//$.q.push(new InitConfigData());
-			//$.q.push(new InitVideoData());
-			//$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
-			
+			$.q.push(new InitVideoData());//可能抛出BREAK_QM
+			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			$.q.push(new InitBulletData());//可能抛出BREAK_QM
-			//$.q.push(new InitCookieData());
 			$.q.push(new InitWebSocket());//可能抛出BREAK_QM
-			
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
 			{
 				Log.info("业务初始化完成");
+				
+				initTools();
 				//加载弹幕播放器
 				loadCommentPlugin();
 			});
@@ -183,12 +180,11 @@ package
 			
 			var errorTxt:ErrorText = new ErrorText();
 			this.addChild(errorTxt);
-			
-			initTools();
 		}
 		
 		private function initTools():void
 		{
+			Log.info("初始化弹幕发送功能");
 			_tools = new InputTools();
 			_tools.x = Number($.g.xml..input.@left[0]);
 			_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
