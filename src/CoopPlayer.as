@@ -191,8 +191,9 @@ package
 			_tools.visible = false;
 			this.addChild(_tools);
 			
+			const DANMU_OPTION_URL:String = "DanmuOption.swf";
 			_optionLoader = new Loader();
-			_optionLoader.load(new URLRequest("DanmuOption.swf"));
+			_optionLoader.load(new URLRequest(DANMU_OPTION_URL));
 			this.addChild(_optionLoader);
 		}
 		

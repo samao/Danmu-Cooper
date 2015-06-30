@@ -28,12 +28,6 @@ package com.idzeir.acfun.view
 		public function MoveBullet()
 		{
 			super();
-			this.selectable = false;
-			this.autoSize = "left";
-			this.tf.font = FontUtil.fontName;
-			this.tf.size = 25;
-			this.tf.color = 0xffffff;
-			this.defaultTextFormat = tf;
 		}
 		
 		override public function update(time:int = 0):void

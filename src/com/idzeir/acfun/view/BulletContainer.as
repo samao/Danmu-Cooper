@@ -57,6 +57,10 @@ package com.idzeir.acfun.view
 		 * 两次更新时间介个此时间之内都会不会seek跳过，直接显示 
 		 */		
 		private const BLOCK_TIME:int = 3;
+		/**
+		 * 顶部和底部最大显示条数 
+		 */		
+		private const TOP_AND_BOTTOM_SIZE:uint = 6;
 		
 		public function BulletContainer()
 		{
@@ -209,6 +213,11 @@ package com.idzeir.acfun.view
 		private function addBottomBullet(value:Node):void
 		{
 			//Log.debug("固定底部弹幕",NodeUtil.get(value).message);
+			if(_bottomBox.numChildren>=TOP_AND_BOTTOM_SIZE)
+			{
+				addToOverMap(value);
+				return;
+			}
 			const BUTTOM_BAR_H:int = 50;
 			_bottomBox.addChild($.ui.create(BulletType.FADE_OUT_BOTTOM).bullet(NodeUtil.get(value),new Point()).warp);
 			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
@@ -218,6 +227,12 @@ package com.idzeir.acfun.view
 		private function addTopBullet(value:Node):void
 		{
 			//Log.debug("固定顶部弹幕",NodeUtil.get(value).message);
+			if(_topBox.numChildren>=TOP_AND_BOTTOM_SIZE)
+			{
+				addToOverMap(value);
+				return;
+			}
+				
 			_topBox.addChildAt($.ui.create(BulletType.FADE_OUT_TOP).bullet(NodeUtil.get(value),new Point()).warp,0);
 			_topBox.x = stage.stageWidth - _topBox.width>>1;
 		}
