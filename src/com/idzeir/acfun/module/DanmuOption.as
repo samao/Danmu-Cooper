@@ -48,6 +48,13 @@ package com.idzeir.acfun.module
 
 		private var _selectColor:uint;
 		
+		/**
+		 * 弹幕配置在flash cookie中的保存字段
+		 */		
+		private const _DANMU_CONFIG_:String = "danmu_config";
+
+		private var _config:Number;
+		
 		public function DanmuOption()
 		{
 			super();
@@ -72,7 +79,7 @@ package com.idzeir.acfun.module
 			var smallRadio:Radio = new Radio();
 			smallRadio.label = $.l.get("setting_size_small");
 			_sizeGroup.group = [smallRadio,midRadio,bigRadio];
-			_sizeGroup.index = 1;
+			//_sizeGroup.index = (_config>>27)&0x3;
 			
 			var size:TextField = new TextField();
 			size.defaultTextFormat = new TextFormat(FontUtil.fontName);
@@ -93,7 +100,7 @@ package com.idzeir.acfun.module
 			var bottomRadio:Radio = new Radio();
 			bottomRadio.label = $.l.get("setting_style_bottom");
 			_styleGroup.group = [topRadio,moveRadio,bottomRadio];
-			_styleGroup.index = 1;
+			//_styleGroup.index = (_config>>24)&0x3;
 			
 			var style:TextField = new TextField();
 			style.defaultTextFormat = new TextFormat(FontUtil.fontName);
@@ -161,6 +168,8 @@ package com.idzeir.acfun.module
 			{
 				y = stage.stageHeight - height - Number($.g.xml..option.@bottom[0]);
 			});
+			
+			applyConfig();
 		}
 		
 		private function createColorPicker():Sprite
@@ -221,6 +230,12 @@ package com.idzeir.acfun.module
 		
 		private function onOptionChange(e:Event = null):void
 		{
+			var save:uint = _sizeGroup.index<<27|_styleGroup.index<<24|_selectColor;
+			var color:int = save&0xFFFFFF;
+			var style:uint = (save>>24)&0x3;
+			var size:uint = (save>>27)&0x3;
+			Log.debug("保存弹幕配置数据",size,style,color.toString(16));
+			$.fc.set(_DANMU_CONFIG_,save);
 			$.e.dispatchEvent(new GlobalEvent(EventType.OPTION_CHANGE,{size:_sizeGroup.index,style:_styleGroup.index,color:_selectColor}));
 		}
 		
@@ -248,6 +263,24 @@ package com.idzeir.acfun.module
 				$.a.to(this,.5,{x:-this.width - 50});
 			}
 			_open = !_open;
+		}
+		
+		/**
+		 * 按照cookie初始化配置信息，没有cookie的话执行默认配置
+		 */		
+		private function applyConfig():void
+		{
+			if($.supportCookie)
+			{
+				_config = $.fc.get(_DANMU_CONFIG_);
+				_sizeGroup.index = (_config>>27)&0x3;
+				_styleGroup.index = (_config>>24)&0x3;
+				selectColor = _config&0xFFFFFF;
+			}else{
+				_sizeGroup.index = 1;
+				_styleGroup.index = 1;
+				selectColor = 0x000000;
+			}
 		}
 	}
 }

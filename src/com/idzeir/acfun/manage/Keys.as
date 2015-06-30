@@ -23,6 +23,8 @@ package com.idzeir.acfun.manage
 		private var _map:Dictionary = new Dictionary(true);
 		private var _stage:Stage;
 		
+		private var _cancelKeys:Array = null;
+		
 		public function Keys()
 		{
 			if(_instance)
@@ -52,14 +54,37 @@ package com.idzeir.acfun.manage
 			{
 				_stage = value;
 				_stage.addEventListener(KeyboardEvent.KEY_UP,onKeyUp);
+				_stage.addEventListener(KeyboardEvent.KEY_DOWN,onKeyDown);
 			}
+		}
+		
+		protected function onKeyDown(e:KeyboardEvent):void
+		{
+			if(_cancelKeys.indexOf(e.keyCode)>-1)
+			{
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+			}
+		}
+		
+		public function set cancelKeys(values:Array):void
+		{
+			_cancelKeys = values;
 		}
 		
 		private function onKeyUp(e:KeyboardEvent):void
 		{
+			if(_cancelKeys.indexOf(e.keyCode)>-1)
+			{
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+				return;
+			}
+			
+			var call:Function;
 			if(_map.hasOwnProperty(e.keyCode))
 			{
-				var call:Function = _map[e.keyCode];
+				call = _map[e.keyCode];
 				call.apply(null,[e]);
 			}
 		}

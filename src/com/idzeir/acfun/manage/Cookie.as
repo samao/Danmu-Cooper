@@ -34,6 +34,8 @@ package com.idzeir.acfun.manage
 		
 		private const _DB_KEY_:String = "AcFun_iDzeir_data";
 		
+		private const BUFFER_SIZE:uint = 1024;
+		
 		public function Cookie(target:IEventDispatcher=null)
 		{
 			super(target);
@@ -57,9 +59,16 @@ package com.idzeir.acfun.manage
 			}
 		}
 		
-		public function get(key:String):String
+		public function get(key:String):*
 		{
 			return _so.data.player[key];
+		}
+		
+		public function set(key:String,value:*):void
+		{
+			_so.data.player ||= {};
+			_so.data.player[key] = value;
+			_so.flush(BUFFER_SIZE);
 		}
 		
 		public function update():void
@@ -99,7 +108,7 @@ package com.idzeir.acfun.manage
 			
 			var flushStatus:String = null;
 			try{
-				flushStatus = _so.flush(1024);
+				flushStatus = _so.flush(BUFFER_SIZE);
 				if (flushStatus) {
 					switch (flushStatus) {
 						case SharedObjectFlushStatus.FLUSHED : 

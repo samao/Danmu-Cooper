@@ -10,6 +10,7 @@
 package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.utils.FontUtil;
+	import com.idzeir.acfun.utils.Log;
 	
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
@@ -29,12 +30,14 @@ package com.idzeir.acfun.view
 			this.multiline = false;
 			this.wordWrap = false;
 			
+			var colors:Array = $.g.xml..label.@colors.split(",");
+			Log.debug("输入框颜色配置：",JSON.stringify(colors),parseInt(colors[0])==0xFFFFFF);
 			this.background = true;
-			this.backgroundColor = 0xFFFFFF;
+			this.backgroundColor = colors&&colors.length>0?parseInt(colors[0]):0xFFFFFF;
 			this.defaultTextFormat = new TextFormat(FontUtil.fontName,12,0x000000,true);
 			this.defaultTextFormat.leftMargin = 10;
 			this.border = true;
-			this.borderColor = 0x33333;
+			this.borderColor = colors&&colors.length>1?parseInt(colors[1]):0x333333;
 			this.maxChars = 60;
 			
 			this.filters = [new DropShadowFilter(1,45,0,1,1,1),new DropShadowFilter(1,225,0,1,1,1)];

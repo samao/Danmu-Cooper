@@ -28,5 +28,9 @@ package com.idzeir.acfun.manage
 		 * 配置监听舞台
 		 */		
 		function set stage(value:Stage):void;
+		/**
+		 * 永久屏蔽按键组键盘事件
+		 */		
+		function set cancelKeys(values:Array):void;
 	}
 }

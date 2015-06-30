@@ -102,13 +102,15 @@ package
 			Log.useTracer = true;
 			
 			//屏蔽合作方右键菜单
-			const VERSION:String = "AcFun Player:20150623";
+			const VERSION:String = "AP_NO.20150623";
 			
 			menuItem = new ContextMenuItem(VERSION,true,false);
 			
 			initVo();
 			
+			Log.info("业务流程执行开始");
 			//先加载语言包和配置然后才开始初始化界面
+			$.q.push(new InitCookieData());
 			$.q.push(new InitConfigData());
 			$.q.push(new InitVideoData());
 			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
@@ -134,13 +136,13 @@ package
 		
 		private function initBusiness():void
 		{
-			Log.info("初始化业务");
+			Log.info("初始化弹幕业务数据");
 			//$.q.push(new InitConfigData());
 			//$.q.push(new InitVideoData());
 			//$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
 			
 			$.q.push(new InitBulletData());//可能抛出BREAK_QM
-			$.q.push(new InitCookieData());
+			//$.q.push(new InitCookieData());
 			$.q.push(new InitWebSocket());//可能抛出BREAK_QM
 			
 			
@@ -342,6 +344,7 @@ package
 		 */		
 		protected function initVo():void
 		{
+			Log.info("数据模型初始化")
 			$.q	= Qm.getInstance();
 			$.c = ConfigVo.getInstance();
 			$.f = FlashVarsVo.getInstance();

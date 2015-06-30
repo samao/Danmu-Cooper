@@ -14,12 +14,13 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.FontUtil;
-	import com.idzeir.acfun.utils.GlayUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
 	
+	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.KeyboardEvent;
+	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
@@ -61,7 +62,11 @@ package com.idzeir.acfun.view
 			{
 				send();
 			});
-			sendBut.style = new LabelButtonStyle(0xFFFFFF,0x666666,null,null,0xFF0000);
+			
+			var colors:Array = $.g.xml..button.@colors.split(",");
+			Log.debug("工具栏按钮颜色：",JSON.stringify(colors))
+			
+			sendBut.style = new LabelButtonStyle(parseInt(colors[0]),parseInt(colors[1]),parseInt(colors[2]),parseInt(colors[3]),parseInt(colors[4]),parseInt(colors[5]));
 			addChild(sendBut);
 			
 			var option:LabelButton = new LabelButton($.l.get("comment_option_but"),function():void
@@ -81,14 +86,6 @@ package com.idzeir.acfun.view
 			close.style = sendBut.style;
 			addChild(close);
 			
-			$.k.listener(Keyboard.SPACE,function(e:KeyboardEvent):void
-			{
-				if(stage.focus == _inputTxt)
-				{
-					e.stopImmediatePropagation();
-					e.stopPropagation();
-				}
-			});
 			$.k.listener(flash.ui.Keyboard.ENTER,function():void
 			{
 				send();
@@ -109,6 +106,8 @@ package com.idzeir.acfun.view
 			_tipsTxt.htmlText = $.l.get("send_text_tips");
 			_tipsTxt.x = this._gap + 3;
 			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
+			_tipsTxt.alpha = .5;
+			_tipsTxt.filters = [new DropShadowFilter(1,45,0xFFFFFF,1,1,1)];
 			this.addRawChild(_tipsTxt);
 			
 			addTextListener();
@@ -117,6 +116,15 @@ package com.idzeir.acfun.view
 			{
 				sendBut.mouseEnabled = _inputTxt.mouseEnabled = false;
 				_tipsTxt.htmlText = $.l.get("used_input_tips");
+			}
+		}
+		
+		private function stopEvent(e:Event):void
+		{
+			if(stage.focus == _inputTxt)
+			{
+				e.stopImmediatePropagation();
+				e.stopPropagation();
 			}
 		}
 		
@@ -129,6 +137,7 @@ package com.idzeir.acfun.view
 			_inputTxt.addEventListener(FocusEvent.FOCUS_IN,function():void
 			{
 				_tipsTxt.visible = false;
+				$.k.cancelKeys = [Keyboard.SPACE,Keyboard.LEFT,Keyboard.RIGHT];
 			});
 			_inputTxt.addEventListener(FocusEvent.FOCUS_OUT,function():void
 			{
@@ -138,6 +147,7 @@ package com.idzeir.acfun.view
 				}else{
 					_tipsTxt.visible = false;
 				}
+				$.k.cancelKeys = [];
 			});
 		}
 		

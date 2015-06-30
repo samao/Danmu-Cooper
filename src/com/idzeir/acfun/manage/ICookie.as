@@ -18,6 +18,12 @@ package com.idzeir.acfun.manage
 		/**
 		 * 获取指定key的cookie值，不存在返回null
 		 */		
-		function get(key:String):String;
+		function get(key:String):*;
+		/**
+		 * 设置指定的Flash cookie 有可能覆盖web cookie
+		 * @param key 
+		 * @param value
+		 */		
+		function set(key:String,value:*):void;
 	}
 }
