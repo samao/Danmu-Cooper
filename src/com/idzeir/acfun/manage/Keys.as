@@ -60,7 +60,7 @@ package com.idzeir.acfun.manage
 		
 		protected function onKeyDown(e:KeyboardEvent):void
 		{
-			if(_cancelKeys.indexOf(e.keyCode)>-1)
+			if(_cancelKeys&&_cancelKeys.indexOf(e.keyCode)>-1)
 			{
 				e.stopImmediatePropagation();
 				e.stopPropagation();
@@ -74,7 +74,7 @@ package com.idzeir.acfun.manage
 		
 		private function onKeyUp(e:KeyboardEvent):void
 		{
-			if(_cancelKeys.indexOf(e.keyCode)>-1)
+			if(_cancelKeys&&_cancelKeys.indexOf(e.keyCode)>-1)
 			{
 				e.stopImmediatePropagation();
 				e.stopPropagation();

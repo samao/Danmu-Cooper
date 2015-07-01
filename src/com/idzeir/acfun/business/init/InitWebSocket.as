@@ -110,13 +110,13 @@ package com.idzeir.acfun.business.init
 		private function sendAuthor():void
 		{
 			var handshakeData:Object = {};
-			handshakeData['client'] = "";
-			handshakeData['client_ck'] = "";
 			handshakeData['vid'] = $.f.vid;
 			handshakeData['vlength'] = $.v.videoLength;
 			handshakeData['time'] = new Date().time;
 			if($.supportCookie)
 			{
+				handshakeData['client'] = $.fc.get("client");
+				handshakeData['client_ck'] = $.fc.get("client_ck");
 				handshakeData['uid'] = $.fc.get("auth_key");//1368971//JavascriptAPI.getCookie("auth_key");
 				handshakeData['uid_ck'] = $.fc.get("auth_key_ac_sha1")//1469459601//JavascriptAPI.getCookie("auth_key_ac_sha1");
 			}

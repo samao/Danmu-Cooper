@@ -21,6 +21,10 @@ package com.idzeir.acfun.coop
 		 */		
 		function get playerURL():String;
 		/**
+		 * 播放器是否存在兼容代理
+		 */		
+		function get proxy():String;
+		/**
 		 * 派发事件对象的路径
 		 */		
 		function get eventTarget():String;

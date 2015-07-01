@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 乐视tv播放器处理配置信息 -->
 <node>
-	<address>http://yuntv.letv.com/bcloud.swf</address>
+	<address proxy="LetvPlayerPlugin.swf">http://yuntv.letv.com/bcloud.swf</address>
+	<core>
+		<!-- SDK检测 -->
+		<check exist="_player"></check>
+		<check exist="_api"></check>
+		<check exist="_videoInfo"></check>
+		
+		<!-- 事件处理 如果是main派发事件请将target置空 -->
+		<dispatch target="">
+		
+			<!-- 播放事件 type为事件类型 value为执行的coop函数 -->
+			<event type="onPlay">onPlay</event>
+			<event type="onStop">onStop</event>
+			<event type="onPause">onPause</event>
+			<event type="onResume">onResume</event>
+			
+			<!-- from 如果是event数据 -->
+			<event type="play_progress" from="::time">onTime</event>
+			
+			<!-- from 如果是全局数据,重加载文件中查找数据 -->
+			<!-- <event type="play_progress" from="::obj.nowTime">onTime</event> -->
+		</dispatch>
+		
+		<!-- 弹幕配置部分 -->
+		<comment>
+			<!-- 弹幕设置面板 -->
+			<option left="10" bottom="80"/>
+			<!-- 输入框 -->
+			<input used="1" left="200" bottom="5">
+				<!-- 按钮样式对应颜色为 普通字体，普通背景，选中字体，选中背景,滑过字体，滑过背景 -->
+				<button colors="0xFFFFFF,0x666666,null,null,0xFF0000,null"/>
+				<!-- 输入框配置颜色，背景颜色和边框颜色 -->
+				<label colors="0xFFFFFF,0x333333"/>
+			</input>
+		</comment>
+		
+	</core>
 </node>

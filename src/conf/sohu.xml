@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 搜狐播放器处理配置信息 -->
 <node>
-	<address>http://tv.sohu.com/upload/swf/20150618/Main.swf</address>
+	<address proxy="">http://tv.sohu.com/upload/swf/20150618/Main.swf</address>
 	<core>
 		<!-- SDK检测 -->
 		<check exist="tvSohuMpb"></check>

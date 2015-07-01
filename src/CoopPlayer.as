@@ -39,6 +39,7 @@ package
 	import com.idzeir.acfun.vo.User;
 	import com.idzeir.acfun.vo.VideoInfoVo;
 	
+	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -224,6 +225,9 @@ package
 				clearHandler();
 				_coopSDK = e.target.content;
 				applyLogicXML();
+				
+				if($.g.proxy!="")_coopSDK["playerURL"]($.g.playerURL,stage.loaderInfo.parameters);
+				_apiBox.addChild(_coopSDK as DisplayObject);
 			};
 			var failHandler:Function = function(e:Event):void
 			{
@@ -238,15 +242,14 @@ package
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,okHandler);
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,failHandler);
 			
-			var ldr:LoaderContext = new LoaderContext(false);
+			var ldr:LoaderContext = new LoaderContext();
 			ldr.applicationDomain = new ApplicationDomain();
 			if(ldr["allowCodeImport"])
 			{
 				ldr["allowCodeImport"] = true;
 			}
-			loader.load(new URLRequest($.g.playerURL),ldr);
+			loader.load(new URLRequest($.g.proxy==""?$.g.playerURL:$.g.proxy),ldr);
 			
-			_apiBox.addChild(loader);
 			_apiBox.visible = false;
 		}
 		
@@ -307,7 +310,7 @@ package
 				time = int(FindUtil.get(e,_timeVo.arg));
 			}
 			//更新弹幕时间
-			//Log.debug("当前播放：",time);
+			//Log.debug("当前播放：",time,_bullets.isRunning);
 			_bullets.time(time);
 		}
 		
@@ -327,6 +330,11 @@ package
 		{
 			Log.debug("视频停止");
 			_bullets.stop();
+		}
+		
+		private function onResume(e:Event):void
+		{
+			_bullets.resume();
 		}
 		
 		private function onPause(e:Event):void

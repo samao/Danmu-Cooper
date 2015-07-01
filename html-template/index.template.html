@@ -41,7 +41,8 @@
             // To use express install, set to playerProductInstall.swf, otherwise the empty string. 
             var xiSwfUrlStr = "${expressInstallSwf}";
             var flashvars = {};
-            flashvars.debug = false;
+          
+			//SOHU PLAYER
             flashvars.wmode="opaque"
             flashvars.allowFullscreenInteractive=true;
             flashvars.allowfullscreen=true;
@@ -53,6 +54,15 @@
             flashvars.vid=2014275;
 			flashvars.autoplay=true;
 			flashvars.jump = 0;
+			
+			//LETV PLAYER
+			//flashvars.debug = 0;
+			flashvars.vid=2218058;
+			flashvars.videoId=2218058;
+			flashvars.vu = "0d2f7aa8cd"
+			flashvars.skinnable = 1;
+			flashvars.autoplay = true;
+			//&fs=0&autoplay=0&host=http://www.acfun.tv&avatar=&hint=小贴士：在"更多设置项"中可以设置弹幕的透明度。&oldcs=1&allowFullscreenInteractive=true&allowfullscreen=true&allowscriptaccess=always
 			
             var params = {};
             params.quality = "high";

@@ -21,6 +21,7 @@ package com.idzeir.acfun.coop
 	{
 		private var _xml:XML;
 		private var _playerURL:String;
+		private var _proxy:String = "";
 		private var _eventTarget:String;
 		private var _checks:Vector.<String>;
 		private var _logicEvents:Vector.<LogicEventVo>;
@@ -36,6 +37,11 @@ package com.idzeir.acfun.coop
 			}
 		}
 		
+		public function get proxy():String
+		{
+			return _proxy;
+		}
+
 		public static function getInstance():Logic
 		{
 			return _instance ||= new Logic();
@@ -66,6 +72,7 @@ package com.idzeir.acfun.coop
 			_xml = xml.copy();
 			
 			_playerURL = _xml.address.text();
+			_proxy = _xml.address.@proxy;
 			
 			_checks ||= new Vector.<String>();
 			_checks.length = 0;

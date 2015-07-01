@@ -69,6 +69,11 @@ package com.idzeir.acfun.view
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
 		}
 		
+		public function get isRunning():Boolean
+		{
+			return _isRunning;
+		}
+		
 		public function start():void
 		{
 			if(!$.t.has(update))

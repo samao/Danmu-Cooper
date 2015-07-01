@@ -62,7 +62,7 @@ package com.idzeir.acfun.utils
 				_url.data = params;
 				_url.method = URLRequestMethod.POST;
 			}else{
-				remote&&(url = url+"?t="+Math.random());
+				remote&&(url = url+(url.indexOf("?")==-1?"?":"&")+"t="+Math.random());
 			}
 			_url.url = url;
 			_loader.load(_url);
@@ -106,7 +106,7 @@ package com.idzeir.acfun.utils
 					_url.data = willExcute.params;
 					_url.method = URLRequestMethod.POST;
 				}else{
-					remote&&(willExcute.url = willExcute.url+"?t="+Math.random());
+					remote&&(willExcute.url = willExcute.url+(willExcute.url.indexOf("?")==-1?"?":"&")+"t="+Math.random());
 				}
 				
 				_url.url = willExcute.url;
