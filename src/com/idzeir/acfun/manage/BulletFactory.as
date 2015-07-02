@@ -9,6 +9,7 @@
 
 package com.idzeir.acfun.manage
 {
+	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.FadeOutBullet;
 	import com.idzeir.acfun.view.IBullet;
 	import com.idzeir.acfun.view.MoveBullet;
@@ -63,6 +64,7 @@ package com.idzeir.acfun.manage
 				}
 				pool.push(bullet);
 			}
+			//Log.debug("弹幕提取");
 			return pool.shift();
 		}
 		
@@ -70,6 +72,7 @@ package com.idzeir.acfun.manage
 		{
 			var pool:Vector.<IBullet> = _map[value.bulletType] ||= new Vector.<IBullet>();
 			pool.push(value);
+			//Log.debug("弹幕回收:",value);
 			if(_useMap.indexOf(value)!=-1)
 			{
 				_useMap.splice(_useMap.indexOf(value),1);

@@ -18,9 +18,13 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.vo.Node;
 	
 	import flash.display.Sprite;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.system.System;
+	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * 弹幕显示容器
@@ -65,8 +69,32 @@ package com.idzeir.acfun.view
 		public function BulletContainer()
 		{
 			super();
+			this.mouseEnabled = this.mouseChildren = false;
 			Log.info("初始化弹幕显示容器");
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
+			
+			/*this.contextMenu = new ContextMenu();
+			this.contextMenu.hideBuiltInItems();
+			this.contextMenu.customItems = [];
+			var copy:ContextMenuItem = new ContextMenuItem("",true);
+			copy.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,function(e:ContextMenuEvent):void
+			{
+				var tar:IBullet = e.mouseTarget as IBullet;
+				if(tar)
+				{
+					flash.system.System.setClipboard(tar.content);
+				}
+			});
+			
+			this.contextMenu.addEventListener(ContextMenuEvent.MENU_SELECT,function(e:ContextMenuEvent):void
+			{
+				var tar:IBullet = e.mouseTarget as IBullet;
+				if(tar)
+				{
+					copy.caption = "--复制>> "+tar.content;
+					contextMenu.customItems.push(copy);
+				}
+			});*/
 		}
 		
 		public function get isRunning():Boolean
@@ -186,7 +214,6 @@ package com.idzeir.acfun.view
 		protected function update():void
 		{
 			if(!_isRunning)return;
-			
 			for each(var i:IBullet in $.ui.useMap)
 			{
 				i.update();
@@ -302,7 +329,7 @@ class LineBox extends Sprite
 		{
 			var box:LineBox = new LineBox();
 			box.mouseEnabled = false;
-			box.mouseChildren = false;
+			//box.mouseChildren = false;
 			box.graphics.beginFill(Math.random()*0xffffff,0);
 			box.graphics.drawRect(0,0,0,h);
 			box.graphics.endFill();

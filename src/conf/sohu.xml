@@ -28,7 +28,7 @@
 			<!-- 弹幕设置面板 -->
 			<option left="10" bottom="80"/>
 			<!-- 输入框 -->
-			<input used="1" left="200" bottom="5">
+			<input used="1" left="200" right="200" bottom="5">
 				<!-- 按钮样式对应颜色为 普通字体，普通背景，选中字体，选中背景,滑过字体，滑过背景 -->
 				<button colors="0xFFFFFF,0x666666,null,null,0xFF0000,null"/>
 				<!-- 输入框配置颜色，背景颜色和边框颜色 -->

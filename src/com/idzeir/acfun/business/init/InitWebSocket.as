@@ -73,8 +73,13 @@ package com.idzeir.acfun.business.init
 			switch(value["status"])
 			{
 				case RespondType.SERVER_AUTHED:
-					Log.info("服务器验证成功");
-					$.u.id = JSON.parse(value.msg)["uid"];
+					Log.info("服务器验证成功：",value.msg);
+					var author:Object = JSON.parse(value.msg);
+					//重置用户信息
+					$.u.id = author["uid"];
+					$.fc.set("client",author['client']);
+					$.fc.set("client_ck",author['client_ck']);
+					
 					$.e.addEventListener(EventType.SEND,function(e:GlobalEvent):void
 					{
 						_websocket.sendUTF(JSON.stringify(e.info));
@@ -113,10 +118,13 @@ package com.idzeir.acfun.business.init
 			handshakeData['vid'] = $.f.vid;
 			handshakeData['vlength'] = $.v.videoLength;
 			handshakeData['time'] = new Date().time;
+			
 			if($.supportCookie)
 			{
-				handshakeData['client'] = $.fc.get("client");
-				handshakeData['client_ck'] = $.fc.get("client_ck");
+				//游客登录时候client 和 client_ck 为空字符串
+				handshakeData['client'] = $.fc.get("client")||"";
+				handshakeData['client_ck'] = $.fc.get("client_ck")||"";
+				
 				handshakeData['uid'] = $.fc.get("auth_key");//1368971//JavascriptAPI.getCookie("auth_key");
 				handshakeData['uid_ck'] = $.fc.get("auth_key_ac_sha1")//1469459601//JavascriptAPI.getCookie("auth_key_ac_sha1");
 			}

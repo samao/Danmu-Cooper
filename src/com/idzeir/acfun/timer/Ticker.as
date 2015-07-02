@@ -83,6 +83,7 @@ package com.idzeir.acfun.timer
 					total--;
 				}
 			}
+			//Math.abs(getTimer()-curTime)>1&&Log.debug("每次执行时间：",getTimer()-curTime);
 		}
 		
 		public function call(delay:uint, handler:Function, times:uint=0, frame:Boolean = false, ...arg):void

@@ -14,6 +14,9 @@ package com.idzeir.acfun.view
 	import flash.display.DisplayObject;
 	import flash.geom.Point;
 	
+	/**
+	 * 弹幕ui接口
+	 */	
 	public interface IBullet
 	{
 		/**
@@ -38,5 +41,9 @@ package com.idzeir.acfun.view
 		 * @return 
 		 */		
 		function get warp():DisplayObject;
+		/**
+		 * 返回弹幕显示内容
+		 */		
+		function get content():String;
 	}
 }

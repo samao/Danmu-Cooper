@@ -43,7 +43,7 @@ package com.idzeir.acfun.view
 			});
 		}
 		
-		private function algin():void
+		public function algin():void
 		{
 			if(stage)
 			{

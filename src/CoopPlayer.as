@@ -24,6 +24,7 @@ package
 	import com.idzeir.acfun.manage.BulletFactory;
 	import com.idzeir.acfun.manage.BulletVoMgr;
 	import com.idzeir.acfun.manage.Keys;
+	import com.idzeir.acfun.profile.Monitor;
 	import com.idzeir.acfun.timer.Ticker;
 	import com.idzeir.acfun.utils.FindUtil;
 	import com.idzeir.acfun.utils.Log;
@@ -44,6 +45,7 @@ package
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -55,7 +57,7 @@ package
 	import flash.utils.clearInterval;
 	import flash.utils.setInterval;
 	
-	[SWF(backgroundColor="#343434",frameRate="24"]
+	[SWF(backgroundColor="#343434",frameRate="30"]
 	/**
 	 * 第三方合作播放器
 	 */	
@@ -98,7 +100,7 @@ package
 			super.onAdded(event);
 			
 			Log.level = 4;
-			Log.useTracer = true;
+			Log.useTracer = false;
 			
 			//屏蔽合作方右键菜单
 			const VERSION:String = "AP_NO.20150623";
@@ -130,7 +132,9 @@ package
 					_tools.visible = stage.displayState != StageDisplayState.FULL_SCREEN
 					_tools.x = Number($.g.xml..input.@left[0]);
 					_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
+					_tools.width = stage.stageWidth - Number($.g.xml..input.@left[0]) - Number($.g.xml..input.@right[0]);
 				}
+				_proBar&&_proBar.algin();
 			});
 		}
 		
@@ -181,6 +185,8 @@ package
 			
 			var errorTxt:ErrorText = new ErrorText();
 			this.addChild(errorTxt);
+			
+			this.addChild(new Monitor());
 		}
 		
 		private function initTools():void
@@ -189,6 +195,7 @@ package
 			_tools = new InputTools();
 			_tools.x = Number($.g.xml..input.@left[0]);
 			_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
+			_tools.width = stage.stageWidth - Number($.g.xml..input.@left[0]) - Number($.g.xml..input.@right[0])
 			_tools.visible = false;
 			this.addChild(_tools);
 			
@@ -203,15 +210,13 @@ package
 			Log.info("加载弹幕播放器");
 			//加载第三方播放器
 			loadCoopPlayer();
-			/**
-			 * 单测试弹幕性能
-				_bullets.start();
-				var t:int = 0;
-				setInterval(function():void{
-					_bullets.time(t++);
-				},1000);
-			*/
 			return;
+			//单测试弹幕性能
+			_bullets.start();
+			var t:int = 0;
+			$.t.call(1000,function():void{
+				_bullets.time(t++);
+			},1000)
 		}
 		
 		private function loadCoopPlayer():void

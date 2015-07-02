@@ -19,7 +19,6 @@ package com.idzeir.acfun.view
 	
 	import flash.events.Event;
 	import flash.events.FocusEvent;
-	import flash.events.KeyboardEvent;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -149,6 +148,16 @@ package com.idzeir.acfun.view
 				}
 				$.k.cancelKeys = [];
 			});
+		}
+		
+		override public function set width(value:Number):void
+		{
+			var min:int = super.width - _inputTxt.width;
+			if(value>min)
+			{
+				_inputTxt.width = value - min;
+			}
+			this.update();
 		}
 		
 		/**

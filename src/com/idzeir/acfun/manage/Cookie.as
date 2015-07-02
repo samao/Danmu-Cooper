@@ -61,6 +61,7 @@ package com.idzeir.acfun.manage
 		
 		public function get(key:String):*
 		{
+			_so.data.player ||= {};
 			return _so.data.player[key];
 		}
 		

@@ -10,15 +10,20 @@
 package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.utils.FontUtil;
+	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.vo.BulletVo;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Point;
+	import flash.system.System;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
+	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * 弹幕显示ui基类
@@ -32,8 +37,7 @@ package com.idzeir.acfun.view
 		public function BaseBullet()
 		{
 			super();
-			this.mouseChildren = this.mouseEnabled = false;
-			
+			this.mouseChildren = false;
 			_txt = new TextField();
 			_txt.selectable = false;
 			_txt.autoSize = "left";
@@ -65,6 +69,11 @@ package com.idzeir.acfun.view
 			
 		}
 		
+		public function get content():String
+		{
+			return _txt.text;
+		}
+		
 		public function get bulletType():String
 		{
 			return "-1";
@@ -78,6 +87,7 @@ package com.idzeir.acfun.view
 			_txt.defaultTextFormat = this.tf;
 			_txt.text = value.message;
 			
+			this.graphics.clear();
 			if(value.user == $.u.id)
 			{
 				this.graphics.lineStyle(2,0xFFFFFF);
@@ -95,7 +105,9 @@ package com.idzeir.acfun.view
 			{
 				this.graphics.clear();
 				this.parent.removeChild(this);
-			}catch(error:Error){};
+			}catch(error:Error){
+				Log.warn("弹幕回收出错");
+			};
 		}
 		
 		public function get warp():DisplayObject

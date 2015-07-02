@@ -10,7 +10,6 @@
 package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.manage.BulletType;
-	import com.idzeir.acfun.utils.FontUtil;
 	import com.idzeir.acfun.vo.BulletVo;
 	
 	import flash.geom.Point;
@@ -23,7 +22,7 @@ package com.idzeir.acfun.view
 		/**
 		 * 每次更新移动的距离
 		 */		
-		private const SPEED:Number = 1.5;
+		private const SPEED:Number = 2;
 		
 		public function MoveBullet()
 		{
@@ -38,6 +37,7 @@ package com.idzeir.acfun.view
 				this.removeFromParent();
 			}
 		}
+		
 		/**
 		 * 设置移动弹幕数据
 		 * @param value

@@ -13,6 +13,7 @@ package com.idzeir.acfun.module
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
+	import flash.events.MouseEvent;
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
@@ -26,6 +27,8 @@ package com.idzeir.acfun.module
 		public var _player:* = null;
 		public var _api:* = null;
 		public var _videoInfo:Object;
+
+		private var _param:Object;
 		
 		public function LetvPlayerPlugin()
 		{
@@ -39,7 +42,7 @@ package com.idzeir.acfun.module
 		{
 			var url:URLRequest = new URLRequest(value);
 			var loader:Loader = new Loader();
-			var _param:Object = {uu:"2d8c027396","auto_play":1,"start":0,"skinnable":0,"pu":"8e7e683c11"};
+			_param = {uu:"2d8c027396","auto_play":1,"start":0,"skinnable":0,"pu":"8e7e683c11"};
 			for(var i:String in params)
 			{
 				_param[i] = params[i];
@@ -53,6 +56,7 @@ package com.idzeir.acfun.module
 				_api.addEventListener("playState",onPlayerState);
 				//默认码率
 				_param["rate"] = "yuanhua";
+				//_api.setGpu(true)//config["try_hardware_accelerate"]);
 				_api["setFlashvars"](_param);
 			});
 			var context:LoaderContext = new LoaderContext();
@@ -64,6 +68,36 @@ package com.idzeir.acfun.module
 			}    
 			loader.load(url,context);
 			addChild(loader);
+			
+			return;
+			if(stage)
+			{
+				addStageClick();
+			}else{
+				this.addEventListener(Event.ADDED_TO_STAGE,function():void
+				{
+					removeEventListener(Event.ADDED_TO_STAGE,arguments.callee);
+					addStageClick();
+				});
+			}
+		}
+		
+		protected function addStageClick():void
+		{
+			stage.addEventListener(MouseEvent.CLICK,function(e:MouseEvent):void
+			{
+				if (!_param.auto_play)
+				{
+					dispatchEvent(new Event("onResume"));
+					_api.resumeVideo();
+				}else{
+					dispatchEvent(new Event("onPause"));
+					_api.pauseVideo();
+				}
+				_param.auto_play = !_param.auto_play;
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+			})
 		}
 		
 		private function onPlayerState(event:*):void
