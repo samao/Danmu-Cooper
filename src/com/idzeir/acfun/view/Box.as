@@ -100,6 +100,16 @@ package com.idzeir.acfun.view
 			return _content.numChildren;
 		}
 		
+		override public function removeChildren(beginIndex:int=0, endIndex:int=2147483647):void
+		{
+			_content.removeChildren(beginIndex,endIndex);
+		}
+		
+		public function removeRawChildren(beginIndex:int=0, endIndex:int=2147483647):void
+		{
+			super.removeChildren(beginIndex,endIndex);
+		}
+		
 		public function update():void
 		{
 			

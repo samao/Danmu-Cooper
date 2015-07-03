@@ -9,8 +9,10 @@
 
 package com.idzeir.acfun.module
 {
+	import com.idzeir.acfun.utils.Log;
+	import com.idzeir.acfun.view.BaseStage;
+	
 	import flash.display.Loader;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
@@ -22,7 +24,7 @@ package com.idzeir.acfun.module
 	/**
 	 * 乐视视频播放器兼容模块
 	 */	
-	public class LetvPlayerPlugin extends Sprite
+	public class LetvPlayerPlugin extends BaseStage
 	{
 		public var _player:* = null;
 		public var _api:* = null;
@@ -38,19 +40,27 @@ package com.idzeir.acfun.module
 			Security.allowInsecureDomain("*");
 		}
 		
-		public function playerURL(value:String,params:Object):void
+		override protected function onAdded(e:Event):void
 		{
-			var url:URLRequest = new URLRequest(value);
+			super.onAdded(e);
+			hooks($.g.playerURL,stage.loaderInfo.parameters);
+		}
+		
+		public function hooks(coopURL:String,stageParams:Object):void
+		{
+			Log.info("乐视播放器代理开始运行");
+			var url:URLRequest = new URLRequest(coopURL);
 			var loader:Loader = new Loader();
 			_param = {uu:"2d8c027396","auto_play":1,"start":0,"skinnable":0,"pu":"8e7e683c11"};
-			for(var i:String in params)
+			for(var i:String in stageParams)
 			{
-				_param[i] = params[i];
+				_param[i] = stageParams[i];
 			}
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,function():void{
-				//letv sdk加载失败，可能是广告屏蔽等原因
+				Log.error("乐视播放器加载失败",coopURL);
 			});
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function():void{
+				Log.info("乐视播放器加载成功");
 				_player = loader.content;
 				_api = _player["api"];				
 				_api.addEventListener("playState",onPlayerState);
@@ -61,7 +71,7 @@ package com.idzeir.acfun.module
 			});
 			var context:LoaderContext = new LoaderContext();
 			//和兼容插件共享一个域，插件和主播放器不同域
-			context.applicationDomain = ApplicationDomain.currentDomain;//播放器需要被放到一个安全域中
+			context.applicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);//播放器需要被放到一个安全域中
 			if(context.hasOwnProperty("allowCodeImport"))
 			{
 				context["allowCodeImport"] = true;//允许播放器内部代码执行

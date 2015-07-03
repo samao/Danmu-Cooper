@@ -18,13 +18,9 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.vo.Node;
 	
 	import flash.display.Sprite;
-	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
-	import flash.system.System;
-	import flash.ui.ContextMenu;
-	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * 弹幕显示容器
@@ -44,7 +40,7 @@ package com.idzeir.acfun.view
 		private var _lastTime:int = 0;
 		
 		private const HGAP:int = 30;
-		private const VGAP:int = 35;
+		private const VGAP:int = 43;
 		/**
 		 * 更新的频率 
 		 */		
@@ -127,6 +123,7 @@ package com.idzeir.acfun.view
 			{
 				$.t.remove(update);
 			}
+			clear();
 			_isRunning = false;
 		}
 		
@@ -159,10 +156,13 @@ package com.idzeir.acfun.view
 		 */		
 		private function clear():void
 		{
+			_overMap.length = 0;
 			for each(var i:LineBox in _useMap)
 			{
 				i.removeChildren();
 			}
+			_bottomBox.removeChildren();
+			_topBox.removeChildren();
 		}
 		
 		protected function onAdded(event:Event):void
@@ -176,7 +176,8 @@ package com.idzeir.acfun.view
 			_bottomBox ||=new VBox();
 			_bottomBox.algin = VBox.CENTER;
 			
-			for(var i:uint = 0;i<stage.stageHeight;i=i+VGAP)
+			const TOP_AND_BOTTOM:int = 20;
+			for(var i:uint = TOP_AND_BOTTOM;i<stage.stageHeight-TOP_AND_BOTTOM;i=i+VGAP)
 			{
 				var lineBox:LineBox = LineBox.create(0,i,stage.stageWidth,VGAP);
 				_moveBox.addChild(lineBox);

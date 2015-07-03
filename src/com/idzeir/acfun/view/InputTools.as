@@ -97,16 +97,17 @@ package com.idzeir.acfun.view
 				_style.style = e.info.style;
 			});
 			
+			var inputColors:Array = $.g.xml..label.@colors.split(",");
 			_tipsTxt = new TextField();
 			_tipsTxt.autoSize = "left";
-			_tipsTxt.textColor = 0x999999;
+			_tipsTxt.textColor = inputColors&&inputColors.length>2?parseInt(inputColors[2]):0x999999;
 			_tipsTxt.mouseEnabled = false;
 			_tipsTxt.defaultTextFormat = new TextFormat(FontUtil.fontName);
 			_tipsTxt.htmlText = $.l.get("send_text_tips");
 			_tipsTxt.x = this._gap + 3;
 			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
 			_tipsTxt.alpha = .5;
-			_tipsTxt.filters = [new DropShadowFilter(1,45,0xFFFFFF,1,1,1)];
+			//_tipsTxt.filters = [new DropShadowFilter(1,45,0xFFFFFF,1,1,1)];
 			this.addRawChild(_tipsTxt);
 			
 			addTextListener();

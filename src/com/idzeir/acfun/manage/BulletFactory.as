@@ -83,5 +83,18 @@ package com.idzeir.acfun.manage
 		{
 			return _useMap;
 		}
+		
+		/**
+		 * 返回弹幕池统计信息
+		 */		
+		public function toString():String
+		{
+			var poolTotal:uint = 0;
+			for each(var i:Vector.<IBullet> in _map)
+			{
+				poolTotal += i.length;
+			}
+			return "使用弹幕："+_useMap.length+" 创建弹幕："+(poolTotal+_useMap.length);
+		}
 	}
 }

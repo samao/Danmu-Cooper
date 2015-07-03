@@ -13,18 +13,14 @@ package com.idzeir.acfun.view
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 	import flash.events.Event;
-	import flash.system.Security;
 	
 	/**
-	 * 舞台基类
+	 * 舞台基类每个独立的swf必须对安全域单独进行授权，否则会出现域代码混乱
 	 */	
 	public class BaseStage extends Sprite
 	{
 		public function BaseStage()
 		{
-			Security.allowDomain("*");
-			Security.allowInsecureDomain("*");
-			
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
 		}
 		

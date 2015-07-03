@@ -65,7 +65,7 @@ package com.idzeir.acfun.profile
 			smoothFps = smoothFps * 0.99 + fps * 0.01;//控制平滑波动
 			
 			infoTxt.text = "帧频:" + smoothFps.toFixed(2) + " 内存:" + Number(curMem * rate).toFixed(2) + " 峰值:" + Number(maxMem * rate).toFixed(2);
-			
+			infoTxt.appendText("\n"+$.ui);
 			prevTime = getTimer();
 		}
 		

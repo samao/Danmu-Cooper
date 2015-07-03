@@ -45,7 +45,6 @@ package
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
-	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -53,6 +52,7 @@ package
 	import flash.net.URLRequest;
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
+	import flash.system.Security;
 	import flash.ui.ContextMenuItem;
 	import flash.utils.clearInterval;
 	import flash.utils.setInterval;
@@ -92,7 +92,9 @@ package
 		
 		public function CoopPlayer()
 		{
-			
+			super();
+			Security.allowDomain("*");
+			Security.allowInsecureDomain("*");
 		}
 		
 		override protected function onAdded(event:Event):void
@@ -100,7 +102,7 @@ package
 			super.onAdded(event);
 			
 			Log.level = 4;
-			Log.useTracer = false;
+			Log.useTracer = true;
 			
 			//屏蔽合作方右键菜单
 			const VERSION:String = "AP_NO.20150623";
@@ -230,8 +232,6 @@ package
 				clearHandler();
 				_coopSDK = e.target.content;
 				applyLogicXML();
-				
-				if($.g.proxy!="")_coopSDK["playerURL"]($.g.playerURL,stage.loaderInfo.parameters);
 				_apiBox.addChild(_coopSDK as DisplayObject);
 			};
 			var failHandler:Function = function(e:Event):void
@@ -248,7 +248,7 @@ package
 			loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR,failHandler);
 			
 			var ldr:LoaderContext = new LoaderContext();
-			ldr.applicationDomain = new ApplicationDomain();
+			ldr.applicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
 			if(ldr["allowCodeImport"])
 			{
 				ldr["allowCodeImport"] = true;
@@ -339,12 +339,13 @@ package
 		
 		private function onResume(e:Event):void
 		{
+			//Log.debug("视频播放恢复");
 			_bullets.resume();
 		}
 		
 		private function onPause(e:Event):void
 		{
-			Log.debug("视频暂停");
+			//Log.debug("视频暂停");
 			_bullets.pause();
 		}
 		

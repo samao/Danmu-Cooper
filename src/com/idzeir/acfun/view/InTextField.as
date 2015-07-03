@@ -36,8 +36,11 @@ package com.idzeir.acfun.view
 			this.backgroundColor = colors&&colors.length>0?parseInt(colors[0]):0xFFFFFF;
 			this.defaultTextFormat = new TextFormat(FontUtil.fontName,12,0x000000,true);
 			this.defaultTextFormat.leftMargin = 10;
-			this.border = true;
-			this.borderColor = colors&&colors.length>1?parseInt(colors[1]):0x333333;
+			if(colors&&colors.length>1&&colors[1]!="null")
+			{
+				this.border = true;
+				this.borderColor = colors&&colors.length>1?parseInt(colors[1]):0x333333;
+			}
 			this.maxChars = 60;
 			
 			this.filters = [new DropShadowFilter(1,45,0,1,1,1),new DropShadowFilter(1,225,0,1,1,1)];
