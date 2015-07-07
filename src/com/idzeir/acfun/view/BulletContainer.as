@@ -68,29 +68,6 @@ package com.idzeir.acfun.view
 			this.mouseEnabled = this.mouseChildren = false;
 			Log.info("初始化弹幕显示容器");
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
-			
-			/*this.contextMenu = new ContextMenu();
-			this.contextMenu.hideBuiltInItems();
-			this.contextMenu.customItems = [];
-			var copy:ContextMenuItem = new ContextMenuItem("",true);
-			copy.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,function(e:ContextMenuEvent):void
-			{
-				var tar:IBullet = e.mouseTarget as IBullet;
-				if(tar)
-				{
-					flash.system.System.setClipboard(tar.content);
-				}
-			});
-			
-			this.contextMenu.addEventListener(ContextMenuEvent.MENU_SELECT,function(e:ContextMenuEvent):void
-			{
-				var tar:IBullet = e.mouseTarget as IBullet;
-				if(tar)
-				{
-					copy.caption = "--复制>> "+tar.content;
-					contextMenu.customItems.push(copy);
-				}
-			});*/
 		}
 		
 		public function get isRunning():Boolean
