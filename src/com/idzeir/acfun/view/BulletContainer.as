@@ -224,8 +224,8 @@ package com.idzeir.acfun.view
 				case BulletType.RIGHT_TO_LEFT:
 					addMoveBullet(value,index);
 					break;
-				case BulletType.FIXED_POSTION:
-					addFixedPostionBullet(value);
+				case BulletType.FIXED_FADE_OUT:
+					addFixedFadeBullet(value);
 					break;
 				default:
 					Log.warn("未知弹幕：",NodeUtil.get(value).mode);
@@ -233,9 +233,9 @@ package com.idzeir.acfun.view
 			}
 		}
 		
-		private function addFixedPostionBullet(value:Node):void
+		private function addFixedFadeBullet(value:Node):void
 		{
-			this._advanceBox.addChild($.ui.create(BulletType.FIXED_POSTION).bullet(NodeUtil.get(value)).warp);
+			this._advanceBox.addChild($.ui.create(BulletType.FIXED_FADE_OUT).bullet(NodeUtil.get(value)).warp);
 		}
 		
 		private function addBottomBullet(value:Node):void

@@ -11,7 +11,7 @@ package com.idzeir.acfun.manage
 {
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.FadeOutBullet;
-	import com.idzeir.acfun.view.FixedPostionBullet;
+	import com.idzeir.acfun.view.FixedFadeBullet;
 	import com.idzeir.acfun.view.IBullet;
 	import com.idzeir.acfun.view.MoveBullet;
 	
@@ -61,8 +61,8 @@ package com.idzeir.acfun.manage
 					case BulletType.RIGHT_TO_LEFT:
 						bullet = new MoveBullet();
 						break;
-					case BulletType.FIXED_POSTION:
-						bullet = new FixedPostionBullet();
+					case BulletType.FIXED_FADE_OUT:
+						bullet = new FixedFadeBullet();
 						break;
 					default:
 						//默认都是从右到左

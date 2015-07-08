@@ -30,6 +30,6 @@ package com.idzeir.acfun.manage
 		/**
 		 * 固定位置弹幕 
 		 */		
-		public static const FIXED_POSTION:String = "7";
+		public static const FIXED_FADE_OUT:String = "7";
 	}
 }

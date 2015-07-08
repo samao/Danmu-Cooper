@@ -18,11 +18,11 @@ package com.idzeir.acfun.view
 	/**
 	 * 高级弹幕显示对象
 	 */	
-	public class FixedPostionBullet extends BaseBullet
+	public class FixedFadeBullet extends BaseBullet
 	{
 		private var _dur:int = 30;
 		
-		public function FixedPostionBullet()
+		public function FixedFadeBullet()
 		{
 			super();
 		}
@@ -44,7 +44,7 @@ package com.idzeir.acfun.view
 		
 		override public function get bulletType():String
 		{
-			return BulletType.FIXED_POSTION;
+			return BulletType.FIXED_FADE_OUT;
 		}
 	}
 }
