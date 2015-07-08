@@ -26,5 +26,10 @@ package com.idzeir.acfun.manage
 		 * 底部淡出 
 		 */
 		public static const FADE_OUT_BOTTOM:String = "4";
+		
+		/**
+		 * 固定位置弹幕 
+		 */		
+		public static const FIXED_POSTION:String = "7";
 	}
 }

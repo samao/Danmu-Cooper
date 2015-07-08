@@ -36,6 +36,10 @@ package com.idzeir.acfun.view
 		 * 移动弹幕容器 
 		 */		
 		private var _moveBox:Sprite;
+		/**
+		 * 高级弹幕容器 
+		 */		
+		private var _advanceBox:Sprite;
 		
 		private var _lastTime:int = 0;
 		
@@ -145,6 +149,8 @@ package com.idzeir.acfun.view
 		protected function onAdded(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE,onAdded);
+			_advanceBox ||= new Sprite();
+			
 			_topBox ||= new VBox();
 			_topBox.algin = VBox.CENTER;
 			
@@ -160,10 +166,11 @@ package com.idzeir.acfun.view
 				_moveBox.addChild(lineBox);
 				_useMap.push(lineBox);
 			}
+			
+			this.addChild(_advanceBox);
 			this.addChild(_moveBox);
 			this.addChild(_topBox);
 			this.addChild(_bottomBox);
-			//this.addChild(new BulletProfile());
 			
 			$.e.addEventListener(EventType.SWITCH_BULLET,function():void
 			{
@@ -194,7 +201,7 @@ package com.idzeir.acfun.view
 			if(!_isRunning)return;
 			for each(var i:IBullet in $.ui.useMap)
 			{
-				i.update();
+				i.update(_lastTime);
 			}
 		}
 		
@@ -214,10 +221,21 @@ package com.idzeir.acfun.view
 				case BulletType.FADE_OUT_BOTTOM:
 					addBottomBullet(value);
 					break;
-				default:
+				case BulletType.RIGHT_TO_LEFT:
 					addMoveBullet(value,index);
 					break;
+				case BulletType.FIXED_POSTION:
+					addFixedPostionBullet(value);
+					break;
+				default:
+					Log.warn("未知弹幕：",NodeUtil.get(value).mode);
+					break;
 			}
+		}
+		
+		private function addFixedPostionBullet(value:Node):void
+		{
+			this._advanceBox.addChild($.ui.create(BulletType.FIXED_POSTION).bullet(NodeUtil.get(value)).warp);
 		}
 		
 		private function addBottomBullet(value:Node):void

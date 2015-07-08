@@ -15,15 +15,11 @@ package com.idzeir.acfun.view
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
-	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
 	import flash.geom.Point;
-	import flash.system.System;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
-	import flash.ui.ContextMenu;
-	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * 弹幕显示ui基类

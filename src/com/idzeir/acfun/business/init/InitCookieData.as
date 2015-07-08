@@ -35,7 +35,7 @@ package com.idzeir.acfun.business.init
 			var onCompleteHandler:Function = function(event:Event):void
 			{
 				clear();
-				Log.warn("加载插件成功");
+				Log.info("加载插件成功");
 				$.fc = event.target.content["cookie"];
 				complete();
 			};

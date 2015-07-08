@@ -128,7 +128,7 @@ package com.idzeir.acfun.manage
 			var cur:Node = _begin;
 			while(cur)
 			{
-				s.push((NodeUtil.get(cur)).stime);
+				s.push((NodeUtil.get(cur)).mode);
 				cur = cur.next;
 			}
 			return "Total:"+s.length +" ->"+ s.join("<");
