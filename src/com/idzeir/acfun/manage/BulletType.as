@@ -28,7 +28,7 @@ package com.idzeir.acfun.manage
 		public static const FADE_OUT_BOTTOM:String = "4";
 		
 		/**
-		 * 固定位置弹幕 
+		 * 固定位置弹幕 高级弹幕
 		 */		
 		public static const FIXED_FADE_OUT:String = "7";
 	}

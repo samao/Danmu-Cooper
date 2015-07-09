@@ -96,7 +96,7 @@ package com.idzeir.acfun.business.init
 		 */		
 		private function parse(o:Object):void
 		{
-			Log.debug("弹幕解析数据：",JSON.stringify(o));
+			Log.info("弹幕解析数据");
 			for(var i:uint = 0;i<o.length;++i)
 			{
 				var bNo:Number = o[i].length;
@@ -109,7 +109,7 @@ package com.idzeir.acfun.business.init
 						_map[bullet.commentId] = true;
 						$.b.add(new Node(bullet));
 					}else{
-						Log.debug("重复弹幕：",bullet.message);
+						Log.warn("重复弹幕：",bullet.message);
 					}
 				}
 			}

@@ -9,7 +9,6 @@
 
 package com.idzeir.acfun.manage
 {
-	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.FadeOutBullet;
 	import com.idzeir.acfun.view.FixedFadeBullet;
 	import com.idzeir.acfun.view.IBullet;

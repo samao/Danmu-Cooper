@@ -101,7 +101,7 @@ package
 		{
 			super.onAdded(event);
 			
-			Log.level = 1;
+			Log.level = 3;
 			Log.useTracer = true;
 			
 			//屏蔽合作方右键菜单

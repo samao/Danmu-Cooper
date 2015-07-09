@@ -134,8 +134,9 @@ package com.idzeir.acfun.view
 		
 		/**
 		 * 清理舞台现有的弹幕
+		 * @param force 是否立即清除显示，false时为自动消失
 		 */		
-		private function clear():void
+		private function clear(force:Boolean = true):void
 		{
 			_overMap.length = 0;
 			for each(var i:LineBox in _useMap)
@@ -144,6 +145,7 @@ package com.idzeir.acfun.view
 			}
 			_bottomBox.removeChildren();
 			_topBox.removeChildren();
+			_advanceBox.removeChildren();
 		}
 		
 		protected function onAdded(event:Event):void

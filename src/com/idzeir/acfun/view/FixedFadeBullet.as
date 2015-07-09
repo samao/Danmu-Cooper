@@ -20,7 +20,8 @@ package com.idzeir.acfun.view
 	 */	
 	public class FixedFadeBullet extends BaseBullet
 	{
-		private var _dur:int = 30;
+		private var _dur:Number = 30;
+		private var _stime:Number = 0;
 		
 		public function FixedFadeBullet()
 		{
@@ -29,7 +30,7 @@ package com.idzeir.acfun.view
 		
 		override public function update(time:int=0):void
 		{
-			if(--_dur)
+			if((time-_stime)>_dur)
 			{
 				this.removeFromParent();
 			}
@@ -37,8 +38,18 @@ package com.idzeir.acfun.view
 		
 		override public function bullet(value:BulletVo, point:Point=null):IBullet
 		{
-			Log.warn("高级弹幕功能开发中，暂时无法显示");
-			_dur = 30;
+			//Log.warn("高级弹幕功能开发中，暂时无法显示");
+			_dur = value.duration;
+			_stime = value.stime;
+			
+			this.graphics.clear();
+			this.graphics.beginFill(Math.random()*0xFFFFFF);
+			this.graphics.drawCircle(0,0,Math.random()*50+20);
+			this.graphics.endFill();
+			
+			this.x = 70+Math.random()*900;
+			this.y = 70+Math.random()*450;
+			
 			return this;
 		}
 		

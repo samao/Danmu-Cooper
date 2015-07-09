@@ -9,6 +9,7 @@
 
 package com.idzeir.acfun.vo
 {
+	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
 	
 	/**
@@ -31,6 +32,11 @@ package com.idzeir.acfun.vo
 		private var _type:String;
 		private var _score:String;
 		
+		//高级弹幕数据 
+		private var _addon:Object = null;
+		private var _duration:Number;
+		private var _url:String = null;
+		
 		public function BulletVo(value:* = null,type:uint = 1)
 		{
 			if(value)
@@ -50,9 +56,93 @@ package com.idzeir.acfun.vo
 				_message = value["m"];
 				_score = value["score"];
 				_type = type.toString();
+				
+				//高级弹幕配置信息
+				if(_mode == BulletType.FIXED_FADE_OUT)
+				{
+					try{
+						var specialData:Object = value["addon"]||JSON.parse(value.m);
+						_addon = specialData;
+						_duration = getDurationFromAddon();
+						_url = specialData.url;
+						_message = specialData.n;
+					}catch(e:Error){
+						Log.warn("高级弹幕数据错误：",e.message);
+					}
+				}
 			}
 		}
 		
+		/**
+		 * 高级弹幕超链接 
+		 */
+		public function get url():String
+		{
+			return _url;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set url(value:String):void
+		{
+			_url = value;
+		}
+
+		/**
+		 * 计算当前高级弹幕持续时间
+		 */		
+		private function getDurationFromAddon():Number
+		{
+			var duration:Number = 0;
+			const DEF_TIME:int = 3;
+			if(this._addon)
+			{
+				if(_addon.l != null)
+					duration += Number(_addon.l);
+				else
+					duration += DEF_TIME;
+				
+				if(_addon.z != null)
+				{
+					for each(var i:Object in _addon.z)
+					{
+						if(i.l!=null&&Number(i.l)>0)
+						{
+							duration += Number(i.l);
+						}
+					}
+				}
+			}
+			return duration;
+		}
+		
+		/**
+		 * 高级弹幕持续时间 
+		 */
+		public function get duration():Number
+		{
+			return _duration;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set duration(value:Number):void
+		{
+			_duration = value;
+		}
+
+		public function get addon():Object
+		{
+			return _addon;
+		}
+
+		public function set addon(value:Object):void
+		{
+			_addon = value;
+		}
+
 		/**
 		 * 发送用户 
 		 */

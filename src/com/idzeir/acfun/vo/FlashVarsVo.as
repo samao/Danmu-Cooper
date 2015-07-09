@@ -13,7 +13,7 @@ package com.idzeir.acfun.vo
 	/**
 	 * 页面信息
 	 */	
-	public class FlashVarsVo implements IFlashVarsVo
+	dynamic public class FlashVarsVo implements IFlashVarsVo
 	{
 		private var _vid:String = "1478973";
 		private var _videoId:String;
@@ -70,11 +70,21 @@ package com.idzeir.acfun.vo
 		{
 			if(value)
 			{
+				//严格命名字段
 				value.hasOwnProperty("vid")&&(this._vid = value["vid"]);
 				value.hasOwnProperty("videoId")&&(this._videoId = value["videoId"]);
 				value.hasOwnProperty("sourceId")&&(this._sourceId = value["sourceId"]);
 				value.hasOwnProperty("type")&&(this._type = value["type"]);
 				value.hasOwnProperty("autoplay")&&(this._autoplay = value["autoplay"]);
+				
+				//未命名字段
+				for(var i:String in value)
+				{
+					if(!this.hasOwnProperty(i))
+					{
+						this[i] = value[i];
+					}
+				}
 			}
 			return this
 		}
