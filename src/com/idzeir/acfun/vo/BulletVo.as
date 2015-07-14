@@ -36,6 +36,7 @@ package com.idzeir.acfun.vo
 		private var _addon:Object = null;
 		private var _duration:Number;
 		private var _url:String = null;
+		private var _name:String;
 		
 		public function BulletVo(value:* = null,type:uint = 1)
 		{
@@ -73,6 +74,16 @@ package com.idzeir.acfun.vo
 			}
 		}
 		
+		public function get name():String
+		{
+			return _addon?addon.name:null;
+		}
+
+		public function set name(value:String):void
+		{
+			_name = value;
+		}
+
 		/**
 		 * 高级弹幕超链接 
 		 */

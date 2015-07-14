@@ -90,6 +90,21 @@ package com.idzeir.acfun.manage
 			return _useMap;
 		}
 		
+		public function getUseByName(name:String):IBullet
+		{
+			if(name)
+			{
+			
+			for each(var i:IBullet in _useMap)
+			{
+				if(i.getBullet().mode == BulletType.FIXED_FADE_OUT&&i.getBullet().name == name)
+				{
+					return i;
+				}
+			}}
+			return null;
+		}
+		
 		/**
 		 * 返回弹幕池统计信息
 		 */		

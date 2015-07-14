@@ -30,6 +30,8 @@ package com.idzeir.acfun.view
 		
 		protected var _txt:TextField;
 		
+		protected var _bulletVo:BulletVo;
+		
 		public function BaseBullet()
 		{
 			super();
@@ -58,9 +60,10 @@ package com.idzeir.acfun.view
 		{
 			this.removeEventListener(Event.REMOVED_FROM_STAGE,onRemoved);
 			$.ui.recyle(this);
+			_bulletVo = null;
 		}
 		
-		public function update(time:int=0):void
+		public function update(time:Number=0):void
 		{
 			
 		}
@@ -77,6 +80,7 @@ package com.idzeir.acfun.view
 		
 		public function bullet(value:BulletVo,point:Point = null):IBullet
 		{
+			_bulletVo = value;
 			this.tf.size = value.size;
 			this.tf.color = value.color;
 			
@@ -95,10 +99,16 @@ package com.idzeir.acfun.view
 			return this
 		}
 		
+		public function getBullet():BulletVo
+		{
+			return _bulletVo;
+		}
+		
 		protected function removeFromParent():void
 		{
 			try
 			{
+				_bulletVo = null;
 				this.graphics.clear();
 				this.parent.removeChild(this);
 			}catch(error:Error){

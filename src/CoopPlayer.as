@@ -307,12 +307,12 @@ package
 		
 		private function onTime(e:Event):void
 		{
-			var time:int;
+			var time:Number;
 			if(_timeVo.arg.indexOf("::")==0)
 			{
-				time = int(FindUtil.get(_coopSDK,_timeVo.arg.replace("::","")));
+				time = Number(FindUtil.get(_coopSDK,_timeVo.arg.replace("::","")));
 			}else{
-				time = int(FindUtil.get(e,_timeVo.arg));
+				time = Number(FindUtil.get(e,_timeVo.arg));
 			}
 			//更新弹幕时间
 			//Log.debug("当前播放：",time,_bullets.isRunning);

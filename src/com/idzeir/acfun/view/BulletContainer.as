@@ -9,6 +9,7 @@
 
 package com.idzeir.acfun.view
 {
+	import com.adobe.utils.StringUtil;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
@@ -17,6 +18,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.vo.BulletVo;
 	import com.idzeir.acfun.vo.Node;
 	
+	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -39,7 +41,7 @@ package com.idzeir.acfun.view
 		/**
 		 * 高级弹幕容器 
 		 */		
-		private var _advanceBox:Sprite;
+		private var _advanceBox:FixedSpace;
 		
 		private var _lastTime:int = 0;
 		
@@ -151,7 +153,7 @@ package com.idzeir.acfun.view
 		protected function onAdded(event:Event):void
 		{
 			this.removeEventListener(Event.ADDED_TO_STAGE,onAdded);
-			_advanceBox ||= new Sprite();
+			_advanceBox ||= new FixedSpace();
 			
 			_topBox ||= new VBox();
 			_topBox.algin = VBox.CENTER;
@@ -237,7 +239,43 @@ package com.idzeir.acfun.view
 		
 		private function addFixedFadeBullet(value:Node):void
 		{
-			this._advanceBox.addChild($.ui.create(BulletType.FIXED_FADE_OUT).bullet(NodeUtil.get(value)).warp);
+			var clip:DisplayObjectContainer = this._advanceBox;
+			
+			var p:IBullet = $.ui.getUseByName(NodeUtil.get(value).addon.parent);
+			if(p)
+			{
+				clip = p.warp as DisplayObjectContainer;
+			}
+			
+			var cmt:IBullet = $.ui.create(BulletType.FIXED_FADE_OUT).bullet(NodeUtil.get(value),new Point(stage.stageWidth,stage.stageHeight - 60));
+			if(cmt.getBullet().name&&StringUtil.beginsWith(cmt.getBullet().name,"mask"))
+			{
+				//cmt.warp.visible = false;
+			}
+			
+			/** 添加到舞台 **/
+			for (var i:int=0;i<clip.numChildren;i++)
+			{
+				var child:FixedFadeBullet = clip.getChildAt(i) as FixedFadeBullet;
+				if (child)
+				{
+					if (child["depth"] > cmt["depth"])
+					{
+						break;
+					}
+				}
+			}
+			
+			clip.addChildAt(cmt.warp,i);
+			
+			var m:IBullet = $.ui.getUseByName(NodeUtil.get(value).addon.mask);
+			if(m)
+			{
+				m.warp.visible = true;
+				m.warp.cacheAsBitmap = true;
+				cmt.warp.cacheAsBitmap = true;
+				cmt.warp.mask = m.warp;
+			}
 		}
 		
 		private function addBottomBullet(value:Node):void

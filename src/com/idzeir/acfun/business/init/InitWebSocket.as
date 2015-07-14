@@ -52,6 +52,7 @@ package com.idzeir.acfun.business.init
 			_websocket.addEventListener(WebSocketEvent.CLOSED,function():void
 			{
 				Log.info("websocket连接关闭");
+				breakQm();
 			});
 			_websocket.addEventListener(WebSocketEvent.MESSAGE,function(e:WebSocketEvent):void
 			{

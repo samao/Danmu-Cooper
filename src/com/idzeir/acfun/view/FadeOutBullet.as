@@ -30,7 +30,7 @@ package com.idzeir.acfun.view
 			super();
 		}
 		
-		override public function update(time:int=0):void
+		override public function update(time:Number=0):void
 		{
 			this.alpha -= SPEED;
 			if(this.alpha <= 0)

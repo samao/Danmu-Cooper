@@ -23,7 +23,7 @@ package com.idzeir.acfun.view
 		 * 弹幕位置刷新
 		 * @param time
 		 */		
-		function update(time:int = 0):void;
+		function update(time:Number = 0):void;
 		/**
 		 * 弹幕类型
 		 * @return 
@@ -36,6 +36,10 @@ package com.idzeir.acfun.view
 		 * @return 
 		 */		
 		function bullet(value:BulletVo,point:Point = null):IBullet;
+		/**
+		 * 获取当前的弹幕数据
+		 */		
+		function getBullet():BulletVo;
 		/**
 		 * 返回显示对象
 		 * @return 

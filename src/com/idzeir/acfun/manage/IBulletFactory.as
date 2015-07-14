@@ -32,5 +32,9 @@ package com.idzeir.acfun.manage
 		 * @return 
 		 */		
 		function get useMap():Vector.<IBullet>;
+		/**
+		 * 获取当前屏幕显示指定名称的弹幕
+		 */		
+		function getUseByName(name:String):IBullet
 	}
 }
