@@ -57,7 +57,20 @@ package com.idzeir.acfun.view
 		
 		protected var _line:TimelineLite = new TimelineLite({onComplete:onComplete});
 		
-		public var depth:int = 0;
+		/** 空间分配索引,记录所占用的弹幕空间层 **/
+		protected var _index:int;
+		protected var fileterOff:Boolean = true;
+		private var _color:int;
+		private var isInited:Boolean = false;
+		private var BMS:Vector.<String> = new <String>[BlendMode.NORMAL,BlendMode.MULTIPLY,BlendMode.SCREEN,BlendMode.LIGHTEN,BlendMode.DARKEN,BlendMode.DIFFERENCE,BlendMode.ADD,BlendMode.SUBTRACT,BlendMode.INVERT,BlendMode.OVERLAY,BlendMode.HARDLIGHT,BlendMode.LAYER,BlendMode.ALPHA,BlendMode.ERASE];
+		private var centerPP:PerspectiveProjection;
+		public var _width:Number = 864;
+		public var _height:Number = 526-40;
+		/**
+		 * 深度 
+		 */		
+		public var depth:int=0;
+		
 		
 		public function FixedFadeBullet()
 		{
@@ -68,173 +81,308 @@ package com.idzeir.acfun.view
 		{
 			if((time-_startTime)>_duration)
 			{
+				_line.clear();
 				this.mask = null;
 				this.removeFromParent();
+				return;
 			}
 		}
 		
 		public function onComplete():void
 		{
-			return;
-			this.mask = null;
-			this.removeFromParent();
-			if(this._bulletVo&&this._bulletVo.addon.mask)
+			if(mask!=null&&mask.parent)
 			{
-				var mask:FixedFadeBullet = $.ui.getUseByName(this._bulletVo.addon.mask) as FixedFadeBullet;
-				if(mask)
-				{
-					mask.onComplete();
-				}
+				mask.parent.removeChild(mask);
 			}
 		}
 		
 		override public function bullet(value:BulletVo, point:Point=null):IBullet
 		{
-			reset();
+			this.reset();
 			
-			super.bullet(value,point);
-			
-			//先不设置3d中心
-			this.transform.perspectiveProjection = new PerspectiveProjection();
-			this.transform.perspectiveProjection.projectionCenter = new Point(this.getResoultWidth(500),this.getResoultHeight(500));
-			
-			_duration = value.duration;
-			_startTime = value.stime;
-			
+			this.addChild(_txt);
+			var W:Number = _width;
+			var H:Number = _height;			
 			var addinf:Object = value.addon;
-			if (addinf.dep!=null) depth = addinf.dep;
-			
-			var fsty:Object = addinf.w||{};
-			
-			var filer:Array = [];
-			if((fsty.l as Array) !=null)
+			var i:int;
+			if (addinf.dep!=null) depth = addinf.dep;			
+			var fsty:Object = addinf.w;
+			//			fsty = {f:config.font,b:config.bold,l:{t:1,c:0xCC0000,a:1,x:9,y:9,s:2,b:true,k:false}}
+			//			fsty = {g:{w:10,h:10,d:'NYzbK0MBHMc9+R88aB5cUrbyJpcX1ExnLqGmXDfD2+aBkge5x9ommzENjbl00Ij2wGjhuCzOw8a0NjNpS6L1M6X28nVefOtb3099+2yLxV6qqvKRRhOkvr5nUqmCVF/vJ4UiIHAoIWyjRHKbksl8uLj4hdebhMfzhmg0gf9w3Cfu75MphvGTVhvC5eUX0tNPkZZmhdXqQyTyAYbZFHgbbndC8IapuzsMuz2OpqYrwRlHLPYj/JJYW+Mhlx/CYgmQWh2iLjWP2Vk/5uYiYFkWZWVKVFZacHsTgdl2DG3/LimVj9TYcQKjnoekQAf/Qxiv0Q+h34i+vIOpGcL4lIsa28+phrELm4e4sA0rth3c8XGw+9dw7nHIEjVgeIKjWvk6FZfqYF4NYuvoDbn5vejtMSFD1Imx0QOoVHroZg5I0WxLZedNYmTiG2cewibLweEIYH45CMfGE1wuH5zO11RJicEkEg1STvY0VZTrqbVliWSyeaquXSCp1Ex1dYtUVGQwZWYO/AE='}}
+			if (fsty == null) 
+			{	
+				// fontStyle
+				fsty = {};
+			}
+			else
 			{
-				var fi:Array = fsty.l;					
-				var tmp:Object;
-				for(var k:uint=0;k<fi.length;k++)
+				var filer:Array;
+				if((fsty.l as Array) !=null)
 				{
-					tmp = fi[k];
-					if (tmp is Array)
+					var fi:Array = fsty.l;					
+					var tmp:Object;
+					filer = [];
+					for(var k:uint=0;k<fi.length;k++)
 					{
-						filer.push(getFilter(tmp as Array));
+						tmp = fi[k];
+						if (tmp is Array)
+						{
+							filer.push(getFilter(tmp as Array));
+						}
+						else
+						{
+							filer.push(getFilter(fi));
+							break;
+						}	
+					}
+					fileterOff = false;
+				}
+				
+				var gr:DisplayObject = null;
+				
+				if(fsty.g != null && fsty.g.d != null)
+				{
+					if (fsty.g.w == null)
+					{
+						//新版图片弹幕，支持gif动画
+						gr = getNewData(fsty.g.d);
 					}
 					else
 					{
-						filer.push(getFilter(fi));
-						break;
-					}	
+						//兼容旧版
+						gr = getData(fsty.g.w,fsty.g.h,fsty.g.d);	
+					}
+					if(addinf.b){gr.scaleX = gr.scaleY = (value.size)/Math.max(fsty.g.w,fsty.g.h)}
+					if (gr)
+					{
+						gr.filters = filer;	//图片弹幕滤镜
+						addChild(gr);
+					}
 				}
-			}else{
-				filer = [new GlowFilter(0, 0.7, 3,3),new DropShadowFilter(2, 45, 0, 0.6),new GlowFilter(0, 0.85, 4, 4, 3, 1, false, false)];
+				
+				//				if(fsty.f==null){fsty.f=config.font;}
+				//				if(fsty.b==null){fsty.b=config.bold;}
 			}
 			
-			var gif:DisplayObject = null;
-			if(fsty.g!=null&&fsty.g.d!=null)
+			//			if(addinf.bh!=null&&addinf.bh==true){debug=true;}
+			
+			/** 字幕形式，是普通字幕还是绘图指令 **/
+			var isb:Boolean = (addinf.b == null) ? true:addinf.b;
+			if(isb && fileterOff)
 			{
-				gif = fsty.g.w==null?getNewData(fsty.g.d):getData(fsty.g.w,fsty.g.h,fsty.g.d);
-				gif.filters = filer;
-				this.addChild(gif);
+				if(value.color == 0)
+					filer = [new GlowFilter(16777215, 1, 2,2,1.5,1)];
+				else 
+					filer = [[new GlowFilter(0, 0.7, 3,3)],[new DropShadowFilter(2, 45, 0, 0.6)],[new GlowFilter(0, 0.85, 4, 4, 3, 1, false, false)]];
 			}
 			
-			//初始状态
-			this.x = addinf.p==null?0:getResoultWidth(addinf.p.x);
-			this.y = addinf.p==null?0:getResoultHeight(addinf.p.y);
-			this.z = addinf.pz==null?0:addinf.pz;
-			this.alpha = addinf.a==null?1:addinf.a;
-			this.rotationX = addinf.rx==null?0:addinf.rx;
-			this.rotationY = addinf.k == null?0:addinf.k;
-			this.rotationZ = addinf.r==null?0:addinf.r;
+			var sx:Number = addinf.e||1;
+			var sy:Number = addinf.f||1;
+			var maxl:Number = addinf.l;
+			if(addinf.z!= null)
+			{
+				var lastSx:Number = sx;
+				var lastSy:Number = sy;
+				for(i = 0;i<addinf.z.length;i++)
+				{                    
+					zinf = addinf.z[i];
+					
+					var update:Boolean = false;
+					
+					if (zinf.f != null)
+					{
+						lastSx = zinf.f;						
+					}
+					else
+					{
+						if (zinf.l > maxl)
+						{					
+							sx = lastSx;
+							update = true;
+						}
+					}
+					
+					if (zinf.g != null)
+					{
+						lastSy = zinf.g;
+					}
+					else
+					{
+						if (zinf.l > maxl)
+						{					
+							sy = lastSy;
+							update = true;
+						}
+					}
+					
+					if (update)
+						maxl = zinf.l;
+				}
+				
+				if (maxl == 0)
+				{
+					sx = lastSx;
+					sy = lastSy;
+				}
+			}
+			/** 解析出来初始字体，大小，颜色，是否粗体，边界颜色，文字信息 **/
+			super.bullet(value,point);
+			/** 字幕形式，是普通字幕还是绘图指令 **/
+			var commentType:uint = (addinf.t != null ) ? addinf.t : 0;
 			
-			//缩放状态
-			this.scaleX = addinf.e==null?1:addinf.e;
-			this.scaleY = addinf.f==null?1:addinf.f;
-			this.scaleZ = addinf.sz==null?1:addinf.sz;
+			var xbase:Number = 0,ybase:Number = 0;
 			
-			//先不启用渲染模式
-			var BMS:Vector.<String> = new <String>[BlendMode.NORMAL,BlendMode.MULTIPLY,BlendMode.SCREEN,BlendMode.LIGHTEN,BlendMode.DARKEN,BlendMode.DIFFERENCE,BlendMode.ADD,BlendMode.SUBTRACT,BlendMode.INVERT,BlendMode.OVERLAY,BlendMode.HARDLIGHT,BlendMode.LAYER,BlendMode.ALPHA,BlendMode.ERASE];
-			if(addinf.bm!=null)
+			/** 初始位置 **/
+			if(addinf.p != null)
+			{
+				this.x = int(addinf.p.x * W / 1000 + xbase);
+				this.y = int(addinf.p.y * H / 1000 + ybase);
+			}
+			
+			if(addinf.pz != null)
+			{
+				this.z = addinf.pz;
+			}
+			//var stap:CommentPos = (commentObject.p != null) ? new CommentPos(commentObject.p.x,commentObject.p.y) : new CommentPos(0,0);
+			//_user = data.user;
+			/** 初始透明度 **/
+			var startalpha:Number = (addinf.a == null) ? 1:addinf.a;
+			
+			/** 转角 **/
+			//			if(addinf.pz != null){local3d = true;}
+			
+			if(addinf.rx != null)
+			{
+				this.rotationX = addinf.rx;			
+			}
+			if(addinf.k != null)
+			{
+				this.rotationY = addinf.k;				
+			}
+			if(addinf.r != null)
+			{
+				this.rotationZ = addinf.r;
+			}
+			
+			//设置3d中心为视频正中间
+			if (centerPP == null)
+			{
+				var pp:PerspectiveProjection = new PerspectiveProjection();
+				pp.projectionCenter = new Point(W/2,H/2);
+				centerPP = pp;
+			}
+			//this.transform.perspectiveProjection = centerPP;
+			
+			/** XY缩放 **/
+			if(addinf.e != null)this.scaleX = addinf.e;
+			if(addinf.f != null)this.scaleY = addinf.f;
+			if(addinf.sz != null)this.scaleZ = addinf.sz;
+			
+			if(addinf.bm != null)
 			{
 				var bm:int = int(addinf.bm);
-				if(bm>0&&bm<BMS.length)
-				{
-					this.blendMode = BMS[bm];
-				}
-			}else{
-				this.blendMode = BlendMode.NORMAL;
-			}
-			//先不事先锚点移动
+				if(0<bm && bm<BMS.length){this.blendMode = BMS[bm];}
+			}		
+			
+			/** 生存周期 **/
+			var life:Number = (addinf.l != null) ? addinf.l : 3;
+			
+			/** 锚点 **/
 			var cor:int = int(addinf.c);
-			if(cor>0)this.transObj(this,cor,addinf.w==null||addinf.w.g==null);
-			//动画持续时间
-			var life:Number = addinf.l == null?3:addinf.l;
-			_line.append(new TweenLite(this,life,{}));
+			if(cor > 0)transObj(this,cor,addinf.w==null||addinf.w.g==null);
 			
+			/** 初始化 **/
+			this.alpha = startalpha ;//* config.alpha;
+			
+			/** 初始化计算,Sleep无变化参数 */
+			_line.append(new TweenLite(this,life,{}));
 			var zinf:Object;
-			if(addinf.z!=null)
+			if(addinf.z!= null)
 			{
-				for(var i:int = 0;i<addinf.z.length;++i)
-				{
-					var to:Object = {};
+				for(i=0;i<addinf.z.length;i++)
+				{                    
+					var moveObj:Object = new Object();
+					var mt:Number = 3;
 					zinf = addinf.z[i];
-					to.x = zinf.x==null?this.x:this.getResoultWidth(zinf.x);
-					to.y = zinf.y==null?this.y:this.getResoultHeight(zinf.y);
-					to.z = zinf.z==null?this.z:zinf.z;
-					if(zinf.c!=null)
+					if(zinf.x != null)moveObj.x = zinf.x * W / 1000 + xbase;
+					if(zinf.y != null)moveObj.y = zinf.y * H / 1000 + ybase;
+					if(zinf.z != null)moveObj.z = zinf.z;
+					if(zinf.c != null)
 					{
-						TweenPlugin.activate([TintPlugin]);
-						to.tint = zinf.c;
+						if(!isInited)
+						{
+							isInited = true;
+							TweenPlugin.activate([TintPlugin]);
+						}
+						moveObj.tint = zinf.c;
 					}
-					to.rotationX = zinf.rx==null?this.rotationX:zinf.rx;
-					to.rotationY = zinf.e==null?this.rotationY:zinf.e;
-					to.rotationZ = zinf.d==null?this.rotationZ:zinf.d;
-					
-					to.scaleX = zinf.f==null?this.scaleX:zinf.f;
-					to.scaleY = zinf.g==null?this.scaleY:zinf.g;
-					to.scaleZ = zinf.sz==null?this.scaleZ:zinf.sz;
-					
-					to.alpha = zinf.t==null?this.alpha:zinf.t;
-					
-					var partLife:Number = zinf.l==null?life:zinf.l;
-					switch(zinf.v)
+					if(zinf.rx != null)
+					{moveObj.rotationX = zinf.rx;}
+					if(zinf.e != null)
+					{moveObj.rotationY = zinf.e;}
+					if(zinf.d != null)
 					{
-						case 1:
-							to.ease = null;
-							break;
-						case 2:
-							to.ease = Back.easeOut;
-							break;
-						case 3:
-							to.ease = Back.easeIn;
-							break
-						case 4:
-							to.ease = Back.easeInOut;
-							break;
-						case 5:
-							to.ease = Bounce.easeOut;
-							break;
-						case 6:
-							to.ease = Bounce.easeIn;
-							break;
-						case 7:
-							to.ease = Bounce.easeInOut;
-							break;
-						default:
-							to.ease = Linear.easeNone;
-							break;
+						moveObj.rotationZ = zinf.d;
 					}
-					partLife = Math.max(0.000000001,partLife);
-					_line.append(new TweenLite(this,partLife,to));
+					
+					if(zinf.f != null)moveObj.scaleX = zinf.f;
+					if(zinf.g != null)moveObj.scaleY = zinf.g;
+					if(zinf.sz != null)moveObj.scaleZ = zinf.sz;
+					
+					if(zinf.t != null)moveObj.alpha = zinf.t;
+					
+					if(zinf.l != null)mt = zinf.l;
+					else mt = 3;
+					moveObj.ease = Linear.easeNone;
+					if(zinf.v != null)
+					{
+						/** GLOP EARSE FUNCTIONS**/
+						var s:int = zinf.v;
+						switch(s)
+						{
+							case 0:
+								break;
+							case 1:
+								moveObj.ease = null;
+								break;
+							case 2:
+								moveObj.ease = Back.easeOut;
+								break;
+							case 3:
+								moveObj.ease = Back.easeIn;
+								break;
+							case 4:
+								moveObj.ease = Back.easeInOut;
+								break;
+							case 5:
+								moveObj.ease = Bounce.easeOut;
+								break;
+							case 6:
+								moveObj.ease = Bounce.easeIn;
+								break;
+							case 7:
+								moveObj.ease = Bounce.easeInOut;
+								break;
+							default:
+								break;
+						}
+					}
+					if(mt == 0)mt = 0.000000001;
+					_line.append(new TweenLite(this,mt,moveObj));
 				}
 			}
 			
-			if(addinf.bg!=null&&addinf.bh == true)
+			if(addinf.bh!=null&&addinf.bh==true)
 			{
 				this.graphics.beginFill(16711680);
 				this.graphics.drawCircle(0,0,2);
 				this.graphics.endFill();
 			}
+			
+			this._startTime = value.stime;
 			this._duration = this._line.duration;
 			
+			this.cacheAsBitmap = false;
 			return this;
 		}
 		
@@ -311,16 +459,6 @@ package com.idzeir.acfun.view
 					}
 				}
 			}
-		}
-		
-		private function getResoultWidth(value:Number):Number
-		{
-			return value*864/1000;
-		}
-		
-		private function getResoultHeight(value:Number):Number
-		{
-			return value*(526-40)/1000;
 		}
 		
 		private function getData(w:int,h:int,data:String):DisplayObject

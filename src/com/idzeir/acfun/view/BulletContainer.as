@@ -9,7 +9,6 @@
 
 package com.idzeir.acfun.view
 {
-	import com.adobe.utils.StringUtil;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
@@ -18,7 +17,6 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.vo.BulletVo;
 	import com.idzeir.acfun.vo.Node;
 	
-	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Point;
@@ -239,43 +237,9 @@ package com.idzeir.acfun.view
 		
 		private function addFixedFadeBullet(value:Node):void
 		{
-			var clip:DisplayObjectContainer = this._advanceBox;
-			
-			var p:IBullet = $.ui.getUseByName(NodeUtil.get(value).addon.parent);
-			if(p)
-			{
-				clip = p.warp as DisplayObjectContainer;
-			}
-			
-			var cmt:IBullet = $.ui.create(BulletType.FIXED_FADE_OUT).bullet(NodeUtil.get(value),new Point(stage.stageWidth,stage.stageHeight - 60));
-			if(cmt.getBullet().name&&StringUtil.beginsWith(cmt.getBullet().name,"mask"))
-			{
-				//cmt.warp.visible = false;
-			}
-			
-			/** 添加到舞台 **/
-			for (var i:int=0;i<clip.numChildren;i++)
-			{
-				var child:FixedFadeBullet = clip.getChildAt(i) as FixedFadeBullet;
-				if (child)
-				{
-					if (child["depth"] > cmt["depth"])
-					{
-						break;
-					}
-				}
-			}
-			
-			clip.addChildAt(cmt.warp,i);
-			
-			var m:IBullet = $.ui.getUseByName(NodeUtil.get(value).addon.mask);
-			if(m)
-			{
-				m.warp.visible = true;
-				m.warp.cacheAsBitmap = true;
-				cmt.warp.cacheAsBitmap = true;
-				cmt.warp.mask = m.warp;
-			}
+			//var child:DisplayObject = $.ui.create(BulletType.FIXED_FADE_OUT).bullet(NodeUtil.get(value),new Point(stage.stageWidth,stage.stageHeight-40)).warp;
+			//_advanceBox.addChild(child);
+			_advanceBox.start(NodeUtil.get(value));
 		}
 		
 		private function addBottomBullet(value:Node):void
