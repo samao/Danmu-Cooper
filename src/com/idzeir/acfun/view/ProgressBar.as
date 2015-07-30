@@ -9,9 +9,9 @@
 
 package com.idzeir.acfun.view
 {
+	import com.idzeir.acfun.components.Style;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
-	import com.idzeir.acfun.utils.FontUtil;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -29,7 +29,7 @@ package com.idzeir.acfun.view
 		{
 			super();
 			
-			var tf:TextFormat = new TextFormat(FontUtil.fontName,12,0xffffff,true)
+			var tf:TextFormat = new TextFormat(Style.font,12,0xffffff,true)
 			
 			$.e.addEventListener(EventType.PROGRESS,function(e:GlobalEvent):void
 			{

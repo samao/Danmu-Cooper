@@ -14,16 +14,31 @@ package com.idzeir.acfun.business.init
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.utils.Log;
+	import com.idzeir.acfun.view.FadeOutBullet;
 	import com.idzeir.acfun.websocket.WebSocket;
 	import com.idzeir.acfun.websocket.WebSocketErrorEvent;
 	import com.idzeir.acfun.websocket.WebSocketEvent;
 	
+	import flash.utils.clearInterval;
 	import flash.utils.setInterval;
 
 	public class InitWebSocket extends BaseInit
 	{
 
 		private var _websocket:WebSocket;
+		/**
+		 * 当前pingId 
+		 */		
+		private var _pinId:int = 0;
+		/**
+		 * 重连ws时间 
+		 */		
+		private var _retryDelay:int = 3000;
+		/**
+		 * 缓存没有发出去的数据 
+		 */		
+		private var _map:Vector.<String> = new Vector.<String>();
+		private var _authed:Boolean = false;
 		
 		public function InitWebSocket()
 		{
@@ -39,7 +54,7 @@ package com.idzeir.acfun.business.init
 			{
 				Log.info("websocket连接成功");
 				
-				setInterval(function():void
+				_pinId = setInterval(function():void
 				{
 					_websocket.ping();
 				},10000);
@@ -48,12 +63,14 @@ package com.idzeir.acfun.business.init
 			_websocket.addEventListener(WebSocketErrorEvent.CONNECTION_FAIL,function():void
 			{
 				Log.info("websocket连接失败");
-			});
+				$.t.call(_retryDelay,connect,1);
+			},false,0,true);
 			_websocket.addEventListener(WebSocketEvent.CLOSED,function():void
 			{
 				Log.info("websocket连接关闭");
 				breakQm();
-			});
+				$.t.call(_retryDelay,connect,1);
+			},false,0,true);
 			_websocket.addEventListener(WebSocketEvent.MESSAGE,function(e:WebSocketEvent):void
 			{
 				Log.debug("收到服务器返回消息",e.message.utf8Data);
@@ -64,8 +81,58 @@ package com.idzeir.acfun.business.init
 					return;
 				}
 				respond&&handleMessage(respond);
+			},false,0,true);
+			
+			$.e.addEventListener(EventType.SEND,function(e:GlobalEvent):void
+			{
+				send(JSON.stringify(e.info));
 			});
+			
+			connect();
+		}
+		
+		private function vaild():Boolean
+		{
+			return _websocket&&_websocket.connected&&_authed;
+		}
+		
+		private function send(value:String):void
+		{
+			if(vaild())
+			{
+				_websocket.sendUTF(value);
+				return;
+			}
+			_map.push(value);
+		}
+		
+		/**
+		 * 连接ws
+		 */		
+		private function connect():void
+		{
+			_pinId!=0&&Log.info("websocket重连");
+			clearInterval(_pinId);
+			_pinId = 0;
+			_authed = false;
 			_websocket.connect();
+		}
+		
+		/**
+		 * 清除缓存的发送信息（不包括用户登录验证信息）；
+		 */		
+		private function flush():void
+		{
+			while(_map.length>0)
+			{
+				send(_map.shift());
+			}
+		}
+		
+		private function dispose(result:String = ""):void
+		{
+			_websocket = null;
+			$.e.dispatchEvent(new GlobalEvent(EventType.DISPOSE,result));
 		}
 		
 		private function handleMessage(value:Object):void
@@ -80,15 +147,21 @@ package com.idzeir.acfun.business.init
 					$.u.id = author["uid"];
 					$.fc.set("client",author['client']);
 					$.fc.set("client_ck",author['client_ck']);
-					
-					$.e.addEventListener(EventType.SEND,function(e:GlobalEvent):void
-					{
-						_websocket.sendUTF(JSON.stringify(e.info));
-					});
-					
+					_authed = true;
+					flush();
 					complete();
 					break;
+				case RespondType.SEND_OK:
+				case RespondType.ONLINE_LIST:
+				case RespondType.ONLINE_NUMBER:
+				case RespondType.SEND_REPORT_OK:
+				case RespondType.SEND_REPORT_OK_2:
+					break;
+				case RespondType.SERVER_CLOSE:
+					dispose($.l.get(value["status"]));
+					break;
 				default:
+					Log.warn("websocket反馈码：",value["status"],$.l.get(value["status"]));
 					break;
 			}
 			
@@ -105,7 +178,7 @@ package com.idzeir.acfun.business.init
 						$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
 						break;
 					default:
-						Log.debug("收到服务器action消息");
+						Log.debug("收到服务器消息(忽略):"+JSON.stringify(value));
 						break;
 				}
 			}catch(e:Error){

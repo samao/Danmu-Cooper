@@ -16,4 +16,14 @@
 	<l key="setting_style_move">滚动</l>
 	<l key="setting_style_bottom">底部</l>
 	<l key="setting_color_label">弹幕颜色：</l>
+	
+	<!-- websocket返回失败状态码 -->
+	<l key="401">被管理员禁言</l>
+	<l key="401.3">高级弹幕等级限制</l>
+	<l key="401.6">普通弹幕等级限制</l>
+	<l key="401.9">游客限制</l>
+	<l key="403">敏感词</l>
+	<l key="404">服务器主动关闭</l>
+	<l key="210">官方黑名单人物</l>
+	
 </node>

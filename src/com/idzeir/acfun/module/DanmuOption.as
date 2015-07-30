@@ -9,17 +9,17 @@
 
 package com.idzeir.acfun.module
 {
+	import com.idzeir.acfun.components.HBox;
+	import com.idzeir.acfun.components.LabelButton;
+	import com.idzeir.acfun.components.LabelButtonStyle;
+	import com.idzeir.acfun.components.Radio;
+	import com.idzeir.acfun.components.RadioGroup;
+	import com.idzeir.acfun.components.Style;
+	import com.idzeir.acfun.components.VBox;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
-	import com.idzeir.acfun.utils.FontUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.BaseStage;
-	import com.idzeir.acfun.view.HBox;
-	import com.idzeir.acfun.view.LabelButton;
-	import com.idzeir.acfun.view.LabelButtonStyle;
-	import com.idzeir.acfun.view.Radio;
-	import com.idzeir.acfun.view.RadioGroup;
-	import com.idzeir.acfun.view.VBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -82,7 +82,7 @@ package com.idzeir.acfun.module
 			//_sizeGroup.index = (_config>>27)&0x3;
 			
 			var size:TextField = new TextField();
-			size.defaultTextFormat = new TextFormat(FontUtil.fontName);
+			size.defaultTextFormat = new TextFormat(Style.font);
 			size.autoSize = "left";
 			size.textColor = 0xFFFFFF;
 			size.text = $.l.get("setting_size_label");
@@ -103,7 +103,7 @@ package com.idzeir.acfun.module
 			//_styleGroup.index = (_config>>24)&0x3;
 			
 			var style:TextField = new TextField();
-			style.defaultTextFormat = new TextFormat(FontUtil.fontName);
+			style.defaultTextFormat = new TextFormat(Style.font);
 			style.autoSize = "left";
 			style.textColor = 0xFFFFFF;
 			style.text = $.l.get("setting_style_label");
@@ -114,7 +114,7 @@ package com.idzeir.acfun.module
 			_box.addChild(styleBox);
 			
 			var color:TextField = new TextField();
-			color.defaultTextFormat = new TextFormat(FontUtil.fontName);
+			color.defaultTextFormat = new TextFormat(Style.font);
 			color.autoSize = "left";
 			color.textColor = 0xFFFFFF;
 			color.text = $.l.get("setting_color_label");

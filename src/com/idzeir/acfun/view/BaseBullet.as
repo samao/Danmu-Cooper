@@ -9,7 +9,7 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.acfun.utils.FontUtil;
+	import com.idzeir.acfun.components.Style;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.vo.BulletVo;
 	
@@ -39,7 +39,7 @@ package com.idzeir.acfun.view
 			_txt = new TextField();
 			_txt.selectable = false;
 			_txt.autoSize = "left";
-			this.tf.font = FontUtil.fontName;
+			this.tf.font = Style.font;
 			this.tf.size = 25;
 			this.tf.color = 0xffffff;
 			_txt.defaultTextFormat = tf;

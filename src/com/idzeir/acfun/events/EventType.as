@@ -33,6 +33,11 @@ package com.idzeir.acfun.events
 		 */		
 		public static const RECIVE:String = "recive";
 		/**
+		 * websocket 服务器关闭
+		 * info 为关闭原因 
+		 */		
+		public static const DISPOSE:String = "dispose";
+		/**
 		 * 打开关闭设置面板
 		 */		
 		public static const SWITCH_OPTION:String = "switchOption";

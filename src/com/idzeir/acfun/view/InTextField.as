@@ -9,7 +9,7 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.acfun.utils.FontUtil;
+	import com.idzeir.acfun.components.Style;
 	import com.idzeir.acfun.utils.Log;
 	
 	import flash.filters.DropShadowFilter;
@@ -34,7 +34,7 @@ package com.idzeir.acfun.view
 			Log.debug("输入框颜色配置：",JSON.stringify(colors),parseInt(colors[0])==0xFFFFFF);
 			this.background = true;
 			this.backgroundColor = colors&&colors.length>0?parseInt(colors[0]):0xFFFFFF;
-			this.defaultTextFormat = new TextFormat(FontUtil.fontName,12,0x000000,true);
+			this.defaultTextFormat = new TextFormat(Style.font,12,0x000000,true);
 			this.defaultTextFormat.leftMargin = 10;
 			if(colors&&colors.length>1&&colors[1]!="null")
 			{

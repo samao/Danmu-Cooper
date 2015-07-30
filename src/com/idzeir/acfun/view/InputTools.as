@@ -10,16 +10,18 @@
 package com.idzeir.acfun.view
 {
 	import com.adobe.utils.StringUtil;
+	import com.idzeir.acfun.components.HBox;
+	import com.idzeir.acfun.components.LabelButton;
+	import com.idzeir.acfun.components.LabelButtonStyle;
+	import com.idzeir.acfun.components.Style;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
-	import com.idzeir.acfun.utils.FontUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
 	
 	import flash.events.Event;
 	import flash.events.FocusEvent;
-	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
@@ -102,7 +104,7 @@ package com.idzeir.acfun.view
 			_tipsTxt.autoSize = "left";
 			_tipsTxt.textColor = inputColors&&inputColors.length>2?parseInt(inputColors[2]):0x999999;
 			_tipsTxt.mouseEnabled = false;
-			_tipsTxt.defaultTextFormat = new TextFormat(FontUtil.fontName);
+			_tipsTxt.defaultTextFormat = new TextFormat(Style.font);
 			_tipsTxt.htmlText = $.l.get("send_text_tips");
 			_tipsTxt.x = this._gap + 3;
 			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
