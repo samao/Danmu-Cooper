@@ -9,17 +9,17 @@
 
 package com.idzeir.acfun.module
 {
-	import com.idzeir.acfun.components.HBox;
-	import com.idzeir.acfun.components.LabelButton;
-	import com.idzeir.acfun.components.LabelButtonStyle;
-	import com.idzeir.acfun.components.Radio;
-	import com.idzeir.acfun.components.RadioGroup;
-	import com.idzeir.acfun.components.Style;
-	import com.idzeir.acfun.components.VBox;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.BaseStage;
+	import com.idzeir.components.HBox;
+	import com.idzeir.components.LabelButton;
+	import com.idzeir.components.LabelButtonStyle;
+	import com.idzeir.components.Radio;
+	import com.idzeir.components.RadioGroup;
+	import com.idzeir.components.Style;
+	import com.idzeir.components.VBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

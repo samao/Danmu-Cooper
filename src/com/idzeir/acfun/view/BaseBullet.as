@@ -9,7 +9,7 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.acfun.components.Style;
+	import com.idzeir.components.Style;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.vo.BulletVo;
 	

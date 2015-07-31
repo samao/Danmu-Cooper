@@ -9,7 +9,7 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.acfun.components.VBox;
+	import com.idzeir.components.VBox;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;

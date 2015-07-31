@@ -18,7 +18,7 @@ package com.idzeir.acfun.view
 	import com.greensock.plugins.TweenPlugin;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.vo.BulletVo;
-	import com.idzeir.acfun.gif.Gif;
+	import com.idzeir.gif.Gif;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

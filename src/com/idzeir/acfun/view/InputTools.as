@@ -10,10 +10,10 @@
 package com.idzeir.acfun.view
 {
 	import com.adobe.utils.StringUtil;
-	import com.idzeir.acfun.components.HBox;
-	import com.idzeir.acfun.components.LabelButton;
-	import com.idzeir.acfun.components.LabelButtonStyle;
-	import com.idzeir.acfun.components.Style;
+	import com.idzeir.components.HBox;
+	import com.idzeir.components.LabelButton;
+	import com.idzeir.components.LabelButtonStyle;
+	import com.idzeir.components.Style;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
