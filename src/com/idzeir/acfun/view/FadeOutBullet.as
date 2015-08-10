@@ -25,6 +25,8 @@ package com.idzeir.acfun.view
 		private const SPEED:Number = .01;
 		private const INI_ALPHA:Number = 3;
 		
+		private var _type:String = BulletType.FADE_OUT_TOP;
+		
 		public function FadeOutBullet()
 		{
 			super();
@@ -43,12 +45,13 @@ package com.idzeir.acfun.view
 		{
 			super.bullet(value);
 			this.alpha = INI_ALPHA;
+			_type = value.mode == BulletType.FADE_OUT_TOP?BulletType.FADE_OUT_TOP:BulletType.FADE_OUT_BOTTOM;
 			return this;
 		}
 		
 		override public function get bulletType():String
 		{
-			return BulletType.FADE_OUT_TOP;
+			return _type;
 		}
 	}
 }

@@ -11,6 +11,8 @@ package com.idzeir.acfun.coop
 {
 	import com.idzeir.acfun.vo.LogicEventVo;
 	
+	import flash.geom.Point;
+	
 	/**
 	 * 业务逻辑数据接口
 	 */	
@@ -40,6 +42,10 @@ package com.idzeir.acfun.coop
 		 * 业务xml全部内容
 		 */		
 		function get xml():XML;
+		/**
+		 * 返回上下边距
+		 */		
+		function get gap():Point
 		/**
 		 * 更新业务xml
 		 */		

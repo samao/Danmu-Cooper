@@ -24,7 +24,7 @@
 		</dispatch>
 		
 		<!-- 弹幕配置部分 -->
-		<comment>
+		<comment top="20" bottom="50">
 			<!-- 弹幕设置面板 -->
 			<option left="10" bottom="80"/>
 			<!-- 输入框 -->

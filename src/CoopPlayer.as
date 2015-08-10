@@ -137,6 +137,7 @@ package
 					_tools.width = stage.stageWidth - Number($.g.xml..input.@left[0]) - Number($.g.xml..input.@right[0]);
 				}
 				_proBar&&_proBar.algin();
+				_bullets&&_bullets.resize();
 			});
 		}
 		

@@ -13,7 +13,7 @@ package com.idzeir.acfun.business.init
 	import com.idzeir.acfun.business.IQm;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
-	import com.idzeir.acfun.manage.LanguagePack;
+	import com.idzeir.acfun.manage.Language;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.RequestUtil;
 	
@@ -68,7 +68,7 @@ package com.idzeir.acfun.business.init
 					RequestUtil.load(LA_URL,null,function(value:String):void
 					{
 						Log.debug("语言包加载成功：",XML(value).toXMLString());
-						$.l = LanguagePack.getInstance(XML(value));
+						$.l = Language.getInstance(XML(value));
 						complete();
 					},function(value:Object):void
 					{

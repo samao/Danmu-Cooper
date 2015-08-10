@@ -12,7 +12,7 @@ package com.idzeir.acfun.manage
 	/**
 	 * 语言包接口
 	 */	
-	public interface ILanguagePack
+	public interface ILanguage
 	{
 		/**
 		 * 获取指定key对应的语言文字

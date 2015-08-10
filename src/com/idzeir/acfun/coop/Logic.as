@@ -13,6 +13,7 @@ package com.idzeir.acfun.coop
 	
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
+	import flash.geom.Point;
 	
 	/**
 	 * 业务逻辑数据实现
@@ -25,6 +26,8 @@ package com.idzeir.acfun.coop
 		private var _eventTarget:String;
 		private var _checks:Vector.<String>;
 		private var _logicEvents:Vector.<LogicEventVo>;
+		//弹幕上下边距
+		private var _gap:Point = new Point();
 		
 		private static var _instance:Logic;
 		
@@ -37,6 +40,11 @@ package com.idzeir.acfun.coop
 			}
 		}
 		
+		public function get gap():Point
+		{
+			return _gap;
+		}
+
 		public function get proxy():String
 		{
 			return _proxy;
@@ -89,6 +97,9 @@ package com.idzeir.acfun.coop
 			{
 				_logicEvents.push(new LogicEventVo(i.@type,i.text(),i.@from));
 			}
+			
+			_gap.x = parseInt(_xml..comment.@top);
+			_gap.y = parseInt(_xml..comment.@bottom);
 			
 			_eventTarget = _xml.core.dispatch.@target;
 		}

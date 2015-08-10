@@ -10,15 +10,15 @@
 package com.idzeir.acfun.manage
 {
 	
-	public class LanguagePack implements ILanguagePack
+	public class Language implements ILanguage
 	{
-		private static var _instance:LanguagePack;
+		private static var _instance:Language;
 		/**
 		 * 语言包xml 
 		 */		
 		private static var _xml:XML;
 		
-		public function LanguagePack()
+		public function Language()
 		{
 			if(_instance)
 			{
@@ -26,7 +26,7 @@ package com.idzeir.acfun.manage
 			}
 		}
 		
-		public static function getInstance(value:XML = null):LanguagePack
+		public static function getInstance(value:XML = null):Language
 		{
 			if(!_instance)
 			{
@@ -34,7 +34,7 @@ package com.idzeir.acfun.manage
 				{
 					throw new Error("未提供初始化语言包数据");
 				}
-				_instance = new LanguagePack();
+				_instance = new Language();
 			}
 			if(value != null)
 			{

@@ -14,7 +14,6 @@ package com.idzeir.acfun.business.init
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.utils.Log;
-	import com.idzeir.acfun.view.FadeOutBullet;
 	import com.idzeir.acfun.websocket.WebSocket;
 	import com.idzeir.acfun.websocket.WebSocketErrorEvent;
 	import com.idzeir.acfun.websocket.WebSocketEvent;

@@ -9,7 +9,6 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.components.VBox;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
@@ -17,6 +16,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.utils.NodeUtil;
 	import com.idzeir.acfun.vo.BulletVo;
 	import com.idzeir.acfun.vo.Node;
+	import com.idzeir.components.VBox;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -44,8 +44,14 @@ package com.idzeir.acfun.view
 		
 		private var _lastTime:int = 0;
 		
+		/**弹幕显示水平间距*/
 		private const HGAP:int = 30;
+		/**弹幕显示垂直行高*/
 		private const VGAP:int = 43;
+		/**弹幕顶部偏移*/		
+		private var TOP:int = 0;
+		/**弹幕底部偏移*/
+		private var BOTTOM:int = 0;
 		/**
 		 * 更新的频率 
 		 */		
@@ -162,10 +168,15 @@ package com.idzeir.acfun.view
 			_bottomBox ||=new VBox();
 			_bottomBox.algin = VBox.CENTER;
 			
-			const TOP_AND_BOTTOM:int = 20;
-			for(var i:uint = TOP_AND_BOTTOM;i<stage.stageHeight-TOP_AND_BOTTOM;i=i+VGAP)
+			TOP = $.g.gap.x;
+			BOTTOM = $.g.gap.y;
+			
+			var fullHeight:int = stage.fullScreenHeight;
+			
+			for(var i:uint = TOP;i< fullHeight - BOTTOM - VGAP;i=i+VGAP)
 			{
 				var lineBox:LineBox = LineBox.create(0,i,stage.stageWidth,VGAP);
+				lineBox.visible = (i <= stage.stageHeight-TOP-BOTTOM - VGAP);
 				_moveBox.addChild(lineBox);
 				_useMap.push(lineBox);
 			}
@@ -197,6 +208,18 @@ package com.idzeir.acfun.view
 				$.b.add(node);
 				addBullet(node);
 			});
+			
+		}
+		
+		/**
+		 * 弹幕容器重新组织显示行
+		 */		
+		public function resize():void
+		{
+			for each(var i:LineBox in this._useMap)
+			{
+				i.visible = (i.y <= stage.stageHeight-TOP-BOTTOM - VGAP);
+			}
 		}
 		
 		protected function update():void
@@ -251,7 +274,7 @@ package com.idzeir.acfun.view
 				addToOverMap(value);
 				return;
 			}
-			const BUTTOM_BAR_H:int = 50;
+			const BUTTOM_BAR_H:int = $.g.gap.y;
 			_bottomBox.addChild($.ui.create(BulletType.FADE_OUT_BOTTOM).bullet(NodeUtil.get(value),new Point()).warp);
 			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
 			_bottomBox.y = stage.stageHeight - _bottomBox.height - BUTTOM_BAR_H;
@@ -283,7 +306,7 @@ package com.idzeir.acfun.view
 			for each(var i:LineBox in _useMap)
 			{
 				var rect:Rectangle = i.getBounds(this);
-				
+				if(!i.visible)return;
 				if((rect.right + HGAP)<=stage.stageWidth)
 				{
 					i.addChild($.ui.create(BulletType.RIGHT_TO_LEFT).bullet(NodeUtil.get(value),new Point(stage.stageWidth+index*OFFX,VGAP)).warp);
@@ -301,7 +324,10 @@ package com.idzeir.acfun.view
 		private function addToOverMap(value:Node):void
 		{
 			_overMap.push(value);
-			checkOverMap();
+			if(!($.t.has(checkOverMap)))
+			{
+				$.t.call(100,checkOverMap,1,false);
+			}
 		}
 		
 		/**
