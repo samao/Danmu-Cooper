@@ -17,9 +17,6 @@ package com.idzeir.acfun.business.init
 	import com.idzeir.acfun.websocket.WebSocket;
 	import com.idzeir.acfun.websocket.WebSocketErrorEvent;
 	import com.idzeir.acfun.websocket.WebSocketEvent;
-	
-	import flash.utils.clearInterval;
-	import flash.utils.setInterval;
 
 	public class InitWebSocket extends BaseInit
 	{
@@ -33,6 +30,8 @@ package com.idzeir.acfun.business.init
 		 * 重连ws时间 
 		 */		
 		private var _retryDelay:int = 3000;
+		//重试次数
+		private var _retryTotal:int = 0;
 		/**
 		 * 缓存没有发出去的数据 
 		 */		
@@ -53,22 +52,20 @@ package com.idzeir.acfun.business.init
 			{
 				Log.info("websocket连接成功");
 				
-				_pinId = setInterval(function():void
-				{
-					_websocket.ping();
-				},10000);
+				$.t.call(10000,ping);
+				
 				sendAuthor();
 			});
 			_websocket.addEventListener(WebSocketErrorEvent.CONNECTION_FAIL,function():void
 			{
 				Log.info("websocket连接失败");
-				$.t.call(_retryDelay,connect,1);
+				retry();
 			},false,0,true);
 			_websocket.addEventListener(WebSocketEvent.CLOSED,function():void
 			{
 				Log.info("websocket连接关闭");
 				breakQm();
-				$.t.call(_retryDelay,connect,1);
+				retry();
 			},false,0,true);
 			_websocket.addEventListener(WebSocketEvent.MESSAGE,function(e:WebSocketEvent):void
 			{
@@ -90,6 +87,24 @@ package com.idzeir.acfun.business.init
 			connect();
 		}
 		
+		/**
+		 * 尝试重连
+		 */		
+		private function retry():void
+		{
+			if($.t.has(connect))
+			{
+				return;
+			}
+			if(++_retryTotal>12)
+			{
+				breakQm();
+				Log.warn("websocket连接重试达到上限，不再重连");
+				return;
+			}
+			$.t.call(_retryDelay,connect,1);
+		}
+		
 		private function vaild():Boolean
 		{
 			return _websocket&&_websocket.connected&&_authed;
@@ -105,14 +120,21 @@ package com.idzeir.acfun.business.init
 			_map.push(value);
 		}
 		
+		private function ping():void
+		{
+			_websocket&&_websocket.ping();
+		}
+		
 		/**
 		 * 连接ws
 		 */		
 		private function connect():void
 		{
-			_pinId!=0&&Log.info("websocket重连");
-			clearInterval(_pinId);
-			_pinId = 0;
+			if($.t.has(ping))
+			{
+				Log.info("websocket重连:",_retryTotal);
+				$.t.remove(ping);
+			}
 			_authed = false;
 			_websocket.connect();
 		}

@@ -57,14 +57,14 @@ package com.idzeir.acfun.business.init
 					var o:Object = JSON.parse(value);
 				}catch(e:Error){
 					Log.error("JSONError:",URL);
-					breakQm();
+					complete();
 					return;
 				}
 				vaild(o);
 			},function(value:Object):void
 			{
 				Log.error("加载失败：",JSON.stringify(value));
-				breakQm();
+				complete();
 			});
 		}
 		/**

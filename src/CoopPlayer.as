@@ -146,7 +146,7 @@ package
 			Log.info("初始化弹幕业务数据");
 			$.q.push(new InitVideoData());//可能抛出BREAK_QM
 			$.q.push(new InitXMLLogic());//可能抛出BREAK_QM
-			$.q.push(new InitBulletData());//可能抛出BREAK_QM
+			$.q.push(new InitBulletData());
 			$.q.push(new InitWebSocket());//可能抛出BREAK_QM
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
@@ -298,7 +298,7 @@ package
 			//移除进度条
 			this.removeChild(_proBar);
 			_apiBox.visible = true;
-			_tools.visible = true;
+			_tools&&(_tools.visible = true);
 			
 			if($.f.autoplay)
 			{
