@@ -34,6 +34,14 @@ package com.idzeir.acfun.business.init
 		 * 弹幕id记录 
 		 */		
 		private var _map:Dictionary = new Dictionary(true);
+		/**
+		 * 弹幕总数 
+		 */		
+		private var _total:uint = 0;
+		/**
+		 * 已经提前执行后面进程
+		 */
+		private var _preComplete:Boolean = false;
 		
 		public function InitBulletData()
 		{
@@ -49,6 +57,9 @@ package com.idzeir.acfun.business.init
 		
 		protected function load():void
 		{
+			//页数太多提前结束
+			//!_preComplete&&_pageNo==10&&complete();
+			
 			var URL:String = $.c.staticUrl+"/"+$.v.danmakuId+"?pageSize="+PAGE_SIZE+"&pageNo="+_pageNo;
 			Log.info("加载历史弹幕",URL);
 			RequestUtil.load(URL,null,function(value:String):void
@@ -67,6 +78,14 @@ package com.idzeir.acfun.business.init
 				complete();
 			});
 		}
+		
+		override public function complete():void
+		{
+			!_preComplete&&super.complete();
+			//!_preComplete&&Log.info("弹幕数据太多，优先显示视频");
+			_preComplete = true;
+		}
+		
 		/**
 		 * 检测弹幕数据是否加载完毕
 		 */		
@@ -77,7 +96,7 @@ package com.idzeir.acfun.business.init
 				if(value[0].length == 0&&value[1].length == 0&&value[2].length == 0)
 				{
 					--_pageNo;
-					Log.info("弹幕文件加载完毕");
+					Log.info("弹幕文件加载完毕,总共："+_total+" 条");
 					Log.debug("弹幕排序结果时间：",String($.b));
 					complete();
 					return;
@@ -106,6 +125,7 @@ package com.idzeir.acfun.business.init
 					//排除重复弹幕
 					if(!_map[bullet.commentId])
 					{
+						++_total;
 						_map[bullet.commentId] = true;
 						$.b.add(new Node(bullet));
 					}else{

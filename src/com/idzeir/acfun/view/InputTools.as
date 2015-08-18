@@ -10,18 +10,18 @@
 package com.idzeir.acfun.view
 {
 	import com.adobe.utils.StringUtil;
-	import com.idzeir.components.HBox;
-	import com.idzeir.components.LabelButton;
-	import com.idzeir.components.LabelButtonStyle;
-	import com.idzeir.components.Style;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
+	import com.idzeir.components.HBox;
+	import com.idzeir.components.ImageButton;
+	import com.idzeir.components.Style;
 	
 	import flash.events.Event;
 	import flash.events.FocusEvent;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.ui.Keyboard;
@@ -47,7 +47,7 @@ package com.idzeir.acfun.view
 		public function InputTools()
 		{
 			super();
-			this.gap = 10;
+			this.gap = 8;
 			this.algin = HBox.MIDDLE;
 			
 			addChildren();
@@ -55,36 +55,49 @@ package com.idzeir.acfun.view
 		
 		private function addChildren():void
 		{
-			_inputTxt = new InTextField();
-			_inputTxt.width = 500;
-			addChild(_inputTxt);
+			var buttonsXML:XMLList = $.g.xml..buttons;
 			
-			var sendBut:LabelButton = new LabelButton($.l.get("comment_send_but"),function():void
-			{
-				send();
-			});
+			var logo:ImageButton = new ImageButton();
+			logo.setSize(66,20);
+			logo.skinUrlMap = buttonsXML.logo.text().split("|");
+			addChild(logo);
 			
-			var colors:Array = $.g.xml..button.@colors.split(",");
-			Log.debug("工具栏按钮颜色：",JSON.stringify(colors))
-			
-			sendBut.style = new LabelButtonStyle(parseInt(colors[0]),parseInt(colors[1]),parseInt(colors[2]),parseInt(colors[3]),parseInt(colors[4]),parseInt(colors[5]));
-			addChild(sendBut);
-			
-			var option:LabelButton = new LabelButton($.l.get("comment_option_but"),function():void
+			var option:ImageButton = new ImageButton();
+			option.setSize(16,16);
+			option.skinUrlMap = buttonsXML.set.text().split("|");
+			option.addEventListener(MouseEvent.CLICK,function():void
 			{
 				//Log.debug("设置");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_OPTION));
 			});
-			option.style = sendBut.style;
 			addChild(option);
 			
-			var close:LabelButton = new LabelButton($.l.get("comment_close_but"),function():void
+			_inputTxt = new InTextField();
+			_inputTxt.width = 500;
+			addChild(_inputTxt);
+			
+			var sendBut:ImageButton = new ImageButton();
+			sendBut.setSize(64,25);
+			sendBut.skinUrlMap = buttonsXML.send.text().split("|");
+			sendBut.addEventListener(MouseEvent.CLICK,function():void
 			{
-				//Log.debug("关闭弹幕");
-				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
-				close.label = close.label == $.l.get("comment_close_but")?$.l.get("comment_open_but"):$.l.get("comment_close_but");
+				send();
 			});
-			close.style = sendBut.style;
+			
+			addChild(sendBut);
+			
+			var close:ImageButton = new ImageButton();
+			close.setSize(16,16);
+			var open:Boolean = true;
+			var openMap:Array = buttonsXML.open.text().split("|");;
+			var closeMap:Array = buttonsXML.close.text().split("|");;
+			close.skinUrlMap = closeMap;
+			close.addEventListener(MouseEvent.CLICK,function():void
+			{
+				open = !open;
+				close.skinUrlMap = !open?openMap:closeMap;
+				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
+			});
 			addChild(close);
 			
 			$.k.listener(flash.ui.Keyboard.ENTER,function():void
@@ -106,7 +119,7 @@ package com.idzeir.acfun.view
 			_tipsTxt.mouseEnabled = false;
 			_tipsTxt.defaultTextFormat = new TextFormat(Style.font);
 			_tipsTxt.htmlText = $.l.get("send_text_tips");
-			_tipsTxt.x = this._gap + 3;
+			_tipsTxt.x = _inputTxt.getBounds(this).x + 3;
 			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
 			_tipsTxt.alpha = .5;
 			//_tipsTxt.filters = [new DropShadowFilter(1,45,0xFFFFFF,1,1,1)];

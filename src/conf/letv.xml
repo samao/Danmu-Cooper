@@ -31,8 +31,14 @@
 			<option left="10" bottom="80"/>
 			<!-- 输入框 -->
 			<input used="1" left="200" right="250" bottom="5">
-				<!-- 按钮样式对应颜色为 普通字体，普通背景，选中字体，选中背景,滑过字体，滑过背景 -->
-				<button colors="0xFFFFFF,0x666666,null,null,0xFF0000,null"/>
+				<!-- 按钮皮肤配置顺序为normal，over，select -->
+				<buttons>
+					<logo>image/logo.png|image/logo.png|image/logo.png</logo>
+					<set>image/set0001.png|image/set0002.png|image/set0003.png</set>
+					<send>image/send0001.png|image/send0002.png|image/send0003.png</send>
+					<close>image/close0001.png|image/close0002.png|image/close0003.png</close>
+					<open>image/open0001.png|image/open0002.png|image/open0003.png</open>
+				</buttons>
 				<!-- 输入框配置颜色，背景颜色和边框颜色 -->
 				<label colors="0xFFFFFF,0x333333"/>
 			</input>
