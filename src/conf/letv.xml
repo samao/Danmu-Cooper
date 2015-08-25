@@ -34,7 +34,7 @@
 				<!-- 按钮皮肤配置顺序为normal，over，select -->
 				<buttons>
 					<logo>image/logo.png|image/logo.png|image/logo.png</logo>
-					<set>image/set0001.png|image/set0002.png|image/set0003.png</set>
+					<set>image/modelx0001.png|image/modelx0002.png|image/modelx0003.png</set>
 					<send>image/send0001.png|image/send0002.png|image/send0003.png</send>
 					<close>image/close0001.png|image/close0002.png|image/close0003.png</close>
 					<open>image/open0001.png|image/open0002.png|image/open0003.png</open>

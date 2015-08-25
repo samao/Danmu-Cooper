@@ -91,11 +91,11 @@ package com.idzeir.acfun.view
 			var open:Boolean = true;
 			var openMap:Array = buttonsXML.open.text().split("|");;
 			var closeMap:Array = buttonsXML.close.text().split("|");;
-			close.skinUrlMap = closeMap;
+			close.skinUrlMap = openMap;
 			close.addEventListener(MouseEvent.CLICK,function():void
 			{
 				open = !open;
-				close.skinUrlMap = !open?openMap:closeMap;
+				close.skinUrlMap = open?openMap:closeMap;
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
 			});
 			addChild(close);
