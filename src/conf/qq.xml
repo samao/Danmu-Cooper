@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 优酷播放器处理配置信息 -->
+<!-- QQ播放器处理配置信息 -->
 <node>
-	<address proxy="YoukuPlayerPlugin.swf">http://static.youku.com/v1.0.0447/v/swf/player_yk.swf</address>
+	<address proxy="QQPlugin.swf">http://static.video.qq.com/TPswfout.swf</address>
 	<core>
 		<!-- SDK检测 -->
-		<check exist="player"></check>
-		<check exist="player.videoNsTime"></check>
+		<check exist="_player"></check>
 		
 		<!-- 事件处理 如果是main派发事件请将target置空 -->
-		<dispatch target="">
+		<dispatch target="_player">
 		
 			<!-- 播放事件 type为事件类型 value为执行的coop函数 -->
-			<!-- <event type="onPlay">onPlay</event> -->
-			<event type="onStop">onStop</event>
-			<event type="onPause">onPause</event>
-			<event type="onResume">onResume</event>
+			<event type="START_PLAY">onPlay</event>
+			<event type="PLAY_COMPLETE">onStop</event>
+			<event type="PLAY_PAUSE">onPause</event>
+			<event type="PLAY_RESUME">onResume</event>
 			
 			<!-- from 如果是event数据 -->
-			<event type="play_progress" from="::time">onTime</event>
+			<!-- <event type="play_progress" from="obj.nowTime">onTime</event> -->
 			
 			<!-- from 如果是全局数据,重加载文件中查找数据 -->
-			<!-- <event type="play_progress" from="::obj.nowTime">onTime</event> -->
+			<event type="PLAY_PROGRESS" from="::time">onTime</event>
 		</dispatch>
 		
 		<!-- 弹幕配置部分 -->
@@ -28,7 +27,7 @@
 			<!-- 弹幕设置面板 -->
 			<option left="10" bottom="80"/>
 			<!-- 输入框 -->
-			<input used="1" left="150" right="400" bottom="6">
+			<input used="1" left="200" right="300" bottom="5">
 				<!-- 按钮皮肤配置顺序为normal，over，select -->
 				<buttons>
 					<logo>image/logo.png|image/logo.png|image/logo.png</logo>
@@ -38,7 +37,7 @@
 					<open>image/open0001.png|image/open0002.png|image/open0003.png</open>
 				</buttons>
 				<!-- 输入框配置颜色，背景颜色和边框颜色 -->
-				<label colors="0x666666,null,0xFFFFFF"/>
+				<label colors="0xFFFFFF,0x333333"/>
 			</input>
 		</comment>
 		

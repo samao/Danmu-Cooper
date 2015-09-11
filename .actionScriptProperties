@@ -38,9 +38,10 @@
   </applications>
   <modules>
     <module application="src/CoopPlayer.as" destPath="DanmuOption.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/DanmuOption.as"/>
-    <module application="src/CoopPlayer.as" destPath="com/idzeir/acfun/module/LetvPlayerPlugin.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/LetvPlayerPlugin.as"/>
-    <module application="src/CoopPlayer.as" destPath="com/idzeir/acfun/module/CookieSycn.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/CookieSycn.as"/>
+    <module application="src/CoopPlayer.as" destPath="LetvPlayerPlugin.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/LetvPlayerPlugin.as"/>
+    <module application="src/CoopPlayer.as" destPath="CookieSycn.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/CookieSycn.as"/>
     <module application="src/CoopPlayer.as" destPath="YoukuPlayerPlugin.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/YoukuPlayerPlugin.as"/>
+    <module application="src/CoopPlayer.as" destPath="QQPlugin.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/QQPlugin.as"/>
   </modules>
   <workers/>
   <buildCSSFiles/>

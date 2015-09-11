@@ -30,7 +30,7 @@
 			<!-- 弹幕设置面板 -->
 			<option left="10" bottom="80"/>
 			<!-- 输入框 -->
-			<input used="1" left="200" right="250" bottom="5">
+			<input used="1" left="200" right="250" bottom="2">
 				<!-- 按钮皮肤配置顺序为normal，over，select -->
 				<buttons>
 					<logo>image/logo.png|image/logo.png|image/logo.png</logo>

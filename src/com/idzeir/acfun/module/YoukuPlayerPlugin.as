@@ -9,6 +9,7 @@
 
 package com.idzeir.acfun.module
 {
+	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.BaseStage;
 	
 	import flash.display.DisplayObject;
@@ -23,7 +24,7 @@ package com.idzeir.acfun.module
 	import flash.system.Security;
 	
 	
-	public class YoukuPlayerPlugin extends BaseStage
+	public class YoukuPlayerPlugin extends BaseStage implements IPlugin
 	{
 		public static const PLAYER_URL:String = "http://static.youku.com/v1.0.0447/v/swf/player_yk.swf";
 		private var vid:String;
@@ -39,6 +40,30 @@ package com.idzeir.acfun.module
 			this.mouseEnabled = false;
 			Security.allowDomain("*");
 			Security.allowInsecureDomain("*");
+		}
+		
+		/**
+		 * 第三方播放器的地址
+		 * @param value 地址路径
+		 */		
+		public function hooks(coopURL:String,stageParams:Object):void
+		{
+			if(loader)
+			{
+				return;
+			}
+			var checker:Function = function():void
+			{
+				if(stage)
+				{
+					$.t.remove(checker);
+					loader = new Loader();
+					loader.load(new URLRequest(coopURL.replace("{vid}",vid)),new LoaderContext(false,new ApplicationDomain(ApplicationDomain.currentDomain)));
+					loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onPlayerComplete);
+				}
+			}
+			$.t.call(100,checker)
+			
 		}
 		
 		override protected function onAdded(e:Event):void
@@ -59,13 +84,12 @@ package com.idzeir.acfun.module
 			vid = stage.loaderInfo.parameters["sourceId"] || stage.loaderInfo.parameters["vid"] || "XNzM0ODU2MDY0";
 			cid = stage.loaderInfo.parameters["videoId"] || (PLAYER_TYPE + vid);
 			
-			loader = new Loader();
+			//loader = new Loader();
 			//if (Security.sandboxType == Security.REMOTE)			
 				//loader.load(new URLRequest(PLAYER_URL.replace("{vid}",vid)),new LoaderContext(false,ApplicationDomain.currentDomain));			
 			//else				
-				loader.load(new URLRequest(PLAYER_URL.replace("{vid}",vid)),new LoaderContext(false,new ApplicationDomain(ApplicationDomain.currentDomain)));
-			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onPlayerComplete);
-			$.t.call(200,checkPlayer);
+			//	loader.load(new URLRequest(PLAYER_URL.replace("{vid}",vid)),new LoaderContext(false,new ApplicationDomain(ApplicationDomain.currentDomain)));
+			//loader.contentLoaderInfo.addEventListener(Event.COMPLETE,onPlayerComplete);
 		}
 		
 		private var _lastTime:Number = 0;
@@ -100,6 +124,7 @@ package com.idzeir.acfun.module
 		protected function onPlayerComplete(event:Event):void
 		{
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE,onPlayerComplete);
+			$.t.call(200,checkPlayer);
 			
 			var p:Object = loader.content;
 			addChildAt(p as DisplayObject,0);

@@ -24,6 +24,7 @@ package
 	import com.idzeir.acfun.manage.BulletFactory;
 	import com.idzeir.acfun.manage.BulletVoMgr;
 	import com.idzeir.acfun.manage.Keys;
+	import com.idzeir.acfun.module.IPlugin;
 	import com.idzeir.acfun.profile.Monitor;
 	import com.idzeir.acfun.timer.Ticker;
 	import com.idzeir.acfun.utils.FindUtil;
@@ -229,11 +230,23 @@ package
 			var loader:Loader = new Loader();
 			var okHandler:Function = function(e:Event):void
 			{
-				Log.info("第三方播放器加载成功");
 				clearHandler();
 				_coopSDK = e.target.content;
 				applyLogicXML();
 				_apiBox.addChild(_coopSDK as DisplayObject);
+				
+				//加载第三方播放器
+				if(!($.g.proxy==""))
+				{
+					var p:IPlugin = e.target.content as IPlugin;
+					if(p)
+					{
+						p.hooks($.g.playerURL,stage.loaderInfo.parameters);
+					}
+					Log.info("第三方播放器代理插件加载成功");
+					return;
+				}
+				Log.info("第三方播放器加载成功");
 			};
 			var failHandler:Function = function(e:Event):void
 			{
