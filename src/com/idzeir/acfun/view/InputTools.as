@@ -15,6 +15,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.manage.BulletType;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
+	import com.idzeir.acfun.utils.RefUtil;
 	import com.idzeir.components.HBox;
 	import com.idzeir.components.ImageButton;
 	import com.idzeir.components.Style;
@@ -60,6 +61,20 @@ package com.idzeir.acfun.view
 			var logo:ImageButton = new ImageButton();
 			logo.setSize(66,20);
 			logo.skinUrlMap = buttonsXML.logo.text().split("|");
+			
+			const authority:String = "acfun.tv";
+			const host:String = RefUtil.host;
+			
+			if(RefUtil.remote&&(host.lastIndexOf(authority)+authority.length)==host.length)
+			{
+				logo.buttonMode = false;
+			}else{
+				logo.addEventListener(MouseEvent.CLICK,function():void
+				{
+					RefUtil.toURL("http://www."+authority);
+				});
+			}
+			
 			addChild(logo);
 			
 			var option:ImageButton = new ImageButton();
