@@ -32,7 +32,7 @@ package
 	import com.idzeir.acfun.utils.MenuUtil;
 	import com.idzeir.acfun.view.BaseStage;
 	import com.idzeir.acfun.view.BulletContainer;
-	import com.idzeir.acfun.view.ErrorText;
+	import com.idzeir.acfun.view.ErrorRespondText;
 	import com.idzeir.acfun.view.InputTools;
 	import com.idzeir.acfun.view.ProgressBar;
 	import com.idzeir.acfun.vo.ConfigVo;
@@ -102,7 +102,7 @@ package
 		{
 			super.onAdded(event);
 			
-			Log.level = 1;
+			Log.level = 4;
 			Log.useTracer = true;
 			
 			//屏蔽合作方右键菜单
@@ -187,7 +187,7 @@ package
 			_proBar ||= new ProgressBar();
 			this.addChild(_proBar);
 			
-			var errorTxt:ErrorText = new ErrorText();
+			var errorTxt:ErrorRespondText = new ErrorRespondText();
 			this.addChild(errorTxt);
 			
 			this.addChild(new Monitor());

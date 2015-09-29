@@ -89,9 +89,22 @@ package com.idzeir.acfun.manage
 			return (a.stime - b.stime)>0;
 		}
 		
+		/**
+		 * 验证是否存在历史弹幕
+		 * @return 
+		 */		
+		private function vaild():Boolean
+		{
+			return timeNode||_begin;
+		}
+		
 		public function seek(value:Number):Node
 		{
 			var node:Node = timeNode||_begin;
+			
+			if(!vaild())
+				return null;
+			
 			if(value>(NodeUtil.get(node)).stime)
 			{
 				//向后

@@ -97,7 +97,7 @@ package com.idzeir.acfun.business.init
 				{
 					--_pageNo;
 					Log.info("弹幕文件加载完毕,总共："+_total+" 条");
-					Log.debug("弹幕排序结果时间：",String($.b));
+					//Log.debug("弹幕排序结果时间：",String($.b));
 					complete();
 					return;
 				}

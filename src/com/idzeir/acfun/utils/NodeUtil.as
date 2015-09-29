@@ -19,6 +19,7 @@ package com.idzeir.acfun.utils
 	{
 		public static function get(node:Node):BulletVo
 		{
+			if(node==null)return null;
 			return node.content as BulletVo;
 		}
 	}

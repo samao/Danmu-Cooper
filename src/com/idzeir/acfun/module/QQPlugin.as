@@ -120,7 +120,7 @@ package com.idzeir.acfun.module
 				_player.swf_setSize(stage.stageWidth,stage.stageHeight);
 			});
 			var p:Object = loader.content;
-			addChildAt(p as DisplayObject,0);
+			p&&addChildAt(p as DisplayObject,0);
 		}
 	}
 }
