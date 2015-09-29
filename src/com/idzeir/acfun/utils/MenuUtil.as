@@ -10,7 +10,9 @@
 package com.idzeir.acfun.utils
 {
 	import flash.display.InteractiveObject;
+	import flash.events.ContextMenuEvent;
 	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	
 	/**
 	 * 右键工具类菜单
@@ -33,9 +35,16 @@ package com.idzeir.acfun.utils
 				menuTarget.contextMenu ||= new ContextMenu();
 				menuTarget.contextMenu.hideBuiltInItems();
 				menuTarget.contextMenu.customItems.length = 0;
-				while(arg.length)
+				if(!menuTarget.contextMenu.hasEventListener(ContextMenuEvent.MENU_SELECT))
 				{
-					menuTarget.contextMenu.customItems.push(arg.shift());
+					menuTarget.contextMenu.addEventListener(ContextMenuEvent.MENU_SELECT,function():void
+					{
+						while(arg.length)
+						{
+							var item:ContextMenuItem = arg.shift();
+							item.caption!=""&&menuTarget.contextMenu.customItems.push(item);
+						}
+					});
 				}
 			}
 		}

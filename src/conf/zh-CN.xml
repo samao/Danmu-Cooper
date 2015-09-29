@@ -26,4 +26,6 @@
 	<l key="404">服务器主动关闭</l>
 	<l key="210">官方黑名单人物</l>
 	
+	<l key="error_send_empty">请输入发送内容</l>
+	
 </node>

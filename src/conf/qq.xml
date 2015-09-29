@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- QQ播放器处理配置信息 -->
-<node>
+<node version="1.0.0">
 	<address proxy="QQPlugin.swf">http://static.video.qq.com/TPswfout.swf</address>
 	<core>
 		<!-- SDK检测 -->

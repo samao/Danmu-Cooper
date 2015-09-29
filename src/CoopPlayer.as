@@ -77,7 +77,9 @@ package
 		
 		private var _bullets:BulletContainer;
 
-		private var menuItem:ContextMenuItem;
+		private var _coreItem:ContextMenuItem;
+		private var _versionItem:ContextMenuItem;
+		
 		/**
 		 * 初始化进度显示条 
 		 */		
@@ -106,9 +108,10 @@ package
 			Log.useTracer = true;
 			
 			//屏蔽合作方右键菜单
-			const VERSION:String = "AP_NO.20150623";
+			const VERSION:String = "AcFunPlayer Build:20150623";
 			
-			menuItem = new ContextMenuItem(VERSION,true,false);
+			_coreItem = new ContextMenuItem(VERSION,true,false);
+			_versionItem = new ContextMenuItem("",false,false)
 			
 			initVo();
 			
@@ -125,7 +128,7 @@ package
 			});
 			$.q.excute();
 			
-			MenuUtil.hidenContextMenus(this,menuItem);
+			MenuUtil.hidenContextMenus(this,_coreItem,_versionItem);
 			
 			stage.addEventListener(Event.RESIZE,function():void
 			{
@@ -176,10 +179,10 @@ package
 			_apiBox.addEventListener(Event.ADDED,function(e:Event):void
 			{
 				//Log.error("api add:",e.target);
-				MenuUtil.hidenContextMenus(e.target as InteractiveObject,menuItem);
+				MenuUtil.hidenContextMenus(e.target as InteractiveObject,_coreItem,_versionItem);
 			});
 			
-			MenuUtil.hidenContextMenus(_apiBox,menuItem);
+			MenuUtil.hidenContextMenus(_apiBox,_coreItem,_versionItem);
 			
 			this.addChild(_apiBox);
 			this.addChild(_bullets);
@@ -317,6 +320,8 @@ package
 			{
 				this._bullets.start();
 			}
+			
+			_versionItem.caption ="逻辑版本：" +$.v.sourceType + " " + $.g.xml.@version;
 		}
 		
 		private function onTime(e:Event):void

@@ -187,7 +187,7 @@ package com.idzeir.acfun.business.init
 				case RespondType.SEND_FAIL_FORBIDDEN_SPECIAL_LEVEL:
 				case RespondType.SEND_FAIL_SENSITIVE:
 					Log.error("发送弹幕失败:",JSON.stringify(value));
-					$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":JSON.stringify(value)}));
+					$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":$.l.get(value["status"])}));
 					break;
 				default:
 					Log.warn("websocket反馈码：",value["status"],$.l.get(value["status"]));

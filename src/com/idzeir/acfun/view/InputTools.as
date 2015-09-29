@@ -196,7 +196,11 @@ package com.idzeir.acfun.view
 		 */		
 		private function send():void
 		{
-			if(StringUtil.remove(_inputTxt.text," ").length == 0) return;
+			if(StringUtil.remove(_inputTxt.text," ").length == 0) 
+			{
+				$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":$.l.get("error_send_empty")}));
+				return;
+			}
 			
 			var d:Object = {};
 			var c:Object = {};

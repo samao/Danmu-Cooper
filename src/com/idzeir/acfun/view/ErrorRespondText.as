@@ -14,6 +14,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.components.Style;
 	
 	import flash.events.Event;
+	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	import flash.text.TextField;
@@ -51,11 +52,11 @@ package com.idzeir.acfun.view
 				appendText(e.info.message+"\n")
 			});
 			
+			this.alpha = .8
 			this.selectable = this.mouseEnabled = false;
 			this.autoSize = "left";
-			this.textColor = 0xFF0000;
 			this.defaultTextFormat = new TextFormat(Style.font,12,0xFFFFFF,true);
-			this.filters = [new GlowFilter(0xffffff,1,2,2,1,1),new GlowFilter(0xFFFF00,.5,1,1,1)];
+			this.filters = [new GlowFilter(0x999999,1,1,1,1,1)];
 			
 			this.addEventListener(Event.ADDED_TO_STAGE,function():void
 			{
