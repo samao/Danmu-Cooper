@@ -44,6 +44,15 @@ package com.idzeir.acfun.view
 		private var _style:Object = {size:1,style:1,color:0x000000};
 
 		private var _tipsTxt:TextField;
+		/**
+		 * 是否正在显示 
+		 */		
+		private var _showing:Boolean = true;
+		
+		//输入框最小宽度
+		private const INPUT_MIN_WIDTH:uint = 30;
+		
+		private var _setWidth:Number = 0;
 		
 		public function InputTools()
 		{
@@ -52,6 +61,8 @@ package com.idzeir.acfun.view
 			this.algin = HBox.MIDDLE;
 			
 			addChildren();
+			
+			_setWidth = this.width;
 		}
 		
 		private function addChildren():void
@@ -183,12 +194,38 @@ package com.idzeir.acfun.view
 		
 		override public function set width(value:Number):void
 		{
+			_setWidth = value;
 			var min:int = super.width - _inputTxt.width;
+			//输入框小于30像素时候隐藏
+			if(value<0||value<(min+INPUT_MIN_WIDTH))
+			{
+				_showing&&(super.visible = false);
+				return;
+			}
+			
+			_showing&&(super.visible = true);
 			if(value>min)
 			{
 				_inputTxt.width = value - min;
 			}
 			this.update();
+		}
+		
+		override public function set visible(value:Boolean):void
+		{
+			super.visible = vaild()?value:false;
+			_showing = value;
+		}
+		
+		/**
+		 * 检测是否有足够空间显示
+		 * @return 
+		 */		
+		private function vaild():Boolean
+		{
+			if(_setWidth<0||_setWidth<(super.width - _inputTxt.width+INPUT_MIN_WIDTH))
+				return false;
+			return true;
 		}
 		
 		/**

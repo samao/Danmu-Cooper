@@ -11,6 +11,7 @@ package com.idzeir.acfun.utils
 {
 	import flash.external.ExternalInterface;
 	import flash.net.URLRequest;
+	import flash.net.URLVariables;
 	import flash.net.navigateToURL;
 	import flash.system.Security;
 	
@@ -75,6 +76,40 @@ package com.idzeir.acfun.utils
 			}else{
 				navigateToURL(new URLRequest(url),window);
 			}
+		}
+		/**
+		 * 获取页面地址后面的参数
+		 * @return 
+		 */		
+		public static function getUrlVars():Object
+		{
+			var adress:String = ref;
+			try{
+				if(adress.indexOf("?")>0)
+				{
+					return toObject(adress.split("?")[1]);
+				}
+			}catch(e:Error){}
+			return {};
+		}
+		/**
+		 * 将对值串转成Object对象
+		 * @param url
+		 * @return 
+		 */		
+		public static function toObject(url:String):Object
+		{
+			var map:Array = url.split("&");
+			var o:Object = {};
+			for(var i:uint = 0; i < map.length; ++i)
+			{
+				var elem:Array = map[i].split("=");
+				if(elem.length==2)
+				{
+					o[elem[0]] = elem[1];
+				}
+			}
+			return o;
 		}
 	}
 }

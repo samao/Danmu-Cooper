@@ -30,6 +30,7 @@ package
 	import com.idzeir.acfun.utils.FindUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.MenuUtil;
+	import com.idzeir.acfun.utils.RefUtil;
 	import com.idzeir.acfun.view.BaseStage;
 	import com.idzeir.acfun.view.BulletContainer;
 	import com.idzeir.acfun.view.ErrorRespondText;
@@ -104,8 +105,18 @@ package
 		{
 			super.onAdded(event);
 			
-			Log.level = 4;
-			Log.useTracer = true;
+			CONFIG::release
+			{
+				const LOG_TAG:String = "log";
+				var urlVars:Object = RefUtil.getUrlVars();
+				Log.level = urlVars.hasOwnProperty(LOG_TAG)?parseInt(urlVars[LOG_TAG]):0;
+			}
+			
+			CONFIG::debug
+			{
+				Log.level = 4;
+				Log.useTracer = true;
+			}
 			
 			//屏蔽合作方右键菜单
 			const VERSION:String = "AcFunPlayer Build:20150623";
@@ -157,7 +168,6 @@ package
 			{
 				Log.info("业务初始化完成");
 				
-				initTools();
 				//加载弹幕播放器
 				loadCommentPlugin();
 			});
@@ -203,7 +213,6 @@ package
 			_tools.x = Number($.g.xml..input.@left[0]);
 			_tools.y = stage.stageHeight - _tools.height - Number($.g.xml..input.@bottom[0]);
 			_tools.width = stage.stageWidth - Number($.g.xml..input.@left[0]) - Number($.g.xml..input.@right[0])
-			_tools.visible = false;
 			this.addChild(_tools);
 			
 			const DANMU_OPTION_URL:String = "DanmuOption.swf";
@@ -214,7 +223,7 @@ package
 		
 		private function loadCommentPlugin():void
 		{
-			Log.info("加载弹幕播放器");
+			Log.info("开始加载视频播放器");
 			//加载第三方播放器
 			loadCoopPlayer();
 			return;
@@ -296,6 +305,9 @@ package
 		
 		private function addXMLEvent():void
 		{
+			//初始化输入框
+			initTools();
+			
 			var target:IEventDispatcher = FindUtil.get(_coopSDK,$.g.eventTarget) as IEventDispatcher;
 			if(target)
 			{

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 搜狐播放器处理配置信息 -->
-<node version="1.0.0">
+<node version="1.0.1">
 	<address proxy="">http://tv.sohu.com/upload/swf/p2p/20150807/Main.swf</address>
 	<core>
 		<!-- SDK检测 -->

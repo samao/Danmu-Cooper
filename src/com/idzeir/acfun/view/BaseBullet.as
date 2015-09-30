@@ -9,14 +9,15 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.components.Style;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.vo.BulletVo;
+	import com.idzeir.components.Style;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -44,7 +45,7 @@ package com.idzeir.acfun.view
 			this.tf.color = 0xffffff;
 			_txt.defaultTextFormat = tf;
 			
-			_txt.filters = [/*new DropShadowFilter(1,-135,0,1,1,1),*/new DropShadowFilter(1,45,0,1,1,1)];
+			_txt.filters = [new GlowFilter(0xFFFFFF, 1, 1, 1, 1),new DropShadowFilter(.5, 45, 0, .3,1,1),new GlowFilter(0, 1, 1, 1, 1)];
 			
 			this.addChild(_txt);
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
