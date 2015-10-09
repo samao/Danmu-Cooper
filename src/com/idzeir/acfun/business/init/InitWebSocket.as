@@ -48,36 +48,11 @@ package com.idzeir.acfun.business.init
 			$.e.dispatchEvent(new GlobalEvent(EventType.PROGRESS,"连接聊天服务器"));
 			_websocket = new WebSocket($.c.websocketUri+"/"+$.v.danmakuId,"*",null,20000);
 			Log.info("连接websocket",_websocket.uri);
-			_websocket.addEventListener(WebSocketEvent.OPEN,function():void
-			{
-				Log.info("websocket连接成功");
-				
-				$.t.call(10000,ping);
-				
-				sendAuthor();
-			});
-			_websocket.addEventListener(WebSocketErrorEvent.CONNECTION_FAIL,function():void
-			{
-				Log.info("websocket连接失败");
-				retry();
-			},false,0,true);
-			_websocket.addEventListener(WebSocketEvent.CLOSED,function():void
-			{
-				Log.info("websocket连接关闭");
-				breakQm();
-				retry();
-			},false,0,true);
-			_websocket.addEventListener(WebSocketEvent.MESSAGE,function(e:WebSocketEvent):void
-			{
-				Log.debug("收到服务器返回消息",e.message.utf8Data);
-				try{
-					var respond:Object = JSON.parse(e.message.utf8Data);
-				}catch(error:Error){
-					Log.warn("JSONError:websocket返回数据无法JSON");
-					return;
-				}
-				respond&&handleMessage(respond);
-			},false,0,true);
+			
+			_websocket.addEventListener(WebSocketEvent.OPEN,onConnectOpen);
+			_websocket.addEventListener(WebSocketErrorEvent.CONNECTION_FAIL,onConnectFail);
+			_websocket.addEventListener(WebSocketEvent.CLOSED,onConnectClosed);
+			_websocket.addEventListener(WebSocketEvent.MESSAGE,onMessage);
 			
 			$.e.addEventListener(EventType.SEND,function(e:GlobalEvent):void
 			{
@@ -85,6 +60,54 @@ package com.idzeir.acfun.business.init
 			});
 			
 			connect();
+		}
+		
+		/**
+		 * 接收消息
+		 * @param e
+		 */		
+		private function onMessage(e:WebSocketEvent):void
+		{
+			try{
+				Log.debug("收到服务器数据:",e.message.utf8Data);
+				var respond:Object = JSON.parse(e.message.utf8Data);
+			}catch(error:Error){
+				Log.warn("JSONError：websocket返回数据无法JSON",error.message);
+				return;
+			}
+			respond&&handleMessage(respond);
+		}
+		/**
+		 * 成功连接ws
+		 * @param e
+		 */		
+		private function onConnectOpen(e:WebSocketEvent):void
+		{
+			Log.info("websocket连接成功");
+			
+			$.t.call(10000,ping);
+			
+			sendAuthor();
+		}
+		/**
+		 * ws关闭
+		 * @param e
+		 */		
+		private function onConnectClosed(e:WebSocketEvent):void
+		{
+			Log.info("websocket连接关闭");
+			breakQm();
+			retry();
+		}
+		
+		/**
+		 * 连接失败
+		 * @param e
+		 */		
+		private function onConnectFail(e:WebSocketEvent):void
+		{
+			Log.info("websocket连接失败");
+			retry();
 		}
 		
 		/**
@@ -152,6 +175,13 @@ package com.idzeir.acfun.business.init
 		
 		private function dispose(result:String = ""):void
 		{
+			try{
+				_websocket.removeEventListener(WebSocketEvent.OPEN,onConnectOpen);
+				_websocket.removeEventListener(WebSocketErrorEvent.CONNECTION_FAIL,onConnectFail);
+				_websocket.removeEventListener(WebSocketEvent.CLOSED,onConnectClosed);
+				_websocket.removeEventListener(WebSocketEvent.MESSAGE,onMessage);
+			}catch(e:Error){}
+			
 			_websocket = null;
 			$.e.dispatchEvent(new GlobalEvent(EventType.DISPOSE,result));
 		}
@@ -159,59 +189,65 @@ package com.idzeir.acfun.business.init
 		private function handleMessage(value:Object):void
 		{
 			//服务器和用户交互状态反馈
-			switch(value["status"])
+			if(value.hasOwnProperty("status"))
 			{
-				case RespondType.SERVER_AUTHED:
-					Log.info("服务器验证成功：",value.msg);
-					var author:Object = JSON.parse(value.msg);
-					//重置用户信息
-					$.u.id = author["uid"];
-					$.fc.set("client",author['client']);
-					$.fc.set("client_ck",author['client_ck']);
-					_authed = true;
-					flush();
-					complete();
-					break;
-				case RespondType.SEND_OK:
-				case RespondType.ONLINE_LIST:
-				case RespondType.ONLINE_NUMBER:
-				case RespondType.SEND_REPORT_OK:
-				case RespondType.SEND_REPORT_OK_2:
-					break;
-				case RespondType.SERVER_CLOSE:
-					dispose($.l.get(value["status"]));
-					break;
-				case RespondType.SEND_FAIL_FORBIDDEN:
-				case RespondType.SEND_FAIL_FORBIDDEN_GUEST:
-				case RespondType.SEND_FAIL_FORBIDDEN_LEVEL:
-				case RespondType.SEND_FAIL_FORBIDDEN_SPECIAL_LEVEL:
-				case RespondType.SEND_FAIL_SENSITIVE:
-					Log.error("发送弹幕失败:",JSON.stringify(value));
-					$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":$.l.get(value["status"])}));
-					break;
-				default:
-					Log.warn("websocket反馈码：",value["status"],$.l.get(value["status"]));
-					break;
-			}
-			
-			try{
-				//收到服务器交互指令
-				switch(value["action"])
+				switch(value["status"])
 				{
-					case RespondAction.POST:
-						//接收到弹幕，包括自己的弹幕
-						$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
+					case RespondType.SERVER_AUTHED:
+						Log.info("服务器验证成功：",value.msg);
+						var author:Object = JSON.parse(value.msg);
+						//重置用户信息
+						$.u.id = author["uid"];
+						$.fc.set("client",author['client']);
+						$.fc.set("client_ck",author['client_ck']);
+						_authed = true;
+						flush();
+						complete();
 						break;
-					case RespondAction.VOW:
-						//服务器公告信息
-						$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
+					case RespondType.SEND_OK:
+					case RespondType.ONLINE_LIST:
+					case RespondType.ONLINE_NUMBER:
+					case RespondType.SEND_REPORT_OK:
+					case RespondType.SEND_REPORT_OK_2:
+						break;
+					case RespondType.SERVER_CLOSE:
+						dispose($.l.get(value["status"]));
+						break;
+					case RespondType.SEND_FAIL_FORBIDDEN:
+					case RespondType.SEND_FAIL_FORBIDDEN_GUEST:
+					case RespondType.SEND_FAIL_FORBIDDEN_LEVEL:
+					case RespondType.SEND_FAIL_FORBIDDEN_SPECIAL_LEVEL:
+					case RespondType.SEND_FAIL_SENSITIVE:
+						Log.error("发送弹幕失败:",JSON.stringify(value));
+						$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":$.l.get(value["status"])}));
 						break;
 					default:
-						Log.debug("收到服务器消息(忽略):"+JSON.stringify(value));
+						Log.warn("websocket反馈码：",value["status"],$.l.get(value["status"]));
 						break;
 				}
-			}catch(e:Error){
-				Log.error("接收websocket消息处理出错：",e.message,e.getStackTrace());
+				return;
+			}
+			
+			if(value.hasOwnProperty("action")){
+				try{
+					//收到服务器交互指令
+					switch(value["action"])
+					{
+						case RespondAction.POST:
+							//接收到弹幕，包括自己的弹幕
+							$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
+							break;
+						case RespondAction.VOW:
+							//服务器公告信息
+							$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
+							break;
+						default:
+							Log.warn("收到服务器消息(忽略):"+JSON.stringify(value));
+							break;
+					}
+				}catch(e:Error){
+					Log.error("接收websocket消息处理出错：",e.message,e.getStackTrace());
+				}
 			}
 		}
 		

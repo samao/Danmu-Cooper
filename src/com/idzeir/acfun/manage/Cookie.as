@@ -77,7 +77,7 @@ package com.idzeir.acfun.manage
 			if(ExternalInterface.available)
 			{
 				var cookies:String = ExternalInterface.call("function(){ return document.cookie; }");
-				
+				//{"command":"{\"uid\":\"1407552\",\"uid_ck\":\"-2041506475\"}","action":"auth"}
 				//cookies = "auth_key=1368971; auth_key_ac_sha1=1469459601; auth_key_ac_sha1_=ebF9oHOxJwrf7XYU8rwwcgSg06Q=; ac_username=%E6%88%91%E2%91%A9%E9%BE%98; ac_userimg=http%3A%2F%2Fstatic.acfun.mm111.net%2Fdotnet%2F20120923%2Fstyle%2Fimage%2Favatar.jpg; Hm_lvt_bc75b9260fe72ee13356c664daa5568c=1434093416,1434340247,1435549666,1435568174; Hm_lpvt_bc75b9260fe72ee13356c664daa5568c=1435568179; clientlanguage=zh_CN";
 				if(cookies)
 				{

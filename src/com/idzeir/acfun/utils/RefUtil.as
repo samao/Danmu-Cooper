@@ -69,7 +69,7 @@ package com.idzeir.acfun.utils
 			if(ExternalInterface.available)
 			{
 				try{
-					ExternalInterface.call("window.open",url,window);	
+					ExternalInterface.call("function(){window.open("+url+","+window+")}");	
 				}catch(e:Error){
 					navigateToURL(new URLRequest(url),window);
 				}
