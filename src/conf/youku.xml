@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 优酷播放器处理配置信息 -->
 <node version="1.0.0">
-	<address proxy="YoukuPlayerPlugin.swf">http://static.youku.com/v1.0.0447/v/swf/player_yk.swf</address>
+	<address proxy="YoukuPlugin.swf">http://static.youku.com/v1.0.0447/v/swf/player_yk.swf</address>
 	<core>
 		<!-- SDK检测 -->
 		<check exist="player"></check>

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 乐视tv播放器处理配置信息 -->
 <node version="1.0.0">
-	<address proxy="LetvPlugin.swf">http://yuntv.letv.com/bcloud.swf</address>
+	<address proxy="IQiyiPlugin.swf">http://dispatcher.video.qiyi.com/disp/shareplayer.swf</address>
 	<core>
 		<!-- SDK检测 -->
 		<check exist="_player"></check>
-		<check exist="_api"></check>
-		<check exist="_videoInfo"></check>
+		<check exist="_player.currentTime"></check>
 		
 		<!-- 事件处理 如果是main派发事件请将target置空 -->
 		<dispatch target="">
@@ -30,7 +29,7 @@
 			<!-- 弹幕设置面板 -->
 			<option left="10" bottom="80"/>
 			<!-- 输入框 -->
-			<input used="1" left="200" right="250" bottom="2">
+			<input used="1" left="180" right="320" bottom="5">
 				<!-- 按钮皮肤配置顺序为normal，over，select -->
 				<buttons>
 					<logo>image/logo.png|image/logo.png|image/logo.png</logo>
