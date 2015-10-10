@@ -23,10 +23,6 @@ package com.idzeir.acfun.business.init
 
 		private var _websocket:WebSocket;
 		/**
-		 * 当前pingId 
-		 */		
-		private var _pinId:int = 0;
-		/**
 		 * 重连ws时间 
 		 */		
 		private var _retryDelay:int = 3000;
@@ -127,7 +123,10 @@ package com.idzeir.acfun.business.init
 			}
 			$.t.call(_retryDelay,connect,1);
 		}
-		
+		/**
+		 * 验证是否为可发送消息状态
+		 * @return 
+		 */		
 		private function vaild():Boolean
 		{
 			return _websocket&&_websocket.connected&&_authed;
@@ -143,6 +142,9 @@ package com.idzeir.acfun.business.init
 			_map.push(value);
 		}
 		
+		/**
+		 * 心跳
+		 */		
 		private function ping():void
 		{
 			_websocket&&_websocket.ping();
@@ -222,10 +224,9 @@ package com.idzeir.acfun.business.init
 						$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":$.l.get(value["status"])}));
 						break;
 					default:
-						Log.warn("websocket反馈码：",value["status"],$.l.get(value["status"]));
+						Log.warn("未处理websocket消息：","status:",value["status"],JSON.stringify(value));
 						break;
 				}
-				return;
 			}
 			
 			if(value.hasOwnProperty("action")){
@@ -242,13 +243,16 @@ package com.idzeir.acfun.business.init
 							$.e.dispatchEvent(new GlobalEvent(EventType.RECIVE,JSON.parse(value["command"])));
 							break;
 						default:
-							Log.warn("收到服务器消息(忽略):"+JSON.stringify(value));
+							Log.warn("未处理websocket消息：","action:",value["action"],JSON.stringify(value));
 							break;
 					}
 				}catch(e:Error){
 					Log.error("接收websocket消息处理出错：",e.message,e.getStackTrace());
 				}
+				return;
 			}
+			
+			Log.warn("未知websocket消息:","原始内容：",value,"JSON化：",JSON.stringify(value));
 		}
 		
 		private function sendAuthor():void

@@ -24,7 +24,7 @@ package com.idzeir.acfun.module
 	/**
 	 * 乐视视频播放器兼容模块
 	 */	
-	public class LetvPlayerPlugin extends BaseStage
+	public class LetvPlugin extends BaseStage
 	{
 		public var _player:* = null;
 		public var _api:* = null;
@@ -32,7 +32,7 @@ package com.idzeir.acfun.module
 
 		private var _param:Object;
 		
-		public function LetvPlayerPlugin()
+		public function LetvPlugin()
 		{
 			super();
 			this.mouseEnabled = false;

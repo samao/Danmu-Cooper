@@ -24,7 +24,7 @@ package com.idzeir.acfun.module
 	import flash.system.Security;
 	
 	
-	public class YoukuPlayerPlugin extends BaseStage implements IPlugin
+	public class YoukuPlugin extends BaseStage implements IPlugin
 	{
 		public static const PLAYER_URL:String = "http://static.youku.com/v1.0.0447/v/swf/player_yk.swf";
 		private var vid:String;
@@ -34,7 +34,7 @@ package com.idzeir.acfun.module
 		
 		public static const PLAYER_TYPE:String = "youku";
 		
-		public function YoukuPlayerPlugin()
+		public function YoukuPlugin()
 		{
 			super();
 			this.mouseEnabled = false;
