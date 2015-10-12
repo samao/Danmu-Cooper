@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 乐视tv播放器处理配置信息 -->
-<node version="1.0.0">
+<!-- 爱奇艺播放器处理配置信息 -->
+<node version="1.0.1">
 	<address proxy="IQiyiPlugin.swf">http://dispatcher.video.qiyi.com/disp/shareplayer.swf</address>
 	<core>
 		<!-- SDK检测 -->
