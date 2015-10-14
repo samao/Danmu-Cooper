@@ -220,6 +220,11 @@ package com.idzeir.acfun.view
 			{
 				i.visible = (i.y <= stage.stageHeight-TOP-BOTTOM - VGAP);
 			}
+			
+			const BUTTOM_BAR_H:int = $.g.gap.y||0;
+			_topBox.x = stage.stageWidth - _topBox.width>>1;
+			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
+			_bottomBox.y = stage.stageHeight - _bottomBox.height - BUTTOM_BAR_H;
 		}
 		
 		protected function update():void

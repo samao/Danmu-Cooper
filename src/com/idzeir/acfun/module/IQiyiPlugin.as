@@ -144,7 +144,7 @@ package com.idzeir.acfun.module
 			
 			$.t.call(200,checkPlayer);
 			
-			addChild(event.target.content as DisplayObject);
+			addChild(loader as DisplayObject);
 		}
 				
 		private function updateTime():void
