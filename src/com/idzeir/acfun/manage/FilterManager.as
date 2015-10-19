@@ -44,7 +44,7 @@ package com.idzeir.acfun.manage
 		
 		public function checkWords(value:String):String
 		{
-			if(value)return value.replace(_regExp,"爱你");
+			if(value)return value.replace(_regExp,"520");
 			return value;
 		}
 		

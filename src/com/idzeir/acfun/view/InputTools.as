@@ -239,13 +239,19 @@ package com.idzeir.acfun.view
 				return;
 			}
 			
+			if(!$.fm.checkUser($.u.id))
+			{
+				$.e.dispatchEvent(new GlobalEvent(EventType.ERROR,{"message":$.l.get("error_send_blacklist")}));
+				return;
+			}
+			
 			var d:Object = {};
 			var c:Object = {};
 			c.mode = _styles[_style.style];
 			c.color = _style.color;
 			c.size = _sizes[_style.size];
 			c.user = $.u.id;
-			c.message = _inputTxt.text;
+			c.message = $.fm.checkWords(_inputTxt.text);
 			c.time = new Date().time;
 			//比当前时间少1s防止重复显示
 			c.stime = NodeUtil.get($.b.timeNode).stime - 1;

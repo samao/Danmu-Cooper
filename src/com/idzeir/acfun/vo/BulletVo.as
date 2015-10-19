@@ -223,7 +223,7 @@ package com.idzeir.acfun.vo
 		 */
 		public function get message():String
 		{
-			return _message;
+			return $.fm.checkWords(_message);
 		}
 
 		/**

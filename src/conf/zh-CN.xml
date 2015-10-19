@@ -27,5 +27,5 @@
 	<l key="210">官方黑名单人物</l>
 	
 	<l key="error_send_empty">请输入发送内容</l>
-	
+	<l key="error_send_blacklist">封禁用户禁止发言</l>
 </node>

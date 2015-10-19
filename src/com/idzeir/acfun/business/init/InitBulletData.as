@@ -127,7 +127,12 @@ package com.idzeir.acfun.business.init
 					{
 						++_total;
 						_map[bullet.commentId] = true;
-						$.b.add(new Node(bullet));
+						if($.fm.checkUser(bullet.user))
+						{
+							$.b.add(new Node(bullet));
+						}else{
+							Log.debug("被封用户弹幕:",bullet.user);
+						}
 					}else{
 						Log.warn("重复弹幕：",bullet.message);
 					}
