@@ -61,7 +61,7 @@ package com.idzeir.acfun.business.init
 			{
 				Log.info("黑名单加载完成");
 				$.fm.updateBlacklist(value);
-				Log.debug("敏感词和封禁用户细心：",$.fm);
+				Log.debug("敏感词和封禁用户信息：",$.fm);
 				complete();
 			},function(value:*):void
 			{
