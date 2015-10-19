@@ -32,6 +32,7 @@ package
 	import com.idzeir.acfun.utils.FindUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.MenuUtil;
+	import com.idzeir.acfun.utils.RefUtil;
 	import com.idzeir.acfun.view.BaseStage;
 	import com.idzeir.acfun.view.BulletContainer;
 	import com.idzeir.acfun.view.ErrorRespondText;
