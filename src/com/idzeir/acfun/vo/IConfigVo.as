@@ -31,5 +31,15 @@ package com.idzeir.acfun.vo
 		 * 加载完json更新配置信息
 		 */		
 		function update(value:Object):IConfigVo;
+		
+		/**
+		 * 敏感词地址
+		 */		
+		function get ban():String
+			
+		/**
+		 * 黑名单地址
+		 */		
+		function get blacklist():String
 	}
 }

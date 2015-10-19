@@ -34,8 +34,11 @@ package com.idzeir.acfun.business
 		
 		public function breakQm():void
 		{
-			_qm.breakQm();
-			_qm = null;
+			if(_qm)
+			{
+				_qm.breakQm();
+				_qm = null;
+			}
 		}
 		
 		public function complete():void

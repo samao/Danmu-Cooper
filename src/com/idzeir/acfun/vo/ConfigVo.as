@@ -19,6 +19,9 @@ package com.idzeir.acfun.vo
 		private var _getVideoUrl:String = "";
 		private var _staticUrl:String = "";
 		private var _websocketUri:String = "";
+		private var _ban:String = "";
+		private var _blacklist:String = "";
+		
 		
 		private static var _instance:ConfigVo;
 		
@@ -29,7 +32,7 @@ package com.idzeir.acfun.vo
 				throw new Error("单例");
 			}
 		}
-		
+
 		public static function getInstance():ConfigVo
 		{
 			return _instance ||= new ConfigVo();
@@ -49,6 +52,16 @@ package com.idzeir.acfun.vo
 		{
 			return _websocketUri;
 		}
+		
+		public function get blacklist():String
+		{
+			return _blacklist;
+		}
+		
+		public function get ban():String
+		{
+			return _ban;
+		}
 
 		public function update(value:Object):IConfigVo
 		{
@@ -56,13 +69,21 @@ package com.idzeir.acfun.vo
 			value.hasOwnProperty("getVideoUrl")&&(_getVideoUrl = value["getVideoUrl"]);
 			value.hasOwnProperty("staticUrl")&&(_staticUrl = value["staticUrl"]);
 			value.hasOwnProperty("websocketUri")&&(_websocketUri = value["websocketUri"]);
+			value.hasOwnProperty("ban")&&(_ban = value["ban"]);
+			value.hasOwnProperty("blacklist")&&(_blacklist = value["blacklist"]);
 			
 			return this;
 		}
 		
 		public function toString():String
 		{
-			return "========配置信息：\nhost:"+_host+"\ngetVideoUrl:"+_getVideoUrl+"\nstaticUrl"+_staticUrl+"\nwebsocketUri:"+_websocketUri+"\n========(end)";
+			return "========配置信息：\nhost:"+_host+"" +
+				"\ngetVideoUrl:"+_getVideoUrl+"" +
+				"\nstaticUrl"+_staticUrl+"" +
+				"\nwebsocketUri:"+_websocketUri+"" +
+				"\nban:" + _ban +""+
+				"\nblacklist:" + _blacklist +"" +
+				"\n========(end)";
 		}
 	}
 }

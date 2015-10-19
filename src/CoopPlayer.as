@@ -14,6 +14,7 @@ package
 	import com.idzeir.acfun.business.init.InitBulletData;
 	import com.idzeir.acfun.business.init.InitConfigData;
 	import com.idzeir.acfun.business.init.InitCookieData;
+	import com.idzeir.acfun.business.init.InitFilterData;
 	import com.idzeir.acfun.business.init.InitVideoData;
 	import com.idzeir.acfun.business.init.InitWebSocket;
 	import com.idzeir.acfun.business.init.InitXMLLogic;
@@ -23,6 +24,7 @@ package
 	import com.idzeir.acfun.manage.Animation;
 	import com.idzeir.acfun.manage.BulletFactory;
 	import com.idzeir.acfun.manage.BulletVoMgr;
+	import com.idzeir.acfun.manage.FilterManager;
 	import com.idzeir.acfun.manage.Keys;
 	import com.idzeir.acfun.module.IPlugin;
 	import com.idzeir.acfun.profile.Monitor;
@@ -30,7 +32,6 @@ package
 	import com.idzeir.acfun.utils.FindUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.MenuUtil;
-	import com.idzeir.acfun.utils.RefUtil;
 	import com.idzeir.acfun.view.BaseStage;
 	import com.idzeir.acfun.view.BulletContainer;
 	import com.idzeir.acfun.view.ErrorRespondText;
@@ -130,6 +131,7 @@ package
 			//先加载语言包和配置然后才开始初始化界面
 			$.q.push(new InitCookieData());
 			$.q.push(new InitConfigData());
+			$.q.push(new InitFilterData());
 			
 			$.q.addEventListener(QmEvent.COMPLETE_QM,function():void
 			{
@@ -399,6 +401,7 @@ package
 			$.k = Keys.getInstance();
 			$.a = Animation.getInstance();
 			$.u = User.getInstance();
+			$.fm = FilterManager.getInstance();
 			
 			$.f.update(stage.loaderInfo.parameters);
 			$.k.stage = stage;

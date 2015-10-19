@@ -15,6 +15,7 @@ package
 	import com.idzeir.acfun.manage.IBulletFactory;
 	import com.idzeir.acfun.manage.IBulletVoMgr;
 	import com.idzeir.acfun.manage.ICookie;
+	import com.idzeir.acfun.manage.IFilterManager;
 	import com.idzeir.acfun.manage.IKeys;
 	import com.idzeir.acfun.manage.ILanguage;
 	import com.idzeir.acfun.timer.ITicker;
@@ -82,6 +83,10 @@ package
 		 * 语言包信息
 		 */		
 		public static var l:ILanguage;
+		/**
+		 * 弹幕过滤管理 
+		 */		
+		public static var fm:IFilterManager;
 		/**
 		 * flash cookie 
 		 */		
