@@ -44,7 +44,7 @@ package com.idzeir.acfun.manage
 		
 		public function checkWords(value:String):String
 		{
-			if(value)return value.replace(_regExp,"520");
+			if(value)return value.replace(_regExp,"█");
 			return value;
 		}
 		
@@ -66,10 +66,10 @@ package com.idzeir.acfun.manage
 			}
 			words.forEach(function(e:*,index:int,arr:Array):void
 			{
-				words[index] = "("+e+")";
-				_wordsMap.push(e);
+				if(e!=""&&_wordsMap.indexOf(e)==-1)
+					_wordsMap.push(e);
 			});
-			_regExp = new RegExp(words.join(words.join("|")),"ig");
+			_regExp = new RegExp(_wordsMap.join("|"),"ig");
 		}
 		
 		public function updateBlacklist(value:String):void

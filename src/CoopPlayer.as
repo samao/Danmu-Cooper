@@ -227,6 +227,7 @@ package
 		private function loadCommentPlugin():void
 		{
 			Log.info("开始加载视频播放器");
+			
 			//加载第三方播放器
 			loadCoopPlayer();
 			return;
