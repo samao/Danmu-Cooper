@@ -43,6 +43,7 @@
     <module application="src/CoopPlayer.as" destPath="DanmuOption.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/DanmuOption.as"/>
     <module application="src/CoopPlayer.as" destPath="IQiyiPlugin.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/IQiyiPlugin.as"/>
     <module application="src/CoopPlayer.as" destPath="QQPlugin.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/QQPlugin.as"/>
+    <module application="src/CoopPlayer.as" destPath="FaceText.swf" optimize="false" sourcePath="src/com/idzeir/acfun/module/FaceText.as"/>
   </modules>
   <workers/>
   <buildCSSFiles/>

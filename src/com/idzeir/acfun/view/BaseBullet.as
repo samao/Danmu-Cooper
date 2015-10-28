@@ -16,6 +16,7 @@ package com.idzeir.acfun.view
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.filters.BitmapFilterQuality;
 	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
@@ -45,7 +46,10 @@ package com.idzeir.acfun.view
 			this.tf.color = 0xffffff;
 			_txt.defaultTextFormat = tf;
 			
-			_txt.filters = [new GlowFilter(0xFFFFFF, 1, 1, 1, 1),new DropShadowFilter(.5, 45, 0, .3,1,1),new GlowFilter(0, 1, 1, 1, 1)];
+			_txt.filters = [new GlowFilter(0xFFFFFF,1,1,1,.5),
+							new GlowFilter(0x000000,1,1,1,.5),
+							new DropShadowFilter(1,45,0xFFFFFF,1,1,1,.5,BitmapFilterQuality.HIGH),
+							new DropShadowFilter(.5,225,0xFFFFFF,1,1,1,.5,BitmapFilterQuality.HIGH)];
 			
 			this.addChild(_txt);
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
