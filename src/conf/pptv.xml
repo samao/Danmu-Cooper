@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PPTV播放器处理配置信息 -->
+<node version="1.0.0">
+	<address proxy="PptvPlugin.swf">http://player.pptv.com/flashplayer/pid/4839803/pl/{sourceId}/rcc_id/Acfun_Animation.swf</address>
+	<core>
+		<!-- SDK检测 -->
+		<check exist="_player"></check>
+		<check exist="_player.playTime"></check>
+		
+		<!-- 事件处理 如果是main派发事件请将target置空 -->
+		<dispatch target="">
+		
+			<!-- 播放事件 type为事件类型 value为执行的coop函数 -->
+			<event type="onPlay">onPlay</event>
+			<event type="onStop">onStop</event>
+			<event type="onPause">onPause</event>
+			<event type="onResume">onResume</event>
+			
+			<!-- from 如果是event数据 -->
+			<!-- <event type="play_progress" from="obj.nowTime">onTime</event> -->
+			
+			<!-- from 如果是全局数据,重加载文件中查找数据 -->
+			<event type="play_progress" from="::time">onTime</event>
+		</dispatch>
+		
+		<!-- 弹幕配置部分 -->
+		<comment top="20" bottom="50">
+			<!-- 弹幕设置面板 -->
+			<option left="10" bottom="80"/>
+			<!-- 输入框 -->
+			<input used="1" left="200" right="300" bottom="5">
+				<!-- 按钮皮肤配置顺序为normal，over，select -->
+				<buttons>
+					<logo>image/logo.png|image/logo.png|image/logo.png</logo>
+					<set>image/modelx0001.png|image/modelx0002.png|image/modelx0003.png</set>
+					<send>image/send0001.png|image/send0002.png|image/send0003.png</send>
+					<close>image/close0001.png|image/close0002.png|image/close0003.png</close>
+					<open>image/open0001.png|image/open0002.png|image/open0003.png</open>
+				</buttons>
+				<!-- 输入框配置颜色，背景颜色和边框颜色 -->
+				<label colors="0xFFFFFF,0x333333"/>
+			</input>
+		</comment>
+		
+	</core>
+</node>
