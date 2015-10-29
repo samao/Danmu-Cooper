@@ -131,9 +131,11 @@ package com.idzeir.acfun.module
 					dispatchEvent(new Event("onResume"));
 					break;
 				case "6":
+					dispatchEvent(new Event("onPause"));
+					break;
 				case "7":
 				case "8":
-					dispatchEvent(new Event("onPause"));
+					dispatchEvent(new Event("onStop"));
 					break;
 			}
 			
