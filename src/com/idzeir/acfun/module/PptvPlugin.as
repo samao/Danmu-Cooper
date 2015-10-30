@@ -114,16 +114,16 @@ package com.idzeir.acfun.module
 			//			ended自动播放结束
 			switch(e.param[1]){
 				case "1":
+					break;
+				case "2":
+					break;
+				case "3":
 					dispatchEvent(new Event("onPlay"));
 					if($.t.has(update))
 					{
 						$.t.remove(update);
 					}
 					$.t.call(200,update);
-					break;
-				case "2":
-					break;
-				case "3":
 					break;
 				case "4":
 					break;

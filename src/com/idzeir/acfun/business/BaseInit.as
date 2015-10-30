@@ -43,7 +43,7 @@ package com.idzeir.acfun.business
 		
 		public function complete():void
 		{
-			_qm.next();
+			_qm&&_qm.next();
 			_qm = null;
 		}
 	}
