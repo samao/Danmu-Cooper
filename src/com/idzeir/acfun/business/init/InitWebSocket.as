@@ -206,6 +206,10 @@ package com.idzeir.acfun.business.init
 						flush();
 						complete();
 						break;
+					case RespondType.SERVER_REDIRECT:
+						//切换到备用ws服务器
+						Log.info("服务器负载转移：",value["msg"]);
+						break;
 					case RespondType.SEND_OK:
 					case RespondType.ONLINE_LIST:
 					case RespondType.ONLINE_NUMBER:
