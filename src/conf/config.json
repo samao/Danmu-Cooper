@@ -4,5 +4,6 @@
 	"staticUrl":"http://danmu.aixifan.com/V2",
 	"websocketUri":"ws://danmaku.acfun.tv:443",
 	"ban":"http://cdn.aixifan.com/player/filter/ban.json",
-	"blacklist":"http://cdn.aixifan.com/player/filter/blacklist.json"
+	"blacklist":"http://cdn.aixifan.com/player/filter/blacklist.json",
+	"recommendUrl":"http://search.acfun.tv/like"
 }

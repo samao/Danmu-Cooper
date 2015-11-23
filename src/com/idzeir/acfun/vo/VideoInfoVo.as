@@ -19,6 +19,7 @@ package com.idzeir.acfun.vo
 		private var _danmakuId:String = "";
 		private var _sourceType:String ="";
 		private var _videoLength:int = 0;
+		private var _contentId:Number = 0;
 		
 		private static var _instance:VideoInfoVo;
 		
@@ -48,6 +49,11 @@ package com.idzeir.acfun.vo
 		{
 			return _videoLength;
 		}
+		
+		public function get contentId():Number
+		{
+			return _contentId;
+		}
 
 		public function update(value:Object):IVideoInfoVo
 		{
@@ -56,6 +62,7 @@ package com.idzeir.acfun.vo
 				value.hasOwnProperty("danmakuId")&&(_danmakuId = value["danmakuId"]);
 				value.hasOwnProperty("sourceType")&&(_sourceType = value["sourceType"]);
 				value.hasOwnProperty("videoLength")&&(_videoLength = value["videoLength"]);
+				value.hasOwnProperty("contentId")&&(_contentId = value["contentId"]);
 			}
 			return this
 		}

@@ -35,11 +35,16 @@ package com.idzeir.acfun.vo
 		/**
 		 * 敏感词地址
 		 */		
-		function get ban():String
+		function get ban():String;
 			
 		/**
 		 * 黑名单地址
 		 */		
-		function get blacklist():String
+		function get blacklist():String;
+		
+		/**
+		 * 推荐视频接口
+		 */		
+		function get recommendUrl():String;
 	}
 }

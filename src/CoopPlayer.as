@@ -27,6 +27,7 @@ package
 	import com.idzeir.acfun.manage.FilterManager;
 	import com.idzeir.acfun.manage.Keys;
 	import com.idzeir.acfun.module.IPlugin;
+	import com.idzeir.acfun.module.Recommend;
 	import com.idzeir.acfun.profile.Monitor;
 	import com.idzeir.acfun.timer.Ticker;
 	import com.idzeir.acfun.utils.FindUtil;
@@ -95,6 +96,8 @@ package
 		 * 弹幕配置面板 
 		 */		
 		private var _optionLoader:Loader;
+		
+		private var _recommentLayer:Recommend;
 		
 		public function CoopPlayer()
 		{
@@ -205,6 +208,8 @@ package
 			
 			var errorTxt:ErrorRespondText = new ErrorRespondText();
 			this.addChild(errorTxt);
+			
+			_recommentLayer ||= new Recommend();
 			
 			this.addChild(new Monitor());
 		}
@@ -358,30 +363,42 @@ package
 		public function onSeek(value:* = null):void
 		{
 			Log.debug("SEEK",JSON.stringify(value));
+			showRecommend = false;
 		}
 		
 		private function onPlay(e:Event):void
 		{
 			Log.debug("视频播放");
 			_bullets.start();
+			showRecommend = false;
 		}
 		
 		private function onStop(e:Event):void
 		{
 			Log.debug("视频停止");
 			_bullets.stop();
+			showRecommend = true;
 		}
 		
 		private function onResume(e:Event):void
 		{
 			//Log.debug("视频播放恢复");
 			_bullets.resume();
+			showRecommend = false;
 		}
 		
 		private function onPause(e:Event):void
 		{
 			//Log.debug("视频暂停");
 			_bullets.pause();
+		}
+		
+		private function set showRecommend(bool:Boolean):void
+		{
+			if(bool)
+				this.addChild(_recommentLayer);
+			else
+				this.contains(_recommentLayer)&&this.removeChild(_recommentLayer);
 		}
 		
 		

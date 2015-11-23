@@ -29,6 +29,11 @@ package com.idzeir.acfun.vo
 		/**
 		 * 更新视频信息
 		 */		
-		function update(value:Object):IVideoInfoVo
+		function update(value:Object):IVideoInfoVo;
+		/**
+		 * 视频ac号
+		 * @return 
+		 */		
+		function get contentId():Number;
 	}
 }

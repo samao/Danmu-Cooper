@@ -21,6 +21,7 @@ package com.idzeir.acfun.vo
 		private var _websocketUri:String = "";
 		private var _ban:String = "";
 		private var _blacklist:String = "";
+		private var _recommendUrl:String = "";
 		
 		
 		private static var _instance:ConfigVo;
@@ -62,6 +63,11 @@ package com.idzeir.acfun.vo
 		{
 			return _ban;
 		}
+		
+		public function get recommendUrl():String
+		{
+			return _recommendUrl;
+		}
 
 		public function update(value:Object):IConfigVo
 		{
@@ -71,6 +77,7 @@ package com.idzeir.acfun.vo
 			value.hasOwnProperty("websocketUri")&&(_websocketUri = value["websocketUri"]);
 			value.hasOwnProperty("ban")&&(_ban = value["ban"]);
 			value.hasOwnProperty("blacklist")&&(_blacklist = value["blacklist"]);
+			value.hasOwnProperty("recommendUrl")&&(_recommendUrl = value["recommendUrl"]);
 			
 			return this;
 		}
@@ -83,6 +90,7 @@ package com.idzeir.acfun.vo
 				"\nwebsocketUri:"+_websocketUri+"" +
 				"\nban:" + _ban +""+
 				"\nblacklist:" + _blacklist +"" +
+				"\nrecommendUrl" + _recommendUrl + "" +
 				"\n========(end)";
 		}
 	}
