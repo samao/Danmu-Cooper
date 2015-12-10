@@ -29,10 +29,30 @@ package com.idzeir.acfun.module
 			RequestUtil.load($.c.recommendUrl+"?ac"+$.v.contentId,null,function(value:*):void
 			{
 				Log.debug("推荐视频数据：",value);
+				createRecommend(value);
 			},function(value:*):void
 			{
 				Log.warn("获取推荐视频失败：",JSON.stringify(value));
 			});
+		}
+		
+		private function createRecommend(value:String):void
+		{
+			var data:Object;
+			
+			try{
+				data = JSON.parse(value);
+			}catch(e:Error){
+				Log.error("推荐视频服务器返回数据出错");
+				return;
+			}
+			
+			if(data&&data["status"]==200)
+			{
+				//组织推荐显示
+			}else{
+				Log.error("未找到推荐视频");
+			}
 		}
 	}
 }

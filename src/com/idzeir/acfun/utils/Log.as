@@ -38,7 +38,7 @@ package com.idzeir.acfun.utils
 		
 		public static function log(...value):void
 		{
-			level>=3&&out(LEVEL_TYPE[2],value);
+			level>=3&&out(LEVEL_TYPE[1],value);
 		}
 		
 		public static function info(...value):void
