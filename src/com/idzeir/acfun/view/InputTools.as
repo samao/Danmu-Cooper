@@ -85,7 +85,7 @@ package com.idzeir.acfun.view
 					RefUtil.toURL("http://www."+authority);
 				});
 			}
-			
+			$.tips.add(logo,"AcFun.tv")
 			addChild(logo);
 			
 			var option:ImageButton = new ImageButton();
@@ -96,6 +96,7 @@ package com.idzeir.acfun.view
 				//Log.debug("设置");
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_OPTION));
 			});
+			$.tips.add(option,"设置")
 			addChild(option);
 			
 			_inputTxt = new InTextField();
@@ -121,9 +122,11 @@ package com.idzeir.acfun.view
 			close.addEventListener(MouseEvent.CLICK,function():void
 			{
 				open = !open;
+				$.tips.add(close,open?"关闭弹幕":"打开弹幕")
 				close.skinUrlMap = open?openMap:closeMap;
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
 			});
+			$.tips.add(close,"关闭弹幕")
 			addChild(close);
 			
 			$.k.listener(flash.ui.Keyboard.ENTER,function():void

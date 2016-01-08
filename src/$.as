@@ -18,6 +18,7 @@ package
 	import com.idzeir.acfun.manage.IFilterManager;
 	import com.idzeir.acfun.manage.IKeys;
 	import com.idzeir.acfun.manage.ILanguage;
+	import com.idzeir.acfun.manage.IToolTipMgr;
 	import com.idzeir.acfun.timer.ITicker;
 	import com.idzeir.acfun.vo.IConfigVo;
 	import com.idzeir.acfun.vo.IFlashVarsVo;
@@ -87,6 +88,10 @@ package
 		 * 弹幕过滤管理 
 		 */		
 		public static var fm:IFilterManager;
+		/**
+		 * tips管理器
+		 */		
+		public static var tips:IToolTipMgr;
 		/**
 		 * flash cookie 
 		 */		

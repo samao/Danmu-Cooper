@@ -26,6 +26,7 @@ package
 	import com.idzeir.acfun.manage.BulletVoMgr;
 	import com.idzeir.acfun.manage.FilterManager;
 	import com.idzeir.acfun.manage.Keys;
+	import com.idzeir.acfun.manage.ToolTipMgr;
 	import com.idzeir.acfun.module.IPlugin;
 	import com.idzeir.acfun.module.Recommend;
 	import com.idzeir.acfun.profile.Monitor;
@@ -33,7 +34,6 @@ package
 	import com.idzeir.acfun.utils.FindUtil;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.MenuUtil;
-	import com.idzeir.acfun.utils.RefUtil;
 	import com.idzeir.acfun.view.BaseStage;
 	import com.idzeir.acfun.view.BulletContainer;
 	import com.idzeir.acfun.view.ErrorRespondText;
@@ -46,6 +46,7 @@ package
 	import com.idzeir.acfun.vo.VideoInfoVo;
 	
 	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -337,6 +338,10 @@ package
 			_apiBox.visible = true;
 			_tools&&(_tools.visible = true);
 			
+			var tipLayer:Sprite = new Sprite();
+			this.addChild(tipLayer);
+			$.tips.setupLayer(tipLayer);
+			
 			if($.f.autoplay)
 			{
 				this._bullets.start();
@@ -421,6 +426,7 @@ package
 			$.a = Animation.getInstance();
 			$.u = User.getInstance();
 			$.fm = FilterManager.getInstance();
+			$.tips = ToolTipMgr.getInstance();
 			
 			$.f.update(stage.loaderInfo.parameters);
 			$.k.stage = stage;
