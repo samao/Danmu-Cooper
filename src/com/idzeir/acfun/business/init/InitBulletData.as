@@ -60,7 +60,9 @@ package com.idzeir.acfun.business.init
 			//页数太多提前结束
 			//!_preComplete&&_pageNo==10&&complete();
 			
-			var URL:String = $.c.staticUrl+"/"+$.v.danmakuId+"?pageSize="+PAGE_SIZE+"&pageNo="+_pageNo;
+			//var URL:String = $.c.staticUrl+"/"+$.v.danmakuId+"?pageSize="+PAGE_SIZE+"&pageNo="+_pageNo;
+			//cdn回源优化
+			var URL:String = $.c.staticUrl+"/"+$.v.danmakuId+"/"+_pageNo+"/"+PAGE_SIZE
 			Log.info("加载历史弹幕",URL);
 			RequestUtil.load(URL,null,function(value:String):void
 			{

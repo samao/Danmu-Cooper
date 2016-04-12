@@ -1,7 +1,7 @@
 {
 	"host":"http://www.acfun.tv",
 	"getVideoUrl":"http://www.acfun.tv/video/getVideo.aspx",
-	"staticUrl":"http://danmu.aixifan.com/V2",
+	"staticUrl":"http://danmu.aixifan.com/V3",
 	"websocketUri":"ws://danmaku.acfun.tv:443",
 	"ban":"http://cdn.aixifan.com/player/filter/ban.json",
 	"blacklist":"http://cdn.aixifan.com/player/filter/blacklist.json",
