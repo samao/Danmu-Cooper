@@ -9,8 +9,8 @@
 
 package com.idzeir.acfun.manage
 {
-	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
+	import flash.display.Sprite;
 
 	/**
 	 * tips全局注册
@@ -33,6 +33,6 @@ package com.idzeir.acfun.manage
 		 * @param layer
 		 * @return 
 		 */		
-		function setupLayer(layer:DisplayObjectContainer):void
+		function setupLayer(layer:Sprite):void
 	}
 }

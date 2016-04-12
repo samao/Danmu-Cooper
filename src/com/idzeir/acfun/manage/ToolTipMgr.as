@@ -12,9 +12,8 @@ package com.idzeir.acfun.manage
 	import com.idzeir.components.Style;
 	
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
-	import flash.display.Stage;
+	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
@@ -30,7 +29,7 @@ package com.idzeir.acfun.manage
 		
 		private static var _instance:ToolTipMgr;
 		
-		private static var _tipBox:DisplayObjectContainer;
+		private static var _tipBox:Sprite;
 		
 		private static var _tipTxt:TextField;
 		
@@ -46,7 +45,7 @@ package com.idzeir.acfun.manage
 			return _instance ||= new ToolTipMgr();
 		}
 		
-		public function setupLayer(layer:DisplayObjectContainer):void
+		public function setupLayer(layer:Sprite):void
 		{
 			_tipBox ||= layer;
 			_tipTxt ||= new TextField();
@@ -96,10 +95,10 @@ package com.idzeir.acfun.manage
 			_active = e.currentTarget;
 			_tipTxt.visible = true;
 			_tipTxt.text = _map[e.currentTarget];
-			_tipTxt.background = true;
+			/*_tipTxt.background = true;
 			_tipTxt.backgroundColor = 0x000000;
 			_tipTxt.border = true;
-			_tipTxt.borderColor = 0x999999;
+			_tipTxt.borderColor = 0x999999;*/
 			updatePos(e.stageX,e.stageY,e.currentTarget);
 			_tipBox.addEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
 		}
@@ -111,6 +110,7 @@ package com.idzeir.acfun.manage
 			_tipTxt.text = "";
 			_tipTxt.background = false;
 			_tipTxt.border = false;
+			_tipBox.graphics.clear();
 			_tipBox.removeEventListener(MouseEvent.MOUSE_MOVE,moveHandler);
 		}
 		
@@ -124,6 +124,14 @@ package com.idzeir.acfun.manage
 			var rect:Rectangle = (tar as DisplayObject).getBounds((tar as DisplayObject).stage);
 			_tipTxt.x = rect.left+(rect.width - _tipTxt.width >>1);
 			_tipTxt.y = (rect.top - _tipTxt.height - 10);
+			
+			const SPACE:uint = 2;
+			var bgRect:Rectangle = _tipTxt.getBounds(_tipBox);
+			_tipBox.graphics.clear();
+			_tipBox.graphics.lineStyle(1,0xFFFFFF,.5)
+			_tipBox.graphics.beginFill(0x000000,.8);
+			_tipBox.graphics.drawRoundRect(bgRect.left - SPACE,bgRect.top - SPACE,bgRect.width + 2 * SPACE,bgRect.height + 2 * SPACE,5,5);
+			_tipBox.graphics.endFill();
 		}
 		
 		private function has(target:InteractiveObject):Boolean
