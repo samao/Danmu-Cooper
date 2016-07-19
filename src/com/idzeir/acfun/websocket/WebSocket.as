@@ -717,9 +717,12 @@ package com.idzeir.acfun.websocket
 			handshakeTimer.stop();
 			handshakeTimer.reset();
 			
-			var errorEvent:WebSocketErrorEvent = new WebSocketErrorEvent(WebSocketErrorEvent.CONNECTION_FAIL);
-			errorEvent.text = message;
-			dispatchEvent(errorEvent);
+			try{
+				var errorEvent:WebSocketErrorEvent = new WebSocketErrorEvent(WebSocketErrorEvent.CONNECTION_FAIL);
+				errorEvent.text = message;
+				dispatchEvent(errorEvent);
+			}catch(e:Error){}
+			
 			
 			var event:WebSocketEvent = new WebSocketEvent(WebSocketEvent.CLOSED);
 			dispatchEvent(event);
