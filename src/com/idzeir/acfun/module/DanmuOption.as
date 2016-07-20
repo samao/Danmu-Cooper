@@ -13,13 +13,13 @@ package com.idzeir.acfun.module
 	import com.idzeir.acfun.events.GlobalEvent;
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.BaseStage;
-	import com.idzeir.components.HBox;
-	import com.idzeir.components.LabelButton;
-	import com.idzeir.components.LabelButtonStyle;
-	import com.idzeir.components.Radio;
-	import com.idzeir.components.RadioGroup;
-	import com.idzeir.components.Style;
-	import com.idzeir.components.VBox;
+	import com.idzeir.components.v2.HBox;
+	import com.idzeir.components.v2.LabelButton;
+	import com.idzeir.components.v2.LabelButtonStyle;
+	import com.idzeir.components.v2.Radio;
+	import com.idzeir.components.v2.RadioGroup;
+	import com.idzeir.components.v2.Style;
+	import com.idzeir.components.v2.VBox;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;

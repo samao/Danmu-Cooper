@@ -17,6 +17,8 @@ package com.idzeir.acfun.business.init
 	import com.idzeir.acfun.websocket.WebSocket;
 	import com.idzeir.acfun.websocket.WebSocketErrorEvent;
 	import com.idzeir.acfun.websocket.WebSocketEvent;
+	
+	import flash.events.Event;
 
 	public class InitWebSocket extends BaseInit
 	{
@@ -100,9 +102,9 @@ package com.idzeir.acfun.business.init
 		 * 连接失败
 		 * @param e
 		 */		
-		private function onConnectFail(e:WebSocketEvent):void
+		private function onConnectFail(e:Event):void
 		{
-			Log.info("websocket连接失败");
+			Log.info("websocket连接失败",e);
 			retry();
 		}
 		
