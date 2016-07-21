@@ -107,6 +107,7 @@ package com.idzeir.acfun.view
 			var sendBut:ImageButton = new ImageButton();
 			sendBut.setSize(64,25);
 			sendBut.skinUrlMap = buttonsXML.send.text().split("|");
+			sendBut.selectSkin = null;
 			sendBut.addEventListener(MouseEvent.CLICK,function():void
 			{
 				send();
