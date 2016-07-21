@@ -16,9 +16,9 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.utils.NodeUtil;
 	import com.idzeir.acfun.utils.RefUtil;
-	import com.idzeir.components.HBox;
-	import com.idzeir.components.ImageButton;
-	import com.idzeir.components.Style;
+	import com.idzeir.components.v2.HBox;
+	import com.idzeir.components.v2.ImageButton;
+	import com.idzeir.components.v2.Style;
 	
 	import flash.events.Event;
 	import flash.events.FocusEvent;
@@ -91,6 +91,7 @@ package com.idzeir.acfun.view
 			var option:ImageButton = new ImageButton();
 			option.setSize(16,16);
 			option.skinUrlMap = buttonsXML.set.text().split("|");
+			option.selectSkin = null;
 			option.addEventListener(MouseEvent.CLICK,function():void
 			{
 				//Log.debug("设置");
@@ -106,6 +107,7 @@ package com.idzeir.acfun.view
 			var sendBut:ImageButton = new ImageButton();
 			sendBut.setSize(64,25);
 			sendBut.skinUrlMap = buttonsXML.send.text().split("|");
+			sendBut.selectSkin = null;
 			sendBut.addEventListener(MouseEvent.CLICK,function():void
 			{
 				send();
@@ -119,11 +121,13 @@ package com.idzeir.acfun.view
 			var openMap:Array = buttonsXML.open.text().split("|");;
 			var closeMap:Array = buttonsXML.close.text().split("|");;
 			close.skinUrlMap = openMap;
+			close.selectSkin = null;
 			close.addEventListener(MouseEvent.CLICK,function():void
 			{
 				open = !open;
 				$.tips.add(close,open?"关闭弹幕":"打开弹幕")
 				close.skinUrlMap = open?openMap:closeMap;
+				close.selectSkin = null;
 				$.e.dispatchEvent(new GlobalEvent(EventType.SWITCH_BULLET));
 			});
 			$.tips.add(close,"关闭弹幕")
@@ -161,6 +165,13 @@ package com.idzeir.acfun.view
 				sendBut.mouseEnabled = _inputTxt.mouseEnabled = false;
 				_tipsTxt.htmlText = $.l.get("used_input_tips");
 			}
+		}
+		
+		override public function immediateUpdate():void
+		{
+			super.immediateUpdate();
+			_tipsTxt.x = _inputTxt.getBounds(this).x + 3;
+			_tipsTxt.y = this.bounds.height - _tipsTxt.height >> 1;
 		}
 		
 		private function stopEvent(e:Event):void
@@ -211,12 +222,12 @@ package com.idzeir.acfun.view
 			{
 				_inputTxt.width = value - min;
 			}
-			this.update();
+			immediateUpdate()
 		}
 		
 		override public function set visible(value:Boolean):void
 		{
-			super.visible = vaild()?value:false;
+			super.visible = spaceVaild()?value:false;
 			_showing = value;
 		}
 		
@@ -224,7 +235,7 @@ package com.idzeir.acfun.view
 		 * 检测是否有足够空间显示
 		 * @return 
 		 */		
-		private function vaild():Boolean
+		private function spaceVaild():Boolean
 		{
 			if(_setWidth<0||_setWidth<(super.width - _inputTxt.width+INPUT_MIN_WIDTH))
 				return false;
