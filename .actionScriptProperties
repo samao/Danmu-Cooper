@@ -29,7 +29,7 @@
         </excludedEntries>
       </libraryPathEntry>
       <libraryPathEntry kind="1" linkType="1" path="libs"/>
-      <libraryPathEntry kind="3" linkType="1" path="/components/bin/components.swc" useDefaultLinkType="false"/>
+      <libraryPathEntry kind="3" linkType="1" path="/LazyDodu/bin/LazyDodu.swc" useDefaultLinkType="false"/>
     </libraryPath>
     <sourceAttachmentPath/>
   </compiler>
