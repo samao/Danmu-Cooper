@@ -16,7 +16,7 @@ package com.idzeir.acfun.view
 	import com.idzeir.acfun.utils.NodeUtil;
 	import com.idzeir.acfun.vo.BulletVo;
 	import com.idzeir.acfun.vo.Node;
-	import com.idzeir.components.VBox;
+	import com.idzeir.components.v2.VBox;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;

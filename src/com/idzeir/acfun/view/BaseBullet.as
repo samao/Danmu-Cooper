@@ -11,7 +11,7 @@ package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.vo.BulletVo;
-	import com.idzeir.components.Style;
+	import com.idzeir.components.v2.Style;
 	
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;

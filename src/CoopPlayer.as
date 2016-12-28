@@ -46,7 +46,6 @@ package
 	import com.idzeir.acfun.vo.VideoInfoVo;
 	
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	import flash.display.InteractiveObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;

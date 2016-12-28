@@ -11,10 +11,9 @@ package com.idzeir.acfun.view
 {
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
-	import com.idzeir.components.Style;
+	import com.idzeir.components.v2.Style;
 	
 	import flash.events.Event;
-	import flash.filters.DropShadowFilter;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	import flash.text.TextField;

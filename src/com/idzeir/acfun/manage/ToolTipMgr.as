@@ -9,7 +9,7 @@
 
 package com.idzeir.acfun.manage
 {
-	import com.idzeir.components.Style;
+	import com.idzeir.components.v2.Style;
 	
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;

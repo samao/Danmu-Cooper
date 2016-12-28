@@ -9,9 +9,9 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.components.Style;
 	import com.idzeir.acfun.events.EventType;
 	import com.idzeir.acfun.events.GlobalEvent;
+	import com.idzeir.components.v2.Style;
 	
 	import flash.display.Sprite;
 	import flash.events.Event;

@@ -9,8 +9,8 @@
 
 package com.idzeir.acfun.view
 {
-	import com.idzeir.components.Style;
 	import com.idzeir.acfun.utils.Log;
+	import com.idzeir.components.v2.Style;
 	
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;

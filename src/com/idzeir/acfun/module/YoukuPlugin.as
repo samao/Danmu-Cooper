@@ -9,7 +9,6 @@
 
 package com.idzeir.acfun.module
 {
-	import com.idzeir.acfun.utils.Log;
 	import com.idzeir.acfun.view.BaseStage;
 	
 	import flash.display.DisplayObject;
