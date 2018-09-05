@@ -1,9 +1,9 @@
 {
-	"host":"http://www.acfun.tv",
-	"getVideoUrl":"http://www.acfun.tv/video/getVideo.aspx",
-	"staticUrl":"http://danmu.aixifan.com/V3",
-	"websocketUri":"ws://danmaku.acfun.tv:443",
-	"ban":"http://cdn.aixifan.com/player/filter/ban.json",
-	"blacklist":"http://cdn.aixifan.com/player/filter/blacklist.json",
-	"recommendUrl":"http://search.acfun.tv/like"
+	"host":"http://www.youtu.tv",
+	"getVideoUrl":"http://www.youtu.tv/video/getVideo.aspx",
+	"staticUrl":"http://danmu.youtu.com/V3",
+	"websocketUri":"ws://danmaku.youtu.tv:443",
+	"ban":"http://cdn.youtu.com/player/filter/ban.json",
+	"blacklist":"http://cdn.youtu.com/player/filter/blacklist.json",
+	"recommendUrl":"http://search.youtu.tv/like"
 }

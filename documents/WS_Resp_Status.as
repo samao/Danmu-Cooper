@@ -2,8 +2,7 @@
  * ===================================
  * Author:	iDzeir					
  * Email:	qiyanlong@wozine.com	
- * Company:	http://www.acfun.tv		
- * Created:	Oct 13, 2015 5:49:35 PM			
+ * Company:	http://www.youtu.tv * Created:	Oct 13, 2015 5:49:35 PM			
  * ===================================
  */
 

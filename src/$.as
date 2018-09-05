@@ -2,28 +2,27 @@
  * ===================================
  * Author:	iDzeir					
  * Email:	qiyanlong@wozine.com	
- * Company:	http://www.acfun.tv		
- * Created:	Jun 3, 2015 9:46:33 PM			
+ * Company:	http://www.youtu.tv * Created:	Jun 3, 2015 9:46:33 PM			
  * ===================================
  */
 
 package
 {
-	import com.idzeir.acfun.business.IQm;
-	import com.idzeir.acfun.coop.ILogic;
-	import com.idzeir.acfun.manage.IAnimation;
-	import com.idzeir.acfun.manage.IBulletFactory;
-	import com.idzeir.acfun.manage.IBulletVoMgr;
-	import com.idzeir.acfun.manage.ICookie;
-	import com.idzeir.acfun.manage.IFilterManager;
-	import com.idzeir.acfun.manage.IKeys;
-	import com.idzeir.acfun.manage.ILanguage;
-	import com.idzeir.acfun.manage.IToolTipMgr;
-	import com.idzeir.acfun.timer.ITicker;
-	import com.idzeir.acfun.vo.IConfigVo;
-	import com.idzeir.acfun.vo.IFlashVarsVo;
-	import com.idzeir.acfun.vo.IUser;
-	import com.idzeir.acfun.vo.IVideoInfoVo;
+	import com.idzeir.business.IQm;
+	import com.idzeir.coop.ILogic;
+	import com.idzeir.manage.IAnimation;
+	import com.idzeir.manage.IBulletFactory;
+	import com.idzeir.manage.IBulletVoMgr;
+	import com.idzeir.manage.ICookie;
+	import com.idzeir.manage.IFilterManager;
+	import com.idzeir.manage.IKeys;
+	import com.idzeir.manage.ILanguage;
+	import com.idzeir.manage.IToolTipMgr;
+	import com.idzeir.timer.ITicker;
+	import com.idzeir.vo.IConfigVo;
+	import com.idzeir.vo.IFlashVarsVo;
+	import com.idzeir.vo.IUser;
+	import com.idzeir.vo.IVideoInfoVo;
 	
 	import flash.events.IEventDispatcher;
 	

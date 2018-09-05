@@ -2,48 +2,47 @@
  * ===================================
  * Author:	iDzeir					
  * Email:	qiyanlong@wozine.com	
- * Company:	http://www.acfun.tv		
- * Created:	Jun 3, 2015 2:45:39 PM			
+ * Company:	http://www.youtu.tv * Created:	Jun 3, 2015 2:45:39 PM			
  * ===================================
  */
 
 package
 {
-	import com.idzeir.acfun.business.Qm;
-	import com.idzeir.acfun.business.QmEvent;
-	import com.idzeir.acfun.business.init.InitBulletData;
-	import com.idzeir.acfun.business.init.InitConfigData;
-	import com.idzeir.acfun.business.init.InitCookieData;
-	import com.idzeir.acfun.business.init.InitFilterData;
-	import com.idzeir.acfun.business.init.InitVideoData;
-	import com.idzeir.acfun.business.init.InitWebSocket;
-	import com.idzeir.acfun.business.init.InitXMLLogic;
-	import com.idzeir.acfun.coop.Logic;
-	import com.idzeir.acfun.events.EventType;
-	import com.idzeir.acfun.events.GlobalEvent;
-	import com.idzeir.acfun.manage.Animation;
-	import com.idzeir.acfun.manage.BulletFactory;
-	import com.idzeir.acfun.manage.BulletVoMgr;
-	import com.idzeir.acfun.manage.FilterManager;
-	import com.idzeir.acfun.manage.Keys;
-	import com.idzeir.acfun.manage.ToolTipMgr;
-	import com.idzeir.acfun.module.IPlugin;
-	import com.idzeir.acfun.module.Recommend;
-	import com.idzeir.acfun.profile.Monitor;
-	import com.idzeir.acfun.timer.Ticker;
-	import com.idzeir.acfun.utils.FindUtil;
-	import com.idzeir.acfun.utils.Log;
-	import com.idzeir.acfun.utils.MenuUtil;
-	import com.idzeir.acfun.view.BaseStage;
-	import com.idzeir.acfun.view.BulletContainer;
-	import com.idzeir.acfun.view.ErrorRespondText;
-	import com.idzeir.acfun.view.InputTools;
-	import com.idzeir.acfun.view.ProgressBar;
-	import com.idzeir.acfun.vo.ConfigVo;
-	import com.idzeir.acfun.vo.FlashVarsVo;
-	import com.idzeir.acfun.vo.LogicEventVo;
-	import com.idzeir.acfun.vo.User;
-	import com.idzeir.acfun.vo.VideoInfoVo;
+	import com.idzeir.business.Qm;
+	import com.idzeir.business.QmEvent;
+	import com.idzeir.business.init.InitBulletData;
+	import com.idzeir.business.init.InitConfigData;
+	import com.idzeir.business.init.InitCookieData;
+	import com.idzeir.business.init.InitFilterData;
+	import com.idzeir.business.init.InitVideoData;
+	import com.idzeir.business.init.InitWebSocket;
+	import com.idzeir.business.init.InitXMLLogic;
+	import com.idzeir.coop.Logic;
+	import com.idzeir.events.EventType;
+	import com.idzeir.events.GlobalEvent;
+	import com.idzeir.manage.Animation;
+	import com.idzeir.manage.BulletFactory;
+	import com.idzeir.manage.BulletVoMgr;
+	import com.idzeir.manage.FilterManager;
+	import com.idzeir.manage.Keys;
+	import com.idzeir.manage.ToolTipMgr;
+	import com.idzeir.module.IPlugin;
+	import com.idzeir.module.Recommend;
+	import com.idzeir.profile.Monitor;
+	import com.idzeir.timer.Ticker;
+	import com.idzeir.utils.FindUtil;
+	import com.idzeir.utils.Log;
+	import com.idzeir.utils.MenuUtil;
+	import com.idzeir.view.BaseStage;
+	import com.idzeir.view.BulletContainer;
+	import com.idzeir.view.ErrorRespondText;
+	import com.idzeir.view.InputTools;
+	import com.idzeir.view.ProgressBar;
+	import com.idzeir.vo.ConfigVo;
+	import com.idzeir.vo.FlashVarsVo;
+	import com.idzeir.vo.LogicEventVo;
+	import com.idzeir.vo.User;
+	import com.idzeir.vo.VideoInfoVo;
 	
 	import flash.display.DisplayObject;
 	import flash.display.InteractiveObject;

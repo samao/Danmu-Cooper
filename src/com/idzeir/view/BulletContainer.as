@@ -1,0 +1,384 @@
+/**
+ * ===================================
+ * Author:	iDzeir					
+ * Email:	qiyanlong@wozine.com	
+ * Company:	http://www.youtu.tv * Created:	Jun 9, 2015 3:08:08 PM			
+ * ===================================
+ */
+
+package com.idzeir.view
+{
+	import com.idzeir.events.EventType;
+	import com.idzeir.events.GlobalEvent;
+	import com.idzeir.manage.BulletType;
+	import com.idzeir.utils.Log;
+	import com.idzeir.utils.NodeUtil;
+	import com.idzeir.vo.BulletVo;
+	import com.idzeir.vo.Node;
+	import com.idzeir.components.v2.VBox;
+	
+	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.geom.Point;
+	import flash.geom.Rectangle;
+	
+	/**
+	 * 弹幕显示容器
+	 */	
+	public class BulletContainer extends Sprite
+	{
+		/**
+		 * 顶部固定容器 
+		 */		
+		private var _topBox:VBox;
+		private var _bottomBox:VBox;
+		/**
+		 * 移动弹幕容器 
+		 */		
+		private var _moveBox:Sprite;
+		/**
+		 * 高级弹幕容器 
+		 */		
+		private var _advanceBox:FixedSpace;
+		
+		private var _lastTime:int = 0;
+		
+		/**弹幕显示水平间距*/
+		private const HGAP:int = 30;
+		/**弹幕显示垂直行高*/
+		private const VGAP:int = 43;
+		/**弹幕顶部偏移*/		
+		private var TOP:int = 0;
+		/**弹幕底部偏移*/
+		private var BOTTOM:int = 0;
+		/**
+		 * 更新的频率 
+		 */		
+		private const FRAME:int = 10;
+		
+		private var _useMap:Vector.<LineBox> = new Vector.<LineBox>();
+		private var _isRunning:Boolean = false;
+		/**
+		 * 弹幕太多无法显示暂时缓存数据 
+		 */		
+		private var _overMap:Vector.<Node> = new Vector.<Node>();
+		
+		/**
+		 * 两次更新时间介个此时间之内都会不会seek跳过，直接显示 
+		 */		
+		private const BLOCK_TIME:int = 3;
+		/**
+		 * 顶部和底部最大显示条数 
+		 */		
+		private const TOP_AND_BOTTOM_SIZE:uint = 6;
+		
+		public function BulletContainer()
+		{
+			super();
+			this.mouseEnabled = this.mouseChildren = false;
+			Log.info("初始化弹幕显示容器");
+			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
+		}
+		
+		public function get isRunning():Boolean
+		{
+			return _isRunning;
+		}
+		
+		public function start():void
+		{
+			if(!$.t.has(update))
+			{
+				$.t.call(FRAME,update);
+			}
+			_isRunning = true;
+		}
+		
+		public function pause():void
+		{
+			_isRunning = false;
+		}
+		
+		public function resume():void
+		{
+			_isRunning = true;
+		}
+		
+		public function stop():void
+		{
+			if($.t.has(update))
+			{
+				$.t.remove(update);
+			}
+			clear();
+			_isRunning = false;
+		}
+		
+		public function time(value:Number):void
+		{
+			if(value == _lastTime)return;
+			//此处seek会丢失显示
+			if(Math.abs(value - _lastTime)>BLOCK_TIME)
+			{
+				//seek
+				$.b.seek(value);
+				//清理正在显示的数据
+				clear();
+			}
+			
+			_lastTime = value;
+			var node:Node = $.b.timeNode;
+			
+			var index:int = 0;
+			while(node&&(NodeUtil.get(node)).stime<=value)
+			{
+				addBullet(node,index++);
+				$.b.nextTime();
+				node = $.b.timeNode;
+			}
+		}
+		
+		/**
+		 * 清理舞台现有的弹幕
+		 * @param force 是否立即清除显示，false时为自动消失
+		 */		
+		private function clear(force:Boolean = true):void
+		{
+			_overMap.length = 0;
+			for each(var i:LineBox in _useMap)
+			{
+				i.removeChildren();
+			}
+			_bottomBox.removeChildren();
+			_topBox.removeChildren();
+			_advanceBox.removeChildren();
+		}
+		
+		protected function onAdded(event:Event):void
+		{
+			this.removeEventListener(Event.ADDED_TO_STAGE,onAdded);
+			_advanceBox ||= new FixedSpace();
+			
+			_topBox ||= new VBox();
+			_topBox.algin = VBox.CENTER;
+			
+			_moveBox ||= new Sprite();
+			
+			_bottomBox ||=new VBox();
+			_bottomBox.algin = VBox.CENTER;
+			
+			TOP = $.g.gap.x;
+			BOTTOM = $.g.gap.y;
+			
+			var fullHeight:int = stage.fullScreenHeight;
+			
+			for(var i:uint = TOP;i< fullHeight - BOTTOM - VGAP;i=i+VGAP)
+			{
+				var lineBox:LineBox = LineBox.create(0,i,stage.stageWidth,VGAP);
+				lineBox.visible = (i <= stage.stageHeight-TOP-BOTTOM - VGAP);
+				_moveBox.addChild(lineBox);
+				_useMap.push(lineBox);
+			}
+			
+			this.addChild(_advanceBox);
+			this.addChild(_moveBox);
+			this.addChild(_topBox);
+			this.addChild(_bottomBox);
+			
+			$.e.addEventListener(EventType.SWITCH_BULLET,function():void
+			{
+				visible = !visible;
+			});
+			
+			$.e.addEventListener(EventType.RECIVE,function(e:GlobalEvent):void
+			{
+				Log.debug("收到websocket数据:",JSON.stringify(e.info))
+				
+				var bullet:BulletVo = new BulletVo();
+				bullet.color = int(e.info.color);
+				bullet.commentId = e.info.commentid;
+				bullet.mode = e.info.mode;
+				bullet.message = e.info.message;
+				bullet.stime = Number(e.info.stime);
+				bullet.size = Number(e.info.size);
+				bullet.user = e.info.user;
+				
+				var node:Node = new Node(bullet);
+				$.b.add(node);
+				addBullet(node);
+			});
+			
+		}
+		
+		/**
+		 * 弹幕容器重新组织显示行
+		 */		
+		public function resize():void
+		{
+			for each(var i:LineBox in this._useMap)
+			{
+				i.visible = (i.y <= stage.stageHeight-TOP-BOTTOM - VGAP);
+			}
+			
+			const BUTTOM_BAR_H:int = $.g.gap.y||0;
+			_topBox.x = stage.stageWidth - _topBox.width>>1;
+			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
+			_bottomBox.y = stage.stageHeight - _bottomBox.height - BUTTOM_BAR_H;
+		}
+		
+		protected function update():void
+		{
+			if(!_isRunning)return;
+			for each(var i:IBullet in $.ui.useMap)
+			{
+				i.update(_lastTime);
+			}
+		}
+		
+		/**
+		 * 添加弹幕显示 
+		 * @param value 弹幕数据
+		 * @param index 弹幕显示距离，同一时间显示多个弹幕，出现的x偏移量
+		 */		
+		private function addBullet(value:Node,index:int = 0):void
+		{
+			//Log.debug("显示弹幕:",NodeUtil.get(value).mode,NodeUtil.get(value).message);
+			switch(NodeUtil.get(value).mode)
+			{
+				case BulletType.FADE_OUT_TOP:
+					addTopBullet(value);
+					break;
+				case BulletType.FADE_OUT_BOTTOM:
+					addBottomBullet(value);
+					break;
+				case BulletType.RIGHT_TO_LEFT:
+					addMoveBullet(value,index);
+					break;
+				case BulletType.FIXED_FADE_OUT:
+					addFixedFadeBullet(value);
+					break;
+				default:
+					Log.warn("未知弹幕：",NodeUtil.get(value).mode);
+					break;
+			}
+		}
+		
+		private function addFixedFadeBullet(value:Node):void
+		{
+			//var child:DisplayObject = $.ui.create(BulletType.FIXED_FADE_OUT).bullet(NodeUtil.get(value),new Point(stage.stageWidth,stage.stageHeight-40)).warp;
+			//_advanceBox.addChild(child);
+			_advanceBox.start(NodeUtil.get(value));
+		}
+		
+		private function addBottomBullet(value:Node):void
+		{
+			//Log.debug("固定底部弹幕",NodeUtil.get(value).message);
+			if(_bottomBox.numChildren>=TOP_AND_BOTTOM_SIZE)
+			{
+				addToOverMap(value);
+				return;
+			}
+			const BUTTOM_BAR_H:int = $.g.gap.y;
+			_bottomBox.addChild($.ui.create(BulletType.FADE_OUT_BOTTOM).bullet(NodeUtil.get(value),new Point()).warp);
+			_bottomBox.x = stage.stageWidth - _bottomBox.width>>1;
+			_bottomBox.y = stage.stageHeight - _bottomBox.height - BUTTOM_BAR_H;
+		}
+		
+		private function addTopBullet(value:Node):void
+		{
+			//Log.debug("固定顶部弹幕",NodeUtil.get(value).message);
+			if(_topBox.numChildren>=TOP_AND_BOTTOM_SIZE)
+			{
+				addToOverMap(value);
+				return;
+			}
+				
+			_topBox.addChildAt($.ui.create(BulletType.FADE_OUT_TOP).bullet(NodeUtil.get(value),new Point()).warp,0);
+			_topBox.x = stage.stageWidth - _topBox.width>>1;
+		}
+			
+		/**
+		 * 添加移动弹幕
+		 * @param value
+		 * @param index
+		 */		
+		private function addMoveBullet(value:Node,index:int = 0):void
+		{
+			//Log.debug("移动弹幕",NodeUtil.get(value).message);
+			//偏移量
+			const OFFX:int = 5;
+			for each(var i:LineBox in _useMap)
+			{
+				var rect:Rectangle = i.getBounds(this);
+				if(!i.visible)return;
+				if((rect.right + HGAP)<=stage.stageWidth)
+				{
+					i.addChild($.ui.create(BulletType.RIGHT_TO_LEFT).bullet(NodeUtil.get(value),new Point(stage.stageWidth+index*OFFX,VGAP)).warp);
+					return;
+				}
+			}
+			
+			Log.warn("弹幕太多无法显示,等待空间",NodeUtil.get(value).message);
+			addToOverMap(value);
+		}
+		
+		/**
+		 * 没有空间显示，加入等待队列
+		 */		
+		private function addToOverMap(value:Node):void
+		{
+			_overMap.push(value);
+			if(!($.t.has(checkOverMap)))
+			{
+				$.t.call(100,checkOverMap,1,false);
+			}
+		}
+		
+		/**
+		 * 迭代延时循环添加弹幕
+		 */		
+		private function checkOverMap():void
+		{
+			if(_overMap.length > 0)
+			{
+				addBullet(_overMap.shift());
+				$.t.call(1,checkOverMap,1,true);
+			}
+		}
+	}
+}
+import flash.display.Sprite;
+
+
+class LineBox extends Sprite
+{
+	private static var _map:Vector.<LineBox> = new Vector.<LineBox>();
+	
+	public static function create(xpos:int,ypos:int,w:int,h:int):LineBox
+	{
+		if(_map.length == 0)
+		{
+			var box:LineBox = new LineBox();
+			box.mouseEnabled = false;
+			//box.mouseChildren = false;
+			box.graphics.beginFill(Math.random()*0xffffff,0);
+			box.graphics.drawRect(0,0,0,h);
+			box.graphics.endFill();
+			box.x = xpos;
+			box.y = ypos;
+			_map.push(box);
+		}
+		return _map.shift();
+	}
+	
+	public function recyle():void
+	{
+		this.removeChildren();
+		_map.push(this);
+	}
+	
+	public static function get map():Vector.<LineBox>
+	{
+		return _map;
+	}
+}
